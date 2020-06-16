@@ -357,8 +357,7 @@ void RequestHandler::internal_retry(RequestExecution* request_execution) {
 
   bool is_done = false;
   while (!is_done && request_execution->current_host()) {
-    PooledConnection::Ptr connection =
-        manager_->find_least_busy(request_execution->current_host()->address());
+    PooledConnection::Ptr connection = manager_->find_connection(request_execution->current_host()->address());
     if (connection) {
       int32_t result = connection->write(request_execution);
 

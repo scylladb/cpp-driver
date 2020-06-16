@@ -378,7 +378,7 @@ bool RequestProcessor::on_prepare_all(const RequestHandler::Ptr& request_handler
     PrepareAllCallback::Ptr prepare_all_callback(
         new PrepareAllCallback(address, prepare_all_handler));
 
-    PooledConnection::Ptr connection(connection_pool_manager_->find_least_busy(address));
+    PooledConnection::Ptr connection = connection_pool_manager_->find_connection(address);
     if (connection) {
       connection->write(prepare_all_callback.get());
     }
@@ -579,8 +579,8 @@ int RequestProcessor::process_requests(uint64_t processing_time) {
 bool RequestProcessor::write_wait_callback(const RequestHandler::Ptr& request_handler,
                                            const Host::Ptr& current_host,
                                            const RequestCallback::Ptr& callback) {
-  PooledConnection::Ptr connection(
-      connection_pool_manager_->find_least_busy(current_host->address()));
+  PooledConnection::Ptr connection = connection_pool_manager_->find_connection(current_host->address());
+
   if (connection && connection->write(callback.get()) > 0) {
     // Stop the original request timer now that we have a response and
     // are waiting for the maximum wait time of the handler.

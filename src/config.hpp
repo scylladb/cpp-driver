@@ -74,7 +74,8 @@ public:
       , is_client_id_set_(false)
       , host_listener_(new DefaultHostListener())
       , monitor_reporting_interval_secs_(CASS_DEFAULT_CLIENT_MONITOR_EVENTS_INTERVAL_SECS)
-      , cluster_metadata_resolver_factory_(new DefaultClusterMetadataResolverFactory()) {
+      , cluster_metadata_resolver_factory_(new DefaultClusterMetadataResolverFactory())
+      , connection_pool_round_robin_(CASS_DEFAULT_CONNECTION_POOL_ROUND_ROBIN) {
     profiles_.set_empty_key(String());
 
     // Assign the defaults to the cluster profile
@@ -392,6 +393,11 @@ public:
     }
   }
 
+  bool connection_pool_round_robin() const { return connection_pool_round_robin_; }
+  void set_connection_pool_round_robin(bool new_val) {
+    connection_pool_round_robin_ = new_val;
+  }
+
 private:
   void init_profiles();
 
@@ -441,6 +447,7 @@ private:
   unsigned monitor_reporting_interval_secs_;
   CloudSecureConnectionConfig cloud_secure_connection_config_;
   ClusterMetadataResolverFactory::Ptr cluster_metadata_resolver_factory_;
+  bool connection_pool_round_robin_;
 };
 
 }}} // namespace datastax::internal::core

@@ -25,6 +25,8 @@
 
 #include <uv.h>
 
+#include <atomic>
+
 namespace datastax { namespace internal { namespace core {
 
 class ConnectionPool;
@@ -94,6 +96,7 @@ struct ConnectionPoolSettings {
   ConnectionSettings connection_settings;
   size_t num_connections_per_host;
   ReconnectionPolicy::Ptr reconnection_policy;
+  bool round_robin;
 };
 
 /**
@@ -130,12 +133,17 @@ public:
                  Metrics* metrics);
 
   /**
-   * Find the least busy connection for the pool. The least busy connection has
-   * the lowest number of outstanding requests and is not closed.
+   * Find a connection in the pool. The behavior depends on the value of
+   * `ConnectionPoolSettings::round_robin`:
+   *   - if it's true, then the returned connection is the next connection
+   *     according to round-robin policy;
+   *   - if it's false, the "least busy" connection is chosen.
+   * (The "least busy" connection has the lowest number of outstanding requests).
+   * If the connection found is closed, empty pointer is returned.
    *
-   * @return The least busy connection or null if no connection is available.
+   * @return The chosen connection or null if no connection is available.
    */
-  PooledConnection::Ptr find_least_busy() const;
+  PooledConnection::Ptr find_connection() const;
 
   /**
    * Determine if the pool has any valid connections.
@@ -235,6 +243,9 @@ private:
   PooledConnection::Vec connections_;
   DelayedConnector::Vec pending_connections_;
   DenseHashSet<PooledConnection*> to_flush_;
+
+  /// Used when `ConnectionPoolSettings::round_robin` is set to true
+  mutable std::atomic<size_t> next_connection_idx_;
 };
 
 }}} // namespace datastax::internal::core
