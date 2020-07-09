@@ -39,12 +39,14 @@ static inline bool least_busy_comp(const PooledConnection::Ptr& a, const PooledC
 
 ConnectionPoolSettings::ConnectionPoolSettings()
     : num_connections_per_host(CASS_DEFAULT_NUM_CONNECTIONS_PER_HOST)
-    , reconnection_policy(new ExponentialReconnectionPolicy()) {}
+    , reconnection_policy(new ExponentialReconnectionPolicy())
+    , round_robin(CASS_DEFAULT_CONNECTION_POOL_ROUND_ROBIN) {}
 
 ConnectionPoolSettings::ConnectionPoolSettings(const Config& config)
     : connection_settings(config)
     , num_connections_per_host(config.core_connections_per_host())
-    , reconnection_policy(config.reconnection_policy()) {}
+    , reconnection_policy(config.reconnection_policy())
+    , round_robin(config.connection_pool_round_robin()) {}
 
 class NopConnectionPoolListener : public ConnectionPoolListener {
 public:
@@ -72,7 +74,8 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
     , settings_(settings)
     , metrics_(metrics)
     , close_state_(CLOSE_STATE_OPEN)
-    , notify_state_(NOTIFY_STATE_NEW) {
+    , notify_state_(NOTIFY_STATE_NEW)
+    , next_connection_idx_(0u) {
   inc_ref(); // Reference for the lifetime of the pooled connections
   set_pointer_keys(reconnection_schedules_);
   set_pointer_keys(to_flush_);
@@ -95,13 +98,28 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
   }
 }
 
-PooledConnection::Ptr ConnectionPool::find_least_busy() const {
-  PooledConnection::Vec::const_iterator it =
-      std::min_element(connections_.begin(), connections_.end(), least_busy_comp);
-  if (it == connections_.end() || (*it)->is_closing()) {
+PooledConnection::Ptr ConnectionPool::find_connection() const {
+  if (!has_connections()) {
     return PooledConnection::Ptr();
   }
-  return *it;
+
+  PooledConnection::Ptr conn_ptr;
+  if (settings_.round_robin) {
+    size_t idx = next_connection_idx_.load(std::memory_order_acquire);
+    size_t new_idx;
+    do {
+      new_idx = (idx + 1u) % connections_.size();
+    } while (!next_connection_idx_.compare_exchange_weak(idx, new_idx, std::memory_order_acq_rel));
+    conn_ptr = connections_[idx];
+  } else {
+    conn_ptr = *std::min_element(connections_.begin(), connections_.end(), least_busy_comp);
+  }
+
+  if (conn_ptr && conn_ptr->is_closing()) {
+    conn_ptr = PooledConnection::Ptr();
+  }
+  LOG_TRACE("Chosen connection: %p", (void*)conn_ptr.get());
+  return conn_ptr;
 }
 
 bool ConnectionPool::has_connections() const { return !connections_.empty(); }

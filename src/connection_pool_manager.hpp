@@ -78,13 +78,21 @@ public:
                         const ConnectionPoolSettings& settings);
 
   /**
-   * Find the least busy connection for a given host.
-   *
-   * @param address The address of the host to find a least busy connection.
-   * @return The least busy connection for a host or null if no connections are
-   * available.
+   * Finds the the next connection for a given host according to round-robin policy,
+   * (when `settings_::round_robin == true`). Otherwise finds the least
+   * busy connection.
+   * 
+   * @param address The address of the host to find a connection to.
+   * @return The connection selected by policy in pool's settings or
+   * null if no connections are available.
    */
-  PooledConnection::Ptr find_least_busy(const Address& address) const;
+  PooledConnection::Ptr find_connection(const Address& address) const;
+
+  /**
+   * Kept for backward compatibility (unit tests).
+   * The tests will pass only when intranode round-robin is DISABLED (default).
+   */
+  PooledConnection::Ptr find_least_busy(const Address& address) const { return find_connection(address); }
 
   /**
    * Determine if a pool has any valid connections.

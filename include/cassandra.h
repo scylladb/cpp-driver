@@ -1975,6 +1975,23 @@ cass_cluster_set_pending_requests_low_water_mark(CassCluster* cluster,
                                                  unsigned num_requests));
 
 /**
+ * Alters the strategy of picking connections from connection pool for a given host.
+ * By default the connection chosen is the one with least pending requests.
+ * When this function is called, then usual round-robin will used.
+ * 
+ * This should not be confused with load balancing while doing node selection. What is
+ * being load-balanced here are the <b>connections</b> to a single node.
+ *
+ * <b>Default:</b> cass_false (no round-robin)
+ *
+ * @public @memberof CassCluster
+ * 
+ * @param[in] cluster
+ */
+CASS_EXPORT void
+cass_cluster_set_round_robin_on_node_connections(CassCluster* cluster);
+
+/**
  * Sets the timeout for connecting to a node.
  *
  * <b>Default:</b> 5000 milliseconds

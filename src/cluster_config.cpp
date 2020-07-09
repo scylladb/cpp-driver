@@ -233,6 +233,10 @@ CassError cass_cluster_set_pending_requests_low_water_mark(CassCluster* cluster,
   return CASS_OK;
 }
 
+void cass_cluster_set_round_robin_on_node_connections(CassCluster* cluster) {
+  cluster->config().set_connection_pool_round_robin(true);
+}
+
 void cass_cluster_set_connect_timeout(CassCluster* cluster, unsigned timeout_ms) {
   cluster->config().set_connect_timeout(timeout_ms);
 }
