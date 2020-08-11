@@ -217,7 +217,13 @@ ClusterSettings::ClusterSettings(const Config& config)
     , prepare_on_up_or_add_host(config.prepare_on_up_or_add_host())
     , max_prepares_per_flush(CASS_DEFAULT_MAX_PREPARES_PER_FLUSH)
     , disable_events_on_startup(false)
-    , cluster_metadata_resolver_factory(config.cluster_metadata_resolver_factory()) {}
+    , cluster_metadata_resolver_factory(config.cluster_metadata_resolver_factory()) {
+  auto local_port_range = config.local_port_range();
+  if (local_port_range.first && local_port_range.second) {
+    local_port_range_lo_ = std::move(local_port_range.first);
+    local_port_range_hi_ = std::move(local_port_range.second);
+  }
+}
 
 Cluster::Cluster(const ControlConnection::Ptr& connection, ClusterListener* listener,
                  EventLoop* event_loop, const Host::Ptr& connected_host, const HostMap& hosts,
@@ -243,6 +249,10 @@ Cluster::Cluster(const ControlConnection::Ptr& connection, ClusterListener* list
 
   inc_ref();
   connection_->set_listener(this);
+
+  if (settings_.local_port_range_lo_ && settings_.local_port_range_hi_) {
+    shard_port_calculator_.reset(new ShardPortCalculator(*settings_.local_port_range_lo_, *settings_.local_port_range_hi_));
+  }
 
   query_plan_.reset(load_balancing_policy_->new_query_plan("", NULL, NULL));
 

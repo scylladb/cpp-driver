@@ -85,6 +85,7 @@ public:
   const String& server_name() const { return server_name_; }
   Family family() const { return family_; }
   int port() const { return port_; }
+  void set_port(int port) { port_ = port; }
 
   bool is_valid() const { return !hostname_or_address_.empty(); }
   bool is_resolved() const { return family_ == IPv4 || family_ == IPv6; }

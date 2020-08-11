@@ -490,6 +490,15 @@ CassError cass_cluster_set_local_address_n(CassCluster* cluster, const char* nam
   return CASS_OK;
 }
 
+CassError cass_cluster_set_local_port_range(CassCluster* cluster, int lo, int hi) {
+  if (hi < lo || lo < 1024 || hi > 65536) {
+    LOG_ERROR("Invalid local port range. Expected: 1024 < lo <= hi < 65536.");
+    return CASS_ERROR_LIB_BAD_PARAMS;
+  }
+  cluster->config().set_local_port_range(lo, hi);
+  return CASS_OK;
+}
+
 CassError cass_cluster_set_no_compact(CassCluster* cluster, cass_bool_t enabled) {
   cluster->config().set_no_compact(enabled == cass_true);
   return CASS_OK;

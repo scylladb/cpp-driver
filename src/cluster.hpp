@@ -25,6 +25,7 @@
 #include "monitor_reporting.hpp"
 #include "prepare_host_handler.hpp"
 #include "prepared.hpp"
+#include "shard_port_calculator.hpp"
 
 #include <uv.h>
 
@@ -220,6 +221,13 @@ struct ClusterSettings {
    * cluster.
    */
   ClusterMetadataResolverFactory::Ptr cluster_metadata_resolver_factory;
+
+  /**
+   * The range of client-side ports to be bound by connection sockets.
+   * Used only when server supports local-port-based shard selection.
+   */
+  CassOptional<int> local_port_range_lo_;
+  CassOptional<int> local_port_range_hi_;
 };
 
 /**
@@ -355,6 +363,7 @@ public:
   const String& local_dc() const { return local_dc_; }
   const VersionNumber& dse_server_version() const { return connection_->dse_server_version(); }
   const StringMultimap& supported_options() const { return supported_options_; }
+  const ShardPortCalculator* shard_port_calculator() const { return shard_port_calculator_.get(); }
 
 private:
   friend class ClusterRunClose;
@@ -447,6 +456,7 @@ private:
   ScopedPtr<MonitorReporting> monitor_reporting_;
   Timer monitor_reporting_timer_;
   ScopedPtr<ReconnectionSchedule> reconnection_schedule_;
+  ScopedPtr<ShardPortCalculator> shard_port_calculator_;
 };
 
 }}} // namespace datastax::internal::core

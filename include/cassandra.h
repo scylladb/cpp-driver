@@ -1550,6 +1550,29 @@ cass_cluster_set_local_address_n(CassCluster* cluster,
                                  const char* name,
                                  size_t name_length);
 
+
+/**
+ * Sets the range of outgoing port numbers (ephemeral ports) to be
+ * used when establishing the shard-aware connections. This is
+ * applicable when the routing of connection to shard is based on
+ * the client-side port number.
+ * 
+ * When application connects to multiple CassCluster-s it is advised
+ * to assign mutually non-overlapping port intervals to each. It is assumed
+ * that the supplied range is allowed by the OS (e.g. it fits inside
+ * /proc/sys/net/ipv4/ip_local_port_range on *nix systems)
+ *
+ * @public @memberof CassCluster
+ *
+ * @param[in] cluster
+ * @param[in] lo The lower bound (inclusive)
+ * @param[in] hi The upper bound (exclusive)
+ * @return CASS_OK if successful, otherwise the range is invalid.
+ */
+CassError cass_cluster_set_local_port_range(CassCluster* cluster,
+                                            int lo,
+                                            int hi);
+
 /**
  * Sets the SSL context and enables SSL.
  *

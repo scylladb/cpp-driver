@@ -326,6 +326,15 @@ public:
 
   void set_local_address(const Address& address) { local_address_ = address; }
 
+  std::pair<CassOptional<int>, CassOptional<int>> local_port_range() const {
+    return {local_port_range_lo_, local_port_range_hi_};
+  }
+
+  void set_local_port_range(int lo, int hi) {
+    local_port_range_lo_ = lo;
+    local_port_range_hi_ = hi;
+  }
+
   bool no_compact() const { return no_compact_; }
 
   void set_no_compact(bool enabled) { no_compact_ = enabled; }
@@ -432,6 +441,8 @@ private:
   bool prepare_on_all_hosts_;
   bool prepare_on_up_or_add_host_;
   Address local_address_;
+  CassOptional<int> local_port_range_lo_;
+  CassOptional<int> local_port_range_hi_;
   bool no_compact_;
   String application_name_;
   String application_version_;

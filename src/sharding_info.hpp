@@ -28,17 +28,22 @@ class ShardingInfo final {
 public:
   size_t get_shards_count() const;
   int32_t shard_id(int64_t token) const;
+  CassOptional<int> shard_aware_port() const { return shard_aware_port_; }
+  CassOptional<int> shard_aware_port_ssl() const { return shard_aware_port_ssl_; }
 
   static CassOptional<ConnectionShardingInfo> parse_sharding_info(const StringMultimap& params);
 
 private:
-  ShardingInfo(size_t shards_count, String partitioner, String sharding_algorithm, int sharding_ignore_MSB) noexcept;
+  ShardingInfo(size_t shards_count, String partitioner, String sharding_algorithm, int sharding_ignore_MSB,
+    CassOptional<int> shard_aware_port, CassOptional<int> shard_aware_port_ssl) noexcept;
 
   static const String SCYLLA_SHARD_PARAM_KEY;
   static const String SCYLLA_NR_SHARDS_PARAM_KEY;
   static const String SCYLLA_PARTITIONER;
   static const String SCYLLA_SHARDING_ALGORITHM;
   static const String SCYLLA_SHARDING_IGNORE_MSB;
+  static const String SCYLLA_SHARD_AWARE_PORT;
+  static const String SCYLLA_SHARD_AWARE_PORT_SSL;
 
   static CassOptional<String> parse_string(const StringMultimap& params, const String& key);
   static CassOptional<int> parse_int(const StringMultimap& params, const String& key);
@@ -47,6 +52,8 @@ private:
   String partitioner_;
   String sharding_algorithm_;
   int sharding_ignore_MSB_;
+  CassOptional<int> shard_aware_port_;
+  CassOptional<int> shard_aware_port_ssl_;
 };
 
 struct ConnectionShardingInfo final {

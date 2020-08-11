@@ -135,6 +135,8 @@ public:
     return error_code_ == SOCKET_ERROR_SSL_HANDSHAKE || error_code_ == SOCKET_ERROR_SSL_VERIFY;
   }
 
+  void set_local_port(int port) { settings_.local_address.set_port(port); }
+
 private:
   void internal_connect(uv_loop_t* loop);
   void ssl_handshake();

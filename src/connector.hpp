@@ -20,6 +20,7 @@
 #include "auth.hpp"
 #include "callback.hpp"
 #include "connection.hpp"
+#include "optional.hpp"
 #include "socket_connector.hpp"
 
 namespace datastax { namespace internal { namespace core {
@@ -190,6 +191,8 @@ public:
   const String& socket_error_message() { return socket_connector_->error_message(); }
   CassError ssl_error_code() { return socket_connector_->ssl_error_code(); }
 
+  void set_desired_shard_num(int32_t shard_id) { desired_shard_num_ = shard_id; }
+
 private:
   void finish();
 
@@ -214,6 +217,7 @@ private:
 
   Connection::Ptr connection_;
   SocketConnector::Ptr socket_connector_;
+  CassOptional<int32_t> desired_shard_num_;
   Timer timer_;
 
   ConnectionError error_code_;
