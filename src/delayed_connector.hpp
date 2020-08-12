@@ -75,6 +75,11 @@ public:
   DelayedConnector* with_settings(const ConnectionSettings& settings);
 
   /**
+   * Same as Connector::with_shard_port_calculator()
+   */
+  DelayedConnector* with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator);
+
+  /**
    * Connect to a host after a delay.
    *
    * @param loop The event loop to run the timer and connection process.

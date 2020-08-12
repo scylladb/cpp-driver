@@ -88,6 +88,14 @@ public:
   ConnectionPoolConnector* with_settings(const ConnectionPoolSettings& settings);
 
   /**
+   * Set the calculator of local port (to be used by Connector when
+   * port-based connection-to-shard routing is supported by the Host).
+   *
+   * @return The connector to chain calls.
+   */
+  ConnectionPoolConnector* with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator);
+
+  /**
    * Connect a pool.
    */
   void connect(uv_loop_t* loop);
@@ -136,6 +144,7 @@ private:
   String keyspace_;
   ConnectionPoolListener* listener_;
   Metrics* metrics_;
+  const ShardPortCalculator* shard_port_calculator_;
 };
 
 }}} // namespace datastax::internal::core

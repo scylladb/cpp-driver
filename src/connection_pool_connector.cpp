@@ -32,7 +32,8 @@ ConnectionPoolConnector::ConnectionPoolConnector(const Host::Ptr& host,
     , host_(host)
     , protocol_version_(protocol_version)
     , listener_(NULL)
-    , metrics_(NULL) {}
+    , metrics_(NULL)
+    , shard_port_calculator_(NULL) {}
 
 ConnectionPoolConnector* ConnectionPoolConnector::with_listener(ConnectionPoolListener* listener) {
   listener_ = listener;
@@ -55,6 +56,12 @@ ConnectionPoolConnector::with_settings(const ConnectionPoolSettings& settings) {
   return this;
 }
 
+ConnectionPoolConnector*
+ConnectionPoolConnector::with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator) {
+  shard_port_calculator_ = shard_port_calculator;
+  return this;
+}
+
 void ConnectionPoolConnector::connect(uv_loop_t* loop) {
   inc_ref();
   loop_ = loop;
@@ -63,9 +70,16 @@ void ConnectionPoolConnector::connect(uv_loop_t* loop) {
     Connector::Ptr connector(new Connector(
         host_, protocol_version_, bind_callback(&ConnectionPoolConnector::on_connect, this)));
     pending_connections_.push_back(connector);
+
+    const auto& si = host_->sharding_info();
+    if (si && (si->shard_aware_port() || si->shard_aware_port_ssl())) {
+      connector->set_desired_shard_num(i % si->get_shards_count());
+    }
+
     connector->with_keyspace(keyspace_)
         ->with_metrics(metrics_)
         ->with_settings(settings_.connection_settings)
+        ->with_shard_port_calculator(shard_port_calculator_)
         ->connect(loop);
   }
 }
@@ -140,7 +154,7 @@ void ConnectionPoolConnector::on_connect(Connector* connector) {
     if (!is_canceled_) {
       if (!critical_error_connector_) {
         pool_.reset(new ConnectionPool(connections_, listener_, keyspace_, loop_, host_,
-                                       protocol_version_, settings_, metrics_));
+                                       protocol_version_, settings_, metrics_, shard_port_calculator_));
       } else {
         if (listener_) {
           listener_->on_pool_critical_error(host_->address(),

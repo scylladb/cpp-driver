@@ -213,6 +213,7 @@ public:
           ->with_keyspace(session_->connect_keyspace())
           ->with_metrics(session_->metrics())
           ->with_random(session_->random())
+          ->with_shard_port_calculator(session_->cluster()->shard_port_calculator())
           ->initialize(session_->event_loop_group_->get(i));
     }
   }

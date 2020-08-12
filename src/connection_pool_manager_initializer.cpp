@@ -26,7 +26,8 @@ ConnectionPoolManagerInitializer::ConnectionPoolManagerInitializer(ProtocolVersi
     , remaining_(0)
     , protocol_version_(protocol_version)
     , listener_(NULL)
-    , metrics_(NULL) {}
+    , metrics_(NULL)
+    , shard_port_calculator_(NULL) {}
 
 void ConnectionPoolManagerInitializer::initialize(uv_loop_t* loop, const HostMap& hosts) {
   inc_ref();
@@ -41,6 +42,7 @@ void ConnectionPoolManagerInitializer::initialize(uv_loop_t* loop, const HostMap
         ->with_keyspace(keyspace_)
         ->with_metrics(metrics_)
         ->with_settings(settings_)
+        ->with_shard_port_calculator(shard_port_calculator_)
         ->connect(loop);
   }
 }
@@ -81,6 +83,12 @@ ConnectionPoolManagerInitializer* ConnectionPoolManagerInitializer::with_metrics
 ConnectionPoolManagerInitializer*
 ConnectionPoolManagerInitializer::with_settings(const ConnectionPoolSettings& settings) {
   settings_ = settings;
+  return this;
+}
+
+ConnectionPoolManagerInitializer*
+ConnectionPoolManagerInitializer::with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator) {
+  shard_port_calculator_ = shard_port_calculator;
   return this;
 }
 
@@ -128,7 +136,7 @@ void ConnectionPoolManagerInitializer::on_connect(ConnectionPoolConnector* pool_
   if (--remaining_ == 0) {
     if (!is_canceled_) {
       manager_.reset(new ConnectionPoolManager(pools_, loop_, protocol_version_, keyspace_,
-                                               listener_, metrics_, settings_));
+                                               listener_, metrics_, settings_, shard_port_calculator_));
     }
     callback_(this);
     // If the manager hasn't been released then close it.

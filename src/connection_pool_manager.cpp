@@ -41,7 +41,8 @@ ConnectionPoolManager::ConnectionPoolManager(const ConnectionPool::Map& pools, u
                                              const String& keyspace,
                                              ConnectionPoolManagerListener* listener,
                                              Metrics* metrics,
-                                             const ConnectionPoolSettings& settings)
+                                             const ConnectionPoolSettings& settings,
+                                             const ShardPortCalculator* shard_port_calculator)
     : loop_(loop)
     , protocol_version_(protocol_version)
     , settings_(settings)
@@ -49,6 +50,7 @@ ConnectionPoolManager::ConnectionPoolManager(const ConnectionPool::Map& pools, u
     , close_state_(CLOSE_STATE_OPEN)
     , keyspace_(keyspace)
     , metrics_(metrics)
+    , shard_port_calculator_(shard_port_calculator)
 #ifdef CASS_INTERNAL_DIAGNOSTICS
     , flush_bytes_("flushed")
 #endif
@@ -109,6 +111,7 @@ void ConnectionPoolManager::add(const Host::Ptr& host) {
   connector->with_listener(this)
       ->with_keyspace(keyspace_)
       ->with_metrics(metrics_)
+      ->with_shard_port_calculator(shard_port_calculator_)
       ->with_settings(settings_)
       ->connect(loop_);
 }

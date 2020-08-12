@@ -43,6 +43,12 @@ DelayedConnector* DelayedConnector::with_settings(const ConnectionSettings& sett
   return this;
 }
 
+DelayedConnector*
+DelayedConnector::with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator) {
+  connector_->with_shard_port_calculator(shard_port_calculator);
+  return this;
+}
+
 void DelayedConnector::delayed_connect(uv_loop_t* loop, uint64_t wait_time_ms) {
   inc_ref();
   if (wait_time_ms > 0) {

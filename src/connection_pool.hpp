@@ -127,7 +127,7 @@ public:
   ConnectionPool(const Connection::Vec& connections, ConnectionPoolListener* listener,
                  const String& keyspace, uv_loop_t* loop, const Host::Ptr& host,
                  ProtocolVersion protocol_version, const ConnectionPoolSettings& settings,
-                 Metrics* metrics);
+                 Metrics* metrics, const ShardPortCalculator* shard_port_calculator);
 
   /**
    * Find the least busy connection for the pool. The least busy connection has
@@ -231,6 +231,7 @@ private:
   const ProtocolVersion protocol_version_;
   const ConnectionPoolSettings settings_;
   Metrics* const metrics_;
+  const ShardPortCalculator* shard_port_calculator_;
   ReconnectionSchedules reconnection_schedules_;
 
   CloseState close_state_;

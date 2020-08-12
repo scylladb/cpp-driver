@@ -29,6 +29,7 @@ class AuthResponseRequest;
 class Config;
 class ResponseMessage;
 class RequestCallback;
+class ShardPortCalculator;
 
 /**
  * Connection settings.
@@ -142,6 +143,14 @@ public:
   Connector* with_settings(const ConnectionSettings& settings);
 
   /**
+   * Set the calculator of local port (to be used when port-based
+   * connection-to-shard routing is supported by the Host).
+   *
+   * @return The connector to chain calls.
+   */
+  Connector* with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator);
+
+  /**
    * Connect the connection.
    *
    * @param loop An event loop to use for connecting the connection.
@@ -231,6 +240,7 @@ private:
   ConnectionListener* listener_;
   Metrics* metrics_;
   ConnectionSettings settings_;
+  const ShardPortCalculator* shard_port_calculator_;
 };
 
 }}} // namespace datastax::internal::core

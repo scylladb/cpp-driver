@@ -99,6 +99,14 @@ public:
   ConnectionPoolManagerInitializer* with_settings(const ConnectionPoolSettings& settings);
 
   /**
+   * Set the calculator of local port (to be used by Connector when
+   * port-based connection-to-shard routing is supported by the Host).
+   *
+   * @return The connector to chain calls.
+   */
+  ConnectionPoolManagerInitializer* with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator);
+
+  /**
    * Critical failures that happened during the connection process.
    *
    * @return A vector of pool connectors that failed.
@@ -149,6 +157,7 @@ private:
   ConnectionPoolManagerListener* listener_;
   Metrics* metrics_;
   ConnectionPoolSettings settings_;
+  const ShardPortCalculator* shard_port_calculator_;
 };
 
 }}} // namespace datastax::internal::core

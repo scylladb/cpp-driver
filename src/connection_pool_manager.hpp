@@ -75,7 +75,8 @@ public:
   ConnectionPoolManager(const ConnectionPool::Map& pools, uv_loop_t* loop,
                         ProtocolVersion protocol_version, const String& keyspace,
                         ConnectionPoolManagerListener* listener, Metrics* metrics,
-                        const ConnectionPoolSettings& settings);
+                        const ConnectionPoolSettings& settings,
+                        const ShardPortCalculator* shard_port_calculator);
 
   /**
    * Find the least busy connection for a given host.
@@ -205,6 +206,7 @@ private:
   String keyspace_;
 
   Metrics* const metrics_;
+  const ShardPortCalculator* shard_port_calculator_;
 
 #ifdef CASS_INTERNAL_DIAGNOSTICS
   HistogramWrapper flush_bytes_;

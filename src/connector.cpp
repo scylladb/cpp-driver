@@ -30,6 +30,7 @@
 #include "register_request.hpp"
 #include "request.hpp"
 #include "startup_request.hpp"
+#include "shard_port_calculator.hpp"
 
 #include "response.hpp"
 #include "result_response.hpp"
@@ -177,7 +178,8 @@ Connector::Connector(const Host::Ptr& host, ProtocolVersion protocol_version,
     , protocol_version_(protocol_version)
     , event_types_(0)
     , listener_(NULL)
-    , metrics_(NULL) {}
+    , metrics_(NULL)
+    , shard_port_calculator_(NULL) {}
 
 Connector* Connector::with_keyspace(const String& keyspace) {
   keyspace_ = keyspace;
@@ -209,10 +211,16 @@ Connector* Connector::with_settings(const ConnectionSettings& settings) {
   return this;
 }
 
+Connector* Connector::with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator) {
+  shard_port_calculator_ = shard_port_calculator;
+  return this;
+}
+
 void Connector::connect(uv_loop_t* loop) {
   inc_ref(); // For the event loop
   loop_ = loop;
   socket_connector_->with_settings(settings_.socket_settings)->connect(loop);
+  // TODO(JS): set port on `socket_connector_` here
   if (settings_.connect_timeout_ms > 0) {
     timer_.start(loop, settings_.connect_timeout_ms, bind_callback(&Connector::on_timeout, this));
   }

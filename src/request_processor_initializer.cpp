@@ -45,6 +45,7 @@ RequestProcessorInitializer::RequestProcessorInitializer(
     , listener_(NULL)
     , metrics_(NULL)
     , random_(NULL)
+    , shard_port_calculator_(NULL)
     , connected_host_(connected_host)
     , protocol_version_(protocol_version)
     , hosts_(hosts)
@@ -90,6 +91,12 @@ RequestProcessorInitializer* RequestProcessorInitializer::with_random(Random* ra
   return this;
 }
 
+RequestProcessorInitializer*
+RequestProcessorInitializer::with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator) {
+  shard_port_calculator_ = shard_port_calculator;
+  return this;
+}
+
 RequestProcessor::Ptr RequestProcessorInitializer::release_processor() {
   RequestProcessor::Ptr temp(processor_);
   processor_.reset();
@@ -129,6 +136,7 @@ void RequestProcessorInitializer::internal_initialize() {
       ->with_listener(this)
       ->with_keyspace(keyspace_)
       ->with_metrics(metrics_)
+      ->with_shard_port_calculator(shard_port_calculator_)
       ->initialize(event_loop_->loop(), hosts_);
 }
 

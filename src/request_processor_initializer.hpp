@@ -116,6 +116,14 @@ public:
   RequestProcessorInitializer* with_random(Random* random);
 
   /**
+   * Set the calculator of local port (to be used by Connector when
+   * port-based connection-to-shard routing is supported by the Host).
+   *
+   * @return The connector to chain calls.
+   */
+  RequestProcessorInitializer* with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator);
+
+  /**
    * Release the processor from the initializer. If not released in the callback
    * the processor will automatically be closed.
    *
@@ -161,6 +169,7 @@ private:
   String keyspace_;
   Metrics* metrics_;
   Random* random_;
+  const ShardPortCalculator* shard_port_calculator_;
 
   const Host::Ptr connected_host_;
   const ProtocolVersion protocol_version_;

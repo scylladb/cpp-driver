@@ -64,7 +64,8 @@ NopConnectionPoolListener nop_connection_pool_listener__;
 ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoolListener* listener,
                                const String& keyspace, uv_loop_t* loop, const Host::Ptr& host,
                                ProtocolVersion protocol_version,
-                               const ConnectionPoolSettings& settings, Metrics* metrics)
+                               const ConnectionPoolSettings& settings, Metrics* metrics,
+                               const ShardPortCalculator* shard_port_calculator)
     : listener_(listener ? listener : &nop_connection_pool_listener__)
     , keyspace_(keyspace)
     , loop_(loop)
@@ -72,6 +73,7 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
     , protocol_version_(protocol_version)
     , settings_(settings)
     , metrics_(metrics)
+    , shard_port_calculator_(shard_port_calculator)
     , close_state_(CLOSE_STATE_OPEN)
     , notify_state_(NOTIFY_STATE_NEW) {
   inc_ref(); // Reference for the lifetime of the pooled connections
@@ -239,6 +241,7 @@ void ConnectionPool::schedule_reconnect(ReconnectionSchedule* schedule) {
   connector->with_keyspace(keyspace())
       ->with_metrics(metrics_)
       ->with_settings(settings_.connection_settings)
+      ->with_shard_port_calculator(shard_port_calculator_)
       ->delayed_connect(loop_, delay_ms);
 }
 
