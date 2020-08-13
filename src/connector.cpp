@@ -219,8 +219,14 @@ Connector* Connector::with_shard_port_calculator(const ShardPortCalculator* shar
 void Connector::connect(uv_loop_t* loop) {
   inc_ref(); // For the event loop
   loop_ = loop;
-  socket_connector_->with_settings(settings_.socket_settings)->connect(loop);
-  // TODO(JS): set port on `socket_connector_` here
+
+  socket_connector_->with_settings(settings_.socket_settings);
+  if (desired_shard_num_ && shard_port_calculator_ && host_->sharding_info()) {
+    const int port_num = shard_port_calculator_->calc_outgoing_port_num(host_->sharding_info()->get_shards_count(), *desired_shard_num_);
+    LOG_DEBUG("Setting client-side port to %d on connection to %s", port_num, address().to_string().c_str());
+    socket_connector_->set_local_port(port_num);
+  }
+  socket_connector_->connect(loop);
   if (settings_.connect_timeout_ms > 0) {
     timer_.start(loop, settings_.connect_timeout_ms, bind_callback(&Connector::on_timeout, this));
   }
