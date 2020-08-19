@@ -43,7 +43,7 @@ void ConnectionPoolManagerInitializer::initialize(uv_loop_t* loop, const HostMap
         ->with_metrics(metrics_)
         ->with_settings(settings_)
         ->with_shard_port_calculator(shard_port_calculator_)
-        ->connect(loop);
+        ->connect_with_scout(loop);
   }
 }
 

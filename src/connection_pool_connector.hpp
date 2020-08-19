@@ -96,9 +96,10 @@ public:
   ConnectionPoolConnector* with_shard_port_calculator(const ShardPortCalculator* shard_port_calculator);
 
   /**
-   * Connect a pool.
+   * Connect a pool. Opens `num_connections_per_host + 1` connections, the 1st being the
+   * "scout connection", whose purpose is only to collect sharding info.
    */
-  void connect(uv_loop_t* loop);
+  void connect_with_scout(uv_loop_t* loop);
 
   /**
    * Cancel the connection process.
@@ -125,7 +126,9 @@ public:
   bool is_keyspace_error() const;
 
 private:
+  void connect();
   void on_connect(Connector* connector);
+  void on_scout_connect(Connector* connector);
 
 private:
   uv_loop_t* loop_;
@@ -135,6 +138,7 @@ private:
   size_t remaining_;
 
   Connector::Vec pending_connections_;
+  Connector::Ptr scout_connector_;
   Connection::Vec connections_;
   Connector::Ptr critical_error_connector_;
 

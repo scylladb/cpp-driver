@@ -62,26 +62,15 @@ ConnectionPoolConnector::with_shard_port_calculator(const ShardPortCalculator* s
   return this;
 }
 
-void ConnectionPoolConnector::connect(uv_loop_t* loop) {
+void ConnectionPoolConnector::connect_with_scout(uv_loop_t* loop) {
   inc_ref();
   loop_ = loop;
-  remaining_ = settings_.num_connections_per_host;
-  for (size_t i = 0; i < settings_.num_connections_per_host; ++i) {
-    Connector::Ptr connector(new Connector(
-        host_, protocol_version_, bind_callback(&ConnectionPoolConnector::on_connect, this)));
-    pending_connections_.push_back(connector);
+  scout_connector_ = Connector::Ptr{new Connector(
+      host_, protocol_version_, bind_callback(&ConnectionPoolConnector::on_scout_connect, this))};
 
-    const auto& si = host_->sharding_info();
-    if (si && (si->shard_aware_port() || si->shard_aware_port_ssl())) {
-      connector->set_desired_shard_num(i % si->get_shards_count());
-    }
-
-    connector->with_keyspace(keyspace_)
-        ->with_metrics(metrics_)
-        ->with_settings(settings_.connection_settings)
-        ->with_shard_port_calculator(shard_port_calculator_)
-        ->connect(loop);
-  }
+  scout_connector_->with_metrics(metrics_)
+      ->with_settings(settings_.connection_settings)
+      ->connect(loop);
 }
 
 void ConnectionPoolConnector::cancel() {
@@ -125,6 +114,27 @@ bool ConnectionPoolConnector::is_keyspace_error() const {
     return critical_error_connector_->is_keyspace_error();
   }
   return false;
+}
+
+void ConnectionPoolConnector::connect() {
+  inc_ref();
+  remaining_ = settings_.num_connections_per_host;
+  for (size_t i = 0; i < settings_.num_connections_per_host; ++i) {
+    Connector::Ptr connector(new Connector(
+        host_, protocol_version_, bind_callback(&ConnectionPoolConnector::on_connect, this)));
+    pending_connections_.push_back(connector);
+
+    const auto& si = host_->sharding_info();
+    if (si && (si->shard_aware_port() || si->shard_aware_port_ssl())) {
+      connector->set_desired_shard_num(i % si->get_shards_count());
+    }
+
+    connector->with_keyspace(keyspace_)
+        ->with_metrics(metrics_)
+        ->with_settings(settings_.connection_settings)
+        ->with_shard_port_calculator(shard_port_calculator_)
+        ->connect(loop_);
+  }
 }
 
 void ConnectionPoolConnector::on_connect(Connector* connector) {
@@ -173,4 +183,10 @@ void ConnectionPoolConnector::on_connect(Connector* connector) {
     }
     dec_ref();
   }
+}
+
+void ConnectionPoolConnector::on_scout_connect(Connector* connector) {
+  scout_connector_->cancel();
+  connect();
+  dec_ref();
 }

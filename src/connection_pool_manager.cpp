@@ -113,7 +113,7 @@ void ConnectionPoolManager::add(const Host::Ptr& host) {
       ->with_metrics(metrics_)
       ->with_shard_port_calculator(shard_port_calculator_)
       ->with_settings(settings_)
-      ->connect(loop_);
+      ->connect_with_scout(loop_);
 }
 
 void ConnectionPoolManager::remove(const Address& address) {
