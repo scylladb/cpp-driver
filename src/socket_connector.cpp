@@ -165,18 +165,6 @@ void SocketConnector::internal_connect(uv_loop_t* loop) {
   socket_ = socket;
   socket_->inc_ref(); // For the event loop
 
-  // This needs to be done after setting the socket to properly cleanup.
-  const Address& local_address = settings_.local_address;
-  if (local_address.is_valid()) {
-    Address::SocketStorage storage;
-    int rc = uv_tcp_bind(socket->handle(), local_address.to_sockaddr(&storage), 0);
-    if (rc != 0) {
-      on_error(SOCKET_ERROR_BIND, "Unable to bind local address: " + String(uv_strerror(rc)));
-
-      return;
-    }
-  }
-
   if (uv_tcp_nodelay(socket_->handle(), settings_.tcp_nodelay_enabled ? 1 : 0) != 0) {
     LOG_WARN("Unable to set tcp nodelay");
   }
@@ -184,6 +172,22 @@ void SocketConnector::internal_connect(uv_loop_t* loop) {
   if (uv_tcp_keepalive(socket_->handle(), settings_.tcp_keepalive_enabled ? 1 : 0,
                        settings_.tcp_keepalive_delay_secs) != 0) {
     LOG_WARN("Unable to set tcp keepalive");
+  }
+
+  // This needs to be done after setting the socket to properly cleanup.
+  const Address& local_address = settings_.local_address;
+  if (local_address.is_valid()) {
+    Address::SocketStorage storage;
+    LOG_DEBUG("Binding socket. local_address=%s:%d, remote=%s:%d",
+        local_address.to_string().c_str(), local_address.port(), socket_->address().to_string().c_str(), socket_->address().port());
+    int rc = uv_tcp_bind(socket->handle(), local_address.to_sockaddr(&storage), 0);
+    if (rc != 0) {
+      on_error(SOCKET_ERROR_BIND, "Unable to bind local address: " + String(uv_strerror(rc)));
+
+      return;
+    }
+  } else {
+    LOG_WARN("Cannot bind to an invalid `local_address` %s:%d", local_address.to_string().c_str(), local_address.port());
   }
 
   if (settings_.ssl_context) {

@@ -113,6 +113,7 @@ public:
   }
 
   const Address& address() const { return address_; }
+  Address& address() { return address_; }
   const String& address_string() const { return address_string_; }
 
   const Address& rpc_address() const { return rpc_address_; }
@@ -142,6 +143,10 @@ public:
   void set_sharding_info_if_unset(ShardingInfo si) {
     ScopedMutex lock(&mutex_);
     if (!sharding_info_opt_) {
+      if (si.shard_aware_port() || si.shard_aware_port_ssl()) {
+        const int remote_port = *(si.shard_aware_port() ? si.shard_aware_port() : si.shard_aware_port_ssl());
+        address_.set_port(remote_port);
+      }
       sharding_info_opt_ = std::move(si);
     }
   }

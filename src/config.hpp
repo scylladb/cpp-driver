@@ -70,6 +70,7 @@ public:
       , max_reusable_write_objects_(CASS_DEFAULT_MAX_REUSABLE_WRITE_OBJECTS)
       , prepare_on_all_hosts_(CASS_DEFAULT_PREPARE_ON_ALL_HOSTS)
       , prepare_on_up_or_add_host_(CASS_DEFAULT_PREPARE_ON_UP_OR_ADD_HOST)
+      , local_address_(CASS_DEFAULT_LOCAL_ADDRESS, CASS_DEFAULT_LOCAL_ADDRESS_PORT)
       , no_compact_(CASS_DEFAULT_NO_COMPACT)
       , is_client_id_set_(false)
       , host_listener_(new DefaultHostListener())
