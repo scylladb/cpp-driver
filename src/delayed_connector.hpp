@@ -108,6 +108,12 @@ public:
    */
   Connection::Ptr release_connection();
 
+  /**
+   * See the respective method in `Connector`.
+   */
+  void set_desired_shard_num(int32_t shard_id) { connector_->set_desired_shard_num(shard_id); }
+  CassOptional<int32_t> desired_shard_num() const { return connector_->desired_shard_num(); }
+
 public:
   bool is_canceled() const;
   bool is_ok() const;

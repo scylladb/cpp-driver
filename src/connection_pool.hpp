@@ -217,7 +217,7 @@ private:
   /** Adds connection to the pool. It's the caller's responsibility
    *  to keep track of the connections count. */
   void add_connection(const PooledConnection::Ptr& connection);
-  void schedule_reconnect(ReconnectionSchedule* schedule = NULL);
+  void schedule_reconnect(ReconnectionSchedule* schedule = NULL, CassOptional<int32_t> desired_shard_num = CassNullopt);
   void internal_close();
   void maybe_closed();
 

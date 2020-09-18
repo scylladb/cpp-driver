@@ -201,6 +201,7 @@ public:
   CassError ssl_error_code() { return socket_connector_->ssl_error_code(); }
 
   void set_desired_shard_num(int32_t shard_id) { desired_shard_num_ = shard_id; }
+  CassOptional<int32_t> desired_shard_num() const { return desired_shard_num_; }
 
 private:
   void finish();

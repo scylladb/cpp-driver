@@ -80,8 +80,9 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
   set_pointer_keys(reconnection_schedules_);
   set_pointer_keys(to_flush_);
 
-  if (host->sharding_info()) {
-    const auto hosts_shard_cnt = host->sharding_info()->get_shards_count();
+  const auto& si = host_->sharding_info();
+  if (si) {
+    const auto hosts_shard_cnt = si->get_shards_count();
     connections_by_shard_.resize(hosts_shard_cnt);
     num_connections_per_shard_ = settings_.num_connections_per_host / hosts_shard_cnt
         + (settings_.num_connections_per_host % hosts_shard_cnt ? 1u : 0u);
@@ -105,13 +106,17 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
   notify_up_or_down();
 
   // We had non-critical errors or some connections closed
-  size_t needed = num_connections_per_shard_ * connections_by_shard_.size()
-      - std::accumulate(connections_by_shard_.begin(), connections_by_shard_.end(), 0u,
-          [] (size_t acc, const PooledConnection::Vec& v) {
-            return acc + v.size();
-          });
-  for (size_t i = 0; i < needed; ++i) {
-    schedule_reconnect();
+  for (size_t shard_num = 0u; shard_num < connections_by_shard_.size(); ++shard_num) {
+    const int needed = num_connections_per_shard_ - connections_by_shard_[shard_num].size();
+    for (int32_t i = 0; i < needed; ++i) {
+      if (si && (si->shard_aware_port() || si->shard_aware_port_ssl())) {
+        // Reconnect with port-based shard awareness
+        schedule_reconnect(nullptr, shard_num);
+      } else {
+        // Traditional or no shard awareness
+        schedule_reconnect();
+      }
+    }
   }
 }
 
@@ -194,7 +199,8 @@ void ConnectionPool::close_connection(PooledConnection* connection, Protected) {
   // When there are no more connections available then notify that the host
   // is down.
   notify_up_or_down();
-  schedule_reconnect();
+  // Try to reconnect to the same shard.
+  schedule_reconnect(nullptr, connection->shard_id());
 }
 
 void ConnectionPool::add_connection(const PooledConnection::Ptr& connection) {
@@ -223,7 +229,7 @@ void ConnectionPool::notify_critical_error(Connector::ConnectionError code, cons
   }
 }
 
-void ConnectionPool::schedule_reconnect(ReconnectionSchedule* schedule) {
+void ConnectionPool::schedule_reconnect(ReconnectionSchedule* schedule, CassOptional<int32_t> desired_shard_num) {
   DelayedConnector::Ptr connector(new DelayedConnector(
       host_, protocol_version_, bind_callback(&ConnectionPool::on_reconnect, this)));
 
@@ -233,6 +239,14 @@ void ConnectionPool::schedule_reconnect(ReconnectionSchedule* schedule) {
   reconnection_schedules_[connector.get()] = schedule;
 
   uint64_t delay_ms = schedule->next_delay_ms();
+
+  if (desired_shard_num) {
+    const auto& si = host_->sharding_info();
+    if (si && (si->shard_aware_port() || si->shard_aware_port_ssl())) {
+      connector->set_desired_shard_num(*desired_shard_num);
+    }
+  }
+
   LOG_INFO("Scheduling %s reconnect for host %s in %llums on connection pool (%p) ",
            settings_.reconnection_policy->name(), host_->address().to_string().c_str(),
            static_cast<unsigned long long>(delay_ms), static_cast<void*>(this));
@@ -314,7 +328,7 @@ void ConnectionPool::on_reconnect(DelayedConnector* connector) {
       LOG_INFO("Reconnection to host %s connected us to shard %ld, reconnecting again",
                address().to_string().c_str(), new_connections_shard);
       pooled_conn->close();
-      schedule_reconnect(schedule.release());
+      schedule_reconnect(schedule.release(), connector->desired_shard_num());
     }
   } else if (!connector->is_canceled()) {
     if (connector->is_critical_error()) {
@@ -326,7 +340,7 @@ void ConnectionPool::on_reconnect(DelayedConnector* connector) {
       LOG_WARN(
           "Connection pool was unable to reconnect to host %s because of the following error: %s",
           address().to_string().c_str(), connector->error_message().c_str());
-      schedule_reconnect(schedule.release());
+      schedule_reconnect(schedule.release(), connector->desired_shard_num());
     }
   }
 }
