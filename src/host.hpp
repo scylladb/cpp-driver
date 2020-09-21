@@ -33,12 +33,14 @@
 #include "sharding_info.hpp"
 #include "optional.hpp"
 
+#include <list>
 #include <math.h>
 #include <stdint.h>
 
 namespace datastax { namespace internal { namespace core {
 
 class Row;
+class Connection;
 
 struct TimestampedAverage {
   TimestampedAverage()
@@ -97,20 +99,8 @@ public:
   typedef SharedRefPtr<Host> Ptr;
   typedef SharedRefPtr<const Host> ConstPtr;
 
-  Host(const Address& address)
-      : address_(address)
-      , rpc_address_(address)
-      , rack_id_(0)
-      , dc_id_(0)
-      , address_string_(address.to_string())
-      , connection_count_(0)
-      , inflight_request_count_(0) {
-    uv_mutex_init(&mutex_);
-  }
-
-  ~Host() {
-    uv_mutex_destroy(&mutex_);
-  }
+  Host(const Address& address);
+  ~Host();
 
   const Address& address() const { return address_; }
   Address& address() { return address_; }
@@ -194,6 +184,16 @@ public:
 
   int32_t connection_count() const { return connection_count_.load(MEMORY_ORDER_RELAXED); }
 
+  /**
+   * "Unpooled connections" are a container of connections that were successfully
+   * established, but did not hit desired shard. They are shared across threads,
+   * within one instance of `Host`, so one thread can make use of a connection
+   * that didn't fit into another thread's `ConnectionPool`.
+   */
+  std::list<SharedRefPtr<Connection>> get_unpooled_connections(int shard_id, int how_many);
+  void add_unpooled_connection(SharedRefPtr<Connection> conn);
+  void close_unpooled_connections();
+
   void increment_inflight_requests() { inflight_request_count_.fetch_add(1, MEMORY_ORDER_RELAXED); }
 
   void decrement_inflight_requests() { inflight_request_count_.fetch_sub(1, MEMORY_ORDER_RELAXED); }
@@ -244,6 +244,7 @@ private:
   ScopedPtr<LatencyTracker> latency_tracker_;
 
   uv_mutex_t mutex_;
+  std::map<int, std::list<SharedRefPtr<Connection>>> unpooled_connections_per_shard_;
 
 private:
   DISALLOW_COPY_AND_ASSIGN(Host);

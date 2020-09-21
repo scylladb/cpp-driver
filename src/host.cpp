@@ -17,7 +17,9 @@
 #include "host.hpp"
 
 #include "collection_iterator.hpp"
+#include "connection.hpp"
 #include "row.hpp"
+#include "scoped_lock.hpp"
 #include "value.hpp"
 
 using namespace datastax;
@@ -85,6 +87,21 @@ void Host::LatencyTracker::update(uint64_t latency_ns) {
 bool VersionNumber::parse(const String& version) {
   return sscanf(version.c_str(), "%d.%d.%d", &major_version_, &minor_version_, &patch_version_) >=
          2;
+}
+
+Host::Host(const Address& address)
+    : address_(address)
+    , rpc_address_(address)
+    , rack_id_(0)
+    , dc_id_(0)
+    , address_string_(address.to_string())
+    , connection_count_(0)
+    , inflight_request_count_(0) {
+  uv_mutex_init(&mutex_);
+}
+
+Host::~Host() {
+    uv_mutex_destroy(&mutex_);
 }
 
 void Host::set(const Row* row, bool use_tokens) {
@@ -157,6 +174,38 @@ void Host::set(const Row* row, bool use_tokens) {
   } else {
     LOG_WARN("No rpc_address for host %s in system.local or system.peers.",
              address_string_.c_str());
+  }
+}
+
+std::list<Connection::Ptr> Host::get_unpooled_connections(int shard_id, int how_many) {
+  ScopedMutex lock(&mutex_);
+  LOG_DEBUG("Requesting %d connections to shard %d on host %s from the marketplace", how_many, shard_id, address_.to_string().c_str());
+  auto conn_list_to_selected_shard_it = unpooled_connections_per_shard_.find(shard_id);
+  if (conn_list_to_selected_shard_it == unpooled_connections_per_shard_.end() || conn_list_to_selected_shard_it->second.empty()) {
+    return {};
+  }
+
+  auto& list_move_from = conn_list_to_selected_shard_it->second;
+  const auto begin_move_from = list_move_from.begin();
+  const auto end_move_from = std::next(begin_move_from, std::min(how_many, (int)list_move_from.size()));
+
+  std::list<Connection::Ptr> ret;
+  ret.splice(ret.begin(), list_move_from, begin_move_from, end_move_from);
+  return ret;
+}
+
+void Host::add_unpooled_connection(Connection::Ptr conn) {
+  ScopedMutex lock(&mutex_);
+  LOG_DEBUG("Connection marketplace consumes a connection to shard %d on host %s", conn->shard_id(), address_.to_string().c_str());
+  unpooled_connections_per_shard_[conn->shard_id()].push_back(std::move(conn));
+}
+
+void Host::close_unpooled_connections() {
+  ScopedMutex lock(&mutex_);
+  for (auto& conn_list : unpooled_connections_per_shard_) {
+    for (auto& c : conn_list.second) {
+      c->close();
+    }
   }
 }
 
