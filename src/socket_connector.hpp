@@ -136,6 +136,7 @@ public:
   }
 
   void set_local_port(int port) { settings_.local_address.set_port(port); }
+  int local_port() const { return settings_.local_address.port(); }
 
 private:
   void internal_connect(uv_loop_t* loop);

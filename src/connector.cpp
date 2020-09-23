@@ -301,6 +301,11 @@ void Connector::on_supported(ResponseMessage* response) {
     if (conn_sharding_info_opt) {
       connection_->set_shard_id(conn_sharding_info_opt->shard_id);
       connection_->host()->set_sharding_info_if_unset(std::move(conn_sharding_info_opt->sharding_info));
+      if (desired_shard_num_ && desired_shard_num_ != connection_->shard_id()) {
+        LOG_WARN("Connected to %s:%d to shard %d from local port %d, but expected shard %d. Is client behind a NAT?",
+                 connection_->address().to_string().c_str(), connection_->address().port(), connection_->shard_id(),
+                 socket_connector_->local_port(), *desired_shard_num_);
+      }
     } else {
       LOG_ERROR("Could not retrieve sharding info from control connection to %s."
                 " Continuing WITHOUT SHARD-AWARENESS.",
