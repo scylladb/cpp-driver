@@ -221,10 +221,11 @@ void Connector::connect(uv_loop_t* loop) {
   loop_ = loop;
 
   socket_connector_->with_settings(settings_.socket_settings);
-  if (desired_shard_num_ && shard_port_calculator_ && host_->sharding_info()) {
-    const int port_num = shard_port_calculator_->calc_outgoing_port_num(host_->sharding_info()->get_shards_count(), *desired_shard_num_);
-    LOG_DEBUG("Setting client-side port to %d on connection to %s", port_num, address().to_string().c_str());
+  const auto& si = host_->sharding_info();
+  if (desired_shard_num_ && shard_port_calculator_ && si) {
+    const int port_num = shard_port_calculator_->calc_outgoing_port_num(si->get_shards_count(), *desired_shard_num_);
     socket_connector_->set_local_port(port_num);
+    socket_connector_->set_remote_port(*(si->shard_aware_port() ? si->shard_aware_port() : si->shard_aware_port_ssl()));
   }
   socket_connector_->connect(loop);
   if (settings_.connect_timeout_ms > 0) {
@@ -301,7 +302,7 @@ void Connector::on_supported(ResponseMessage* response) {
     if (conn_sharding_info_opt) {
       connection_->set_shard_id(conn_sharding_info_opt->shard_id);
       connection_->host()->set_sharding_info_if_unset(std::move(conn_sharding_info_opt->sharding_info));
-      if (desired_shard_num_ && desired_shard_num_ != connection_->shard_id()) {
+      if (desired_shard_num_ && shard_port_calculator_ && desired_shard_num_ != connection_->shard_id()) {
         LOG_WARN("Connected to %s:%d to shard %d from local port %d, but expected shard %d. Is client behind a NAT?",
                  connection_->address().to_string().c_str(), connection_->address().port(), connection_->shard_id(),
                  socket_connector_->local_port(), *desired_shard_num_);
