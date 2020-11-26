@@ -308,7 +308,7 @@ void Connector::on_supported(ResponseMessage* response) {
                  socket_connector_->local_port(), *desired_shard_num_);
       }
     } else {
-      LOG_ERROR("Could not retrieve sharding info from control connection to %s."
+      LOG_ERROR("Could not retrieve sharding info from connection to %s."
                 " Continuing WITHOUT SHARD-AWARENESS.",
                 connection_->address().to_string().c_str());
     }

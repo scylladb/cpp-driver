@@ -179,7 +179,7 @@ void Host::set(const Row* row, bool use_tokens) {
 
 std::list<Connection::Ptr> Host::get_unpooled_connections(int shard_id, int how_many) {
   ScopedMutex lock(&mutex_);
-  LOG_DEBUG("Requesting %d connections to shard %d on host %s from the marketplace", how_many, shard_id, address_.to_string().c_str());
+  LOG_DEBUG("Requesting %d connection(s) to shard %d on host %s from the marketplace", how_many, shard_id, address_.to_string(true).c_str());
   auto conn_list_to_selected_shard_it = unpooled_connections_per_shard_.find(shard_id);
   if (conn_list_to_selected_shard_it == unpooled_connections_per_shard_.end() || conn_list_to_selected_shard_it->second.empty()) {
     return {};
@@ -196,7 +196,7 @@ std::list<Connection::Ptr> Host::get_unpooled_connections(int shard_id, int how_
 
 void Host::add_unpooled_connection(Connection::Ptr conn) {
   ScopedMutex lock(&mutex_);
-  LOG_DEBUG("Connection marketplace consumes a connection to shard %d on host %s", conn->shard_id(), address_.to_string().c_str());
+  LOG_DEBUG("Connection marketplace consumes a connection to shard %d on host %s", conn->shard_id(), address_.to_string(true).c_str());
   unpooled_connections_per_shard_[conn->shard_id()].push_back(std::move(conn));
 }
 

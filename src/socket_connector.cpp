@@ -178,8 +178,8 @@ void SocketConnector::internal_connect(uv_loop_t* loop) {
   const Address& local_address = settings_.local_address;
   if (local_address.is_valid()) {
     Address::SocketStorage storage;
-    LOG_DEBUG("Binding socket. local_address=%s:%d, remote=%s:%d",
-        local_address.to_string().c_str(), local_address.port(), socket_->address().to_string().c_str(), socket_->address().port());
+    LOG_DEBUG("Binding socket. local_address=%s, remote=%s",
+        local_address.to_string(true).c_str(), socket_->address().to_string(true).c_str());
     int rc = uv_tcp_bind(socket->handle(), local_address.to_sockaddr(&storage), 0);
     if (rc != 0) {
       on_error(SOCKET_ERROR_BIND, "Unable to bind local address: " + String(uv_strerror(rc)));
