@@ -40,7 +40,7 @@ static inline bool least_busy_comp(const PooledConnection::Ptr& a, const PooledC
 
 ConnectionPoolSettings::ConnectionPoolSettings()
     : num_connections_per_host(CASS_DEFAULT_NUM_CONNECTIONS_PER_HOST)
-    , reconnection_policy(new ExponentialReconnectionPolicy()) {}
+    , reconnection_policy(new ConstantReconnectionPolicy()) {}
 
 ConnectionPoolSettings::ConnectionPoolSettings(const Config& config)
     : connection_settings(config)
@@ -98,10 +98,12 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
       if (connections_by_shard_[connection->shard_id()].size() < num_connections_per_shard_) {
         add_connection(PooledConnection::Ptr(new PooledConnection(this, connection)));
       } else {
-        connection->close();
+        host_->add_unpooled_connection(std::move(connection));
       }
     }
   }
+
+  grab_unpooled_connections_from_host();
 
   notify_up_or_down();
 
@@ -280,6 +282,8 @@ void ConnectionPool::internal_close() {
       (*it)->cancel();
     }
 
+    host_->close_unpooled_connections();
+
     close_state_ = CLOSE_STATE_WAITING_FOR_CONNECTIONS;
     maybe_closed();
   }
@@ -300,6 +304,33 @@ void ConnectionPool::maybe_closed() {
   }
 }
 
+bool ConnectionPool::grab_unpooled_connections_from_host() {
+  bool is_pool_saturated = true;
+
+  for (int shard_id = 0; shard_id < (int)connections_by_shard_.size(); ++shard_id) {
+    is_pool_saturated &= grab_unpooled_connections_from_host(shard_id);
+  }
+
+  return is_pool_saturated;
+}
+
+bool ConnectionPool::grab_unpooled_connections_from_host(int shard_id) {
+  const auto num_needed_connections = num_connections_per_shard_ - connections_by_shard_[shard_id].size();
+  if (num_needed_connections == 0) {
+    return true;
+  }
+
+  auto unpooled_connections = host_->get_unpooled_connections(shard_id, num_needed_connections);
+
+  for (const auto& connection : unpooled_connections) {
+    if (connection && !connection->is_closing()) {
+      add_connection(PooledConnection::Ptr(new PooledConnection(this, connection)));
+    }
+  }
+
+  return connections_by_shard_[shard_id].size() == num_connections_per_shard_;
+}
+
 void ConnectionPool::on_reconnect(DelayedConnector* connector) {
   pending_connections_.erase(
       std::remove(pending_connections_.begin(), pending_connections_.end(), connector),
@@ -318,17 +349,22 @@ void ConnectionPool::on_reconnect(DelayedConnector* connector) {
   }
 
   if (connector->is_ok()) {
-    PooledConnection::Ptr pooled_conn {new PooledConnection(this, connector->release_connection())};
-    const size_t new_connections_shard = pooled_conn->shard_id();
-    if (connections_by_shard_.size() > new_connections_shard
-        && connections_by_shard_[new_connections_shard].size() < num_connections_per_shard_) {
-      add_connection(pooled_conn);
+    auto connection = connector->release_connection();
+    const size_t new_connections_shard = connection->shard_id();
+    if (connections_by_shard_[new_connections_shard].size() < num_connections_per_shard_) {
+      add_connection(PooledConnection::Ptr(new PooledConnection(this, connection)));
       notify_up_or_down();
     } else {
-      LOG_INFO("Reconnection to host %s connected us to shard %ld, reconnecting again",
+      LOG_INFO("Reconnection to host %s connected us to shard %ld",
                address().to_string().c_str(), new_connections_shard);
-      pooled_conn->close();
-      schedule_reconnect(schedule.release(), connector->desired_shard_num());
+      host_->add_unpooled_connection(std::move(connection));
+      if (!grab_unpooled_connections_from_host() && reconnection_schedules_.empty()) {
+        /* The check `reconnection_schedules_.empty()` is not obligatory. It is a heuristic to avoid opening too many connections:
+        - we have pending reconnections in progress => maybe they'll give us right connections (with the help of marketplace);
+        - we need more connections but no reconnects are in progress => OK, let's open just one.
+        Experiments confirm that it helps - reduces unpooled connections by ~2x. */
+        schedule_reconnect(schedule.release(), connector->desired_shard_num());
+      }
     }
   } else if (!connector->is_canceled()) {
     if (connector->is_critical_error()) {
@@ -340,7 +376,9 @@ void ConnectionPool::on_reconnect(DelayedConnector* connector) {
       LOG_WARN(
           "Connection pool was unable to reconnect to host %s because of the following error: %s",
           address().to_string().c_str(), connector->error_message().c_str());
-      schedule_reconnect(schedule.release(), connector->desired_shard_num());
+      if (!grab_unpooled_connections_from_host()) {
+        schedule_reconnect(schedule.release(), connector->desired_shard_num());
+      }
     }
   }
 }

@@ -221,6 +221,11 @@ private:
   void internal_close();
   void maybe_closed();
 
+  /** Checks Host's marketplace (pool) for connections to trade with other ConnectionPools.
+   *  Returns true if its pool is satisfied with the number of open per-shard Connections. */
+  bool grab_unpooled_connections_from_host();
+  bool grab_unpooled_connections_from_host(int shard_id);
+
   void on_reconnect(DelayedConnector* connector);
 
 private:
