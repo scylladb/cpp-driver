@@ -106,12 +106,7 @@ uint64_t get_random_seed(uint64_t seed) {
   bool readurandom = true;
 #if defined(HAVE_GETRANDOM)
   num_bytes = static_cast<ssize_t>(syscall(SYS_getrandom, &seed, sizeof(seed), GRND_NONBLOCK));
-  if (num_bytes < static_cast<ssize_t>(sizeof(seed))) {
-    char buf[STRERROR_BUFSIZE_];
-    char* err = STRERROR_R_(errno, buf, sizeof(buf));
-    LOG_WARN("Unable to read %u random bytes (%s): %u read",
-             static_cast<unsigned int>(sizeof(seed)), err, static_cast<unsigned int>(num_bytes));
-  } else {
+  if (num_bytes >= static_cast<ssize_t>(sizeof(seed))) {
     readurandom = false;
   }
 #endif // defined(HAVE_GETRANDOM)
