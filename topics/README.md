@@ -6,15 +6,12 @@
 
 #### Driver
 
-Packages are available for the following platforms:
+Packages are currently available for the following platforms:
 
-* [CentOS 6][cpp-driver-centos6]
-* [CentOS 7][cpp-driver-centos7]
-* [CentOS 8][cpp-driver-centos8]
-* [Ubuntu 14.04 LTS][cpp-driver-ubuntu14-04]
-* [Ubuntu 16.04 LTS][cpp-driver-ubuntu16-04]
-* [Ubuntu 18.04 LTS][cpp-driver-ubuntu18-04]
-* [Windows][cpp-driver-windows]
+* CentOS 7
+* Ubuntu 18.04 LTS
+
+They are available for download from the [Releases][cpp-driver-releases] section.
 
 #### Dependencies
 
@@ -29,8 +26,18 @@ and can be found under the "dependencies" directory for each platform:
 * [Ubuntu 18.04 LTS][cpp-driver-dependencies-ubuntu18-04]
 * [Windows][cpp-driver-dependencies-windows]
 
-*Note*: CentOS and Ubuntu use the version of OpenSSL and zlib provided with the
-distribution.
+They can be also installed from distribution's repositories and/or EPEL:
+
+```
+# Example: Ubuntu 18.04:
+sudo apt-get update
+sudo apt-get install -y libuv1-dev openssl libssl-dev zlib1g-dev
+
+# Example: CentOS 7:
+wget https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm
+sudo rpm -Uvh epel-release*rpm
+sudo yum install -y libuv-devel openssl-devel
+```
 
 The driver can also be [built from source].
 
@@ -38,7 +45,6 @@ The driver can also be [built from source].
 
 ```c
 #include <cassandra.h>
-/* Use "#include <dse.h>" when connecting to DataStax Enterpise */
 #include <stdio.h>
 
 int main() {
@@ -49,6 +55,12 @@ int main() {
 
   /* Add contact points */
   cass_cluster_set_contact_points(cluster, "127.0.0.1");
+
+  /* Shard-awareness (Scylla only): choose the local (ephemeral) port range */
+  cass_cluster_set_local_port_range(cluster, 49152, 65535);
+  /* Driver will round up this number (32), on every node,
+     to a multiple of that node's shard count */
+  cass_cluster_set_core_connections_per_host(cluster, 32);
 
   /* Provide the cluster object as configuration to connect the session */
   connect_future = cass_session_connect(session, cluster);
@@ -198,36 +210,40 @@ void handle_query_result(CassFuture* future) {
 
 ### Cluster
 
-The [`CassCluster`] object describes a Cassandra cluster’s configuration. The
-default cluster object is good for most clusters and only requires a single or
-multiple list of contact points in order to establish a session connection.
-Once a session is connected using a cluster object its configuration is
-constant. Modifying the cluster object configuration once a session is
+The [`CassCluster`] object describes a Cassandra/Scylla cluster’s configuration.
+The default cluster object is good for most clusters and only requires a single
+or multiple lists of contact points in order to establish a session connection.
+Once a session is connected using a cluster object, its configuration is
+constant. Modifying the cluster's object configuration after a session is
 established does not alter the session's configuration.
 
 ### Session
 
 The [`CassSession`] object is used for query execution. Internally, a session
-object also manages a pool of client connections to Cassandra and uses a load
-balancing policy to distribute requests across those connections. An
-application should create a single session object per keyspace as a session
+object also manages a pool of client connections to Cassandra/Scylla and uses
+a load balancing policy to distribute requests across those connections. An
+application should create a single session object per keyspace. A session
 object is designed to be created once, reused, and shared by multiple threads
 within the application. The throughput of a session can be scaled by
 increasing the number of I/O threads. An I/O thread is used to handle reading
-and writing query request data to and from Cassandra. The number of I/O threads
-defaults to one per CPU core, but it can be configured using
+and writing query request data to and from Cassandra/Scylla. The number of I/O
+threads defaults to one per CPU core, but it can be configured using
 [`cass_cluster_set_num_threads_io()`]. It’s generally better to create a single
 session with more I/O threads than multiple sessions with a smaller number of
-I/O threads. More DataStax driver best practices can be found in this [post].
+I/O threads. 
 
 ### Asynchronous I/O
 
-Each I/O thread maintains a small number of connections for each node in the
-Cassandra cluster and each of those connections can handle several simultaneous
-requests using pipelining. Asynchronous I/O and pipelining together allow each
-connection to handle several (up to 32k with protocol v3/v4) in-flight requests
-concurrently. This significantly reduces the number of connections required to
-be open to Cassandra and allows the driver to batch requests destined for the
+Each I/O thread maintains a number of connections for each node in the cluster.
+This number can be controlled by `cass_cluster_set_core_connections_per_host()`.
+In case of Scylla this number is additionally rounded up to the number of shards
+on the node.
+
+Each of those connections can handle several simultaneous requests using
+pipelining. Asynchronous I/O and pipelining together allow each connection to
+handle several (up to 32k with protocol v3/v4) in-flight requests concurrently.
+This significantly reduces the number of connections required to be open to
+Cassandra/Scylla and allows the driver to batch requests destined for the
 same node.
 
 ### Thread safety
@@ -256,19 +272,15 @@ without incurring extra allocations.
 ## TODO
 
 Here are some features that are missing from the C/C++ driver, but are included
-with other drivers. The schedule for these features can be found on [JIRA].
+with other drivers. Such features can be found (and requested) on our [GH].
 
+- CDC (change data capture) partitioner support
+- LWT (lightweight transactions) support
 - Compression
 - Schema event registration and notification
 - Callback interfaces for load balancing, authentication, reconnection and retry
 
-[cpp-driver-centos6]: http://downloads.datastax.com/cpp-driver/centos/6/cassandra
-[cpp-driver-centos7]: http://downloads.datastax.com/cpp-driver/centos/7/cassandra
-[cpp-driver-centos8]: http://downloads.datastax.com/cpp-driver/centos/8/cassandra
-[cpp-driver-ubuntu14-04]: http://downloads.datastax.com/cpp-driver/ubuntu/14.04/cassandra
-[cpp-driver-ubuntu16-04]: http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra
-[cpp-driver-ubuntu18-04]: http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra
-[cpp-driver-windows]: http://downloads.datastax.com/cpp-driver/windows/cassandra
+[cpp-driver-releases]: https://github.com/scylladb/cpp-driver/releases
 [cpp-driver-dependencies-centos6]: http://downloads.datastax.com/cpp-driver/centos/6/dependencies/
 [cpp-driver-dependencies-centos7]: http://downloads.datastax.com/cpp-driver/centos/7/dependencies/
 [cpp-driver-dependencies-centos8]: http://downloads.datastax.com/cpp-driver/centos/8/dependencies/
@@ -276,8 +288,8 @@ with other drivers. The schedule for these features can be found on [JIRA].
 [cpp-driver-dependencies-ubuntu16-04]: http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependencies/
 [cpp-driver-dependencies-ubuntu18-04]: http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/
 [cpp-driver-dependencies-windows]: http://downloads.datastax.com/cpp-driver/windows/dependencies/
-[built from source]: http://datastax.github.io/cpp-driver/topics/building/
-[prepared statements]: http://datastax.github.io/cpp-driver/topics/basics/prepared_statements/
+[built from source]: http://github.com/scylladb/cpp-driver/tree/master/topics/building/
+[prepared statements]: http://github.com/scylladb/cpp-driver/tree/master/topics/basics/prepared_statements/
 [`cass_int32_t`]: http://datastax.github.io/cpp-driver/api/cassandra.h/#cass-int32-t
 [`cass_result_first_row()`]: http://datastax.github.io/cpp-driver/api/struct.CassResult/#cass-result-first-row
 [`cass_cluster_set_num_threads_io()`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster/#function-cass_cluster_set_num_threads_io
@@ -287,7 +299,7 @@ with other drivers. The schedule for these features can be found on [JIRA].
 [`CassIterator`]: http://datastax.github.io/cpp-driver/api/struct.CassIterator/
 [`CassSession`]: http://datastax.github.io/cpp-driver/api/struct.CassSession/
 [post]: http://www.datastax.com/dev/blog/4-simple-rules-when-using-the-datastax-drivers-for-cassandra
-[JIRA]: https://datastax-oss.atlassian.net/browse/CPP
+[GH]: https://github.com/scylladb/cpp-driver/issues
 
 ```eval_rst
 .. toctree::
@@ -305,6 +317,7 @@ with other drivers. The schedule for these features can be found on [JIRA].
   installation/*
   logging/*
   metrics/*
+  scylla_specific/*
   security/*
   testing/*
   tracing/*
