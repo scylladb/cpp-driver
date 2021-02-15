@@ -23,7 +23,7 @@ distribution:
 * [Windows][windows-dependencies]
 
 ## Features
-
+* [Scylla Specific Features]
 * [Asynchronous API]
 * [Simple], [Prepared], and [Batch] statements
 * [Asynchronous I/O], [parallel execution], and request pipelining
@@ -221,6 +221,7 @@ Modified by ScyllaDB &copy; 2020
 [DataStax Constellation]: https://constellation.datastax.com
 [Kerberos]: https://web.mit.edu/kerberos
 
+[Scylla Specific Features]: http://cpp-driver.docs.scylladb.com/scylla-specific/
 [Asynchronous API]: http://datastax.github.io/cpp-driver/topics/#futures
 [Simple]: http://datastax.github.io/cpp-driver/topics/#executing-queries
 [Prepared]: http://datastax.github.io/cpp-driver/topics/basics/prepared_statements/
