@@ -11,11 +11,4 @@ As a result, latency is significantly reduced because there is no need to pass d
 
 Details on the `scylla cql protocol extensions <https://github.com/scylladb/scylla/blob/master/docs/protocol-extensions>`_
 
-For using it you only need to enable ``TokenAwarePolicy`` on the ``Cluster`` as follows:
-
-.. code-block:: none
-
-   from cassandra.cluster import Cluster
-   from cassandra.policies import TokenAwarePolicy, RoundRobinPolicy
-
-   cluster = Cluster(load_balancing_policy=TokenAwarePolicy(RoundRobinPolicy()))
+To enable the Shard Aware setting, follow :ref:`this procedure <connecting>`.
