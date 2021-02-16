@@ -4,8 +4,8 @@ The following features are specific to Scylla Drivers and are not found in a non
 
 **Contents**
   * [Shard-Awareness](index.html#shard-awareness)
-    * ["Basic" shard-awareness](http://cpp-driver.docs.scylladb.com/master/topics/scylla_specific/index.html#basic-shard-awareness)
-    * ["Advanced" shard-awareness](http://cpp-driver.docs.scylladb.com/master/topics/scylla_specific/index.html#advanced-shard-awareness)
+    * ["Basic" shard-awareness](index.html#basic-shard-awareness)
+    * ["Advanced" shard-awareness](index.html#advanced-shard-awareness)
 
 ## Shard-Awareness
 
