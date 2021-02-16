@@ -6,6 +6,7 @@ on:
     - master
     paths:
     - 'docs/**'
+    - 'topics/**'
 jobs:
   release:
     name: Build
