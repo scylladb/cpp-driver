@@ -60,6 +60,9 @@ __Disclaimer__: cpp-driver does not support big-endian platforms.
 * [Getting Started]
 * [Building]
 
+## Training
+The course [Using Scylla Drivers] in Scylla University explains how to use drivers in different languages to interact with a Scylla cluster. The lesson, [CPP Driver - Part 1], goes over a sample application that, using the CPP driver, interacts with a three-node Scylla cluster. It connects to a Scylla cluster, displays the contents of a table, inserts and deletes data, and shows the contents of the table after each action. [Scylla University] includes other training material and online courses which will help you become a Scylla NoSQL database expert.
+
 ## Getting Help
 
 * Slack: http://slack.scylladb.com/
@@ -217,3 +220,6 @@ Modified by ScyllaDB &copy; 2020
 [Custom]: http://datastax.github.io/cpp-driver/topics/security/#custom
 [Reverse DNS]: http://datastax.github.io/cpp-driver/topics/security/ssl/#enabling-cassandra-identity-verification
 [Speculative execution]: http://datastax.github.io/cpp-driver/topics/configuration/#speculative-execution
+[Using Scylla Drivers]: https://university.scylladb.com/courses/using-scylla-drivers/
+[CPP Driver - Part 1]: https://university.scylladb.com/courses/using-scylla-drivers/lessons/cpp-driver-part-1/
+[Scylla University]: https://university.scylladb.com/
