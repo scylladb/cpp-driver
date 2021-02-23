@@ -1,25 +1,19 @@
 # Building
 
-The DataStax C/C++ Driver for Apache Cassandra and DataStax Products will build
-on most standard Unix-like and Microsoft Windows platforms. Packages are
-available for the following platforms:
+The Scylla C/C++ Driver will build on most standard Unix-like and Microsoft
+Windows platforms. Packages are available for the following platforms:
 
-* [CentOS 6][cpp-driver-centos6]
-* [CentOS 7][cpp-driver-centos7]
-* [CentOS 8][cpp-driver-centos8]
-* [Ubuntu 14.04 LTS][cpp-driver-ubuntu14-04]
-* [Ubuntu 16.04 LTS][cpp-driver-ubuntu16-04]
-* [Ubuntu 18.04 LTS][cpp-driver-ubuntu18-04]
-* [Windows][cpp-driver-windows]
+* [CentOS 7 64-bit][cpp-driver-centos7]
+* [Ubuntu 18.04 LTS 64-bit][cpp-driver-ubuntu18-04]
 
-__NOTE__: The build procedures only need to be performed for driver development
-          or if your system doesn't have packages available for download and
-          installation.
+These packages can be successfully installed on other, compatible systems, but
+we do not support such configurations and recommend building from sources
+instead. Please note that although Microsoft Windows and OS X builds are possible,
+ScyllaDB does not support these platforms.
 
 ## Compatibility
 
-* Architectures: 32-bit (x86) and 64-bit (x64)
-* Compilers: GCC 4.1.2+ Clang 3.4+, and MSVC 2010/2012/2013/2015/2017/2019
+* Compilers: GCC 4.1.2+ Clang 3.4+, and MSVC 2012+
 
 ## Dependencies
 
@@ -27,21 +21,21 @@ The C/C++ driver depends on the following software:
 
 * [CMake] v2.6.4+
 * [libuv] 1.x
-* Kerberos v5 ([Heimdal] or [MIT]) \*
-* [OpenSSL] v1.0.x or v1.1.x \*\*
-* [zlib] v1.x \*\*\*
+* [OpenSSL] v1.0.x or v1.1.x \*
+* [zlib] v1.x \*\*
+* Kerberos v5 ([Heimdal] or [MIT]) \*\*\*
 
-__\*__ Use the `CASS_USE_KERBEROS` CMake option to enable/disable Kerberos
-       support. Enabling this option will enable Kerberos authentication
-       protocol within the driver; defaults to `Off`.
-
-__\*\*__ Use the `CASS_USE_OPENSSL` CMake option to enable/disable OpenSSL
+__\*__ Use the `CASS_USE_OPENSSL` CMake option to enable/disable OpenSSL
          support. Disabling this option will disable SSL/TLS protocol support
          within the driver; defaults to `On`.
 
-__\*\*\*__ Use the `CASS_USE_ZLIB` CMake option to enable/disable zlib support.
-           Disabling this option will disable DataStax Constellation support
-           within the driver; defaults to `On`.
+__\*\*__ Use the `CASS_USE_ZLIB` CMake option to enable/disable zlib support.
+           Defaults to `On`.
+
+__\*\*\*__ Use the `CASS_USE_KERBEROS` CMake option to enable/disable Kerberos
+       support. Enabling this option will enable Kerberos authentication
+       protocol within the driver (currently unusupproted by Scylla);
+       defaults to `Off`.
 
 ## Linux/Mac OS
 
@@ -99,18 +93,28 @@ apt-get install libkrb5-dev
 
 libuv v1.x should be used in order to ensure all features of the C/C++ driver
 are available. When using a package manager for your operating system make sure
-you install v1.x; if available.
+you install v1.x. Recent package repositories tend to have it available.
 
-##### CentOS/RHEL and Ubuntu packages
+##### Ubuntu
 
-Packages are available from our [download server]:
+```bash
+sudo apt-get update
+sudo apt-get install libuv-dev
+```
 
-* [CentOS 6][libuv-centos6]
-* [CentOS 7][libuv-centos7]
-* [CentOS 8][libuv-centos8]
-* [Ubuntu 14.04 LTS][libuv-ubuntu14-04]
-* [Ubuntu 16.04 LTS][libuv-ubuntu16-04]
-* [Ubuntu 18.04 LTS][libuv-ubuntu18-04]
+##### CentOS/RHEL
+
+```bash
+sudo dnf install libuv-devel
+```
+
+If your package manager is not able to locate `libuv`, you might still be able to
+install it from EPEL:
+
+```bash
+sudo yum install -y epel-release
+sudo yum install -y libuv-devel
+```
 
 ##### Mac OS (Brew)
 
@@ -329,20 +333,9 @@ cmake -G "Visual Studio 16 2019" -A x64 -DCASS_BUILD_INTEGRATION_TESTS=On ..
 cmake -G "Visual Studio 16 2019" -A x64 -DCASS_BUILD_UNIT_TESTS=On ..
 ```
 
-[download server]: http://downloads.datastax.com
-[cpp-driver-centos6]: http://downloads.datastax.com/cpp-driver/centos/6/cassandra
-[cpp-driver-centos7]: http://downloads.datastax.com/cpp-driver/centos/7/cassandra
-[cpp-driver-centos8]: http://downloads.datastax.com/cpp-driver/centos/8/cassandra
-[cpp-driver-ubuntu14-04]: http://downloads.datastax.com/cpp-driver/ubuntu/14.04/cassandra
-[cpp-driver-ubuntu16-04]: http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra
-[cpp-driver-ubuntu18-04]: http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra
-[cpp-driver-windows]: http://downloads.datastax.com/cpp-driver/windows/cassandra
-[libuv-centos6]: http://downloads.datastax.com/cpp-driver/centos/6/dependencies/libuv
-[libuv-centos7]: http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv
-[libuv-centos8]: http://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv
-[libuv-ubuntu14-04]: http://downloads.datastax.com/cpp-driver/ubuntu/14.04/dependencies/libuv
-[libuv-ubuntu16-04]: http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependencies/libuv
-[libuv-ubuntu18-04]: http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv
+[download server]: https://github.com/scylladb/cpp-driver/releases
+[cpp-driver-centos7]: https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-2.15.2-1.el7.x86_64.rpm
+[cpp-driver-ubuntu18-04]: https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver_2.15.2-1_amd64.deb
 [Homebrew]: https://brew.sh
 [Bison]: http://gnuwin32.sourceforge.net/downlinks/bison.php
 [CMake]: http://www.cmake.org/download
