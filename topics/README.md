@@ -4,6 +4,26 @@
 
 ### Installation
 
+#### Dependencies
+
+Packages for the dependencies: libuv (1.x), OpenSSL, zlib can be installed
+from distribution's repositories and/or EPEL. Please note that `apt-get` can
+handle the dependencies by itself, therefore this step can likely be omitted 
+on Ubuntu.
+
+```bash
+# Example: Ubuntu 18.04:
+sudo apt-get update
+sudo apt-get install -y libuv1 openssl libssl zlib1g
+
+# Example: CentOS 7:
+sudo yum install -y epel-release
+sudo yum install -y libuv openssl zlib
+```
+
+The driver can also be [built from source], in which case dependencies need
+to be installed in `-dev` or `-devel` versions.
+
 #### Driver
 
 Packages are currently available for the following platforms:
@@ -13,33 +33,28 @@ Packages are currently available for the following platforms:
 
 They are available for download from the [Releases][cpp-driver-releases] section.
 
-#### Dependencies
+NOTE: If you have Datastax cpp-driver installed you need to remove it first:
 
-Packages for the dependencies, libuv (1.x), OpenSSL, and zlib are also provided
-and can be found under the "dependencies" directory for each platform:
+```bash
+# Ubuntu/Debian:
+sudo apt-get remove cassandra-cpp-driver
 
-* [CentOS 6][cpp-driver-dependencies-centos6]
-* [CentOS 7][cpp-driver-dependencies-centos7]
-* [CentOS 8][cpp-driver-dependencies-centos8]
-* [Ubuntu 14.04 LTS][cpp-driver-dependencies-ubuntu14-04]
-* [Ubuntu 16.04 LTS][cpp-driver-dependencies-ubuntu16-04]
-* [Ubuntu 18.04 LTS][cpp-driver-dependencies-ubuntu18-04]
-* [Windows][cpp-driver-dependencies-windows]
 
-They can be also installed from distribution's repositories and/or EPEL:
-
+# CentOS/RedHat:
+sudo yum remove cassandra-cpp-driver
 ```
-# Example: Ubuntu 18.04:
+
+```bash
+# Example: Ubuntu 18.04/Debian:
+wget https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver_2.15.2-1_amd64.deb https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-dev_2.15.2-1_amd64.deb
 sudo apt-get update
-sudo apt-get install -y libuv1-dev openssl libssl-dev zlib1g-dev
+sudo apt-get install -y ./scylla-cpp-driver_2.15.2-1_amd64.deb ./scylla-cpp-driver-dev_2.15.2-1_amd64.deb
 
-# Example: CentOS 7:
-wget https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm
-sudo rpm -Uvh epel-release*rpm
-sudo yum install -y libuv-devel openssl-devel
+
+# Example: CentOS 7/RedHat:
+wget https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-2.15.2-1.el7.x86_64.rpm https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-devel-2.15.2-1.el7.x86_64.rpm
+sudo yum localinstall -y scylla-cpp-driver-2.15.2-1.el7.x86_64.rpm scylla-cpp-driver-devel-2.15.2-1.el7.x86_64.rpm
 ```
-
-The driver can also be [built from source].
 
 ### Connecting
 
@@ -281,13 +296,6 @@ with other drivers. Such features can be found (and requested) on our [GH].
 - Callback interfaces for load balancing, authentication, reconnection and retry
 
 [cpp-driver-releases]: https://github.com/scylladb/cpp-driver/releases
-[cpp-driver-dependencies-centos6]: http://downloads.datastax.com/cpp-driver/centos/6/dependencies/
-[cpp-driver-dependencies-centos7]: http://downloads.datastax.com/cpp-driver/centos/7/dependencies/
-[cpp-driver-dependencies-centos8]: http://downloads.datastax.com/cpp-driver/centos/8/dependencies/
-[cpp-driver-dependencies-ubuntu14-04]: http://downloads.datastax.com/cpp-driver/ubuntu/14.04/dependencies/
-[cpp-driver-dependencies-ubuntu16-04]: http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependencies/
-[cpp-driver-dependencies-ubuntu18-04]: http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/
-[cpp-driver-dependencies-windows]: http://downloads.datastax.com/cpp-driver/windows/dependencies/
 [built from source]: http://github.com/scylladb/cpp-driver/tree/master/topics/building/
 [prepared statements]: http://github.com/scylladb/cpp-driver/tree/master/topics/basics/prepared_statements/
 [`cass_int32_t`]: http://datastax.github.io/cpp-driver/api/cassandra.h/#cass-int32-t
