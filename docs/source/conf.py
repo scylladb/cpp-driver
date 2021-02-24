@@ -3,6 +3,7 @@ import os
 import re
 import sys
 import yaml
+import subprocess
 from datetime import date
 from docutils import nodes
 from sphinx.util import logging
@@ -68,8 +69,9 @@ class CustomCommonMarkParser(CommonMarkParser):
 
 def replace_relative_links(app, docname, source):
     result = source[0]
-    for key in app.config.replacements:
-        result = re.sub(key, app.config.replacements[key], result)
+    for item in app.config.replacements:
+        for key, value in item.items():
+            result = re.sub(key, value, result)
     source[0] = result
 
 # The encoding of source files.
@@ -130,9 +132,14 @@ def setup(app):
     app.add_transform(AutoStructify)
 
     # Replace DataStax links
-    replacements = { }
+    replacements = [
+        {"http://datastax.github.io/cpp-driver/api/cassandra.h/": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version + "/api"},
+        {"http://datastax.github.io/cpp-driver": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
+        {"http://docs.datastax.com/en/developer/cpp-driver/latest": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
+    ]
     app.add_config_value('replacements', replacements, True)
     app.connect('source-read', replace_relative_links)
+    app.connect("builder-inited", generate_doxygen)	
 
     #Install custom lexers
     app.add_lexer("cql", CQLLexer())
@@ -223,6 +230,30 @@ breathe_projects = {
 }
 breathe_default_project = 'API'
 breathe_default_members = ('members', 'undoc-members')
+
+def _generate_structs(outdir, structs, project):	
+    """Write structs docs in the designated outdir folder"""	
+    for obj in structs:	
+        with open(outdir + '/struct.' + obj + '.rst', 'w') as t_file:	
+            t_file.write(obj + "\n" + "=" * len(obj) + "\n\n" + ".. doxygenstruct:: " + obj +" \n  :project: " + project)	
+
+def _generate_doxygen_rst(xmldir, outdir):	
+    """Autogenerate doxygen docs in the designated outdir folder"""	
+    structs = []
+    files = os.listdir(os.path.join(os.path.dirname(__file__), xmldir))
+    for file_name in files:
+        if 'struct' in file_name and '__' not in file_name:
+            structs.append(file_name
+            .replace('struct_', '')
+            .replace('_', ' ')
+            .replace('.xml','')
+            .title()
+            .replace(' ', ''))
+    _generate_structs(outdir, structs, breathe_default_project)	
+
+def generate_doxygen(app):
+    DOXYGEN_XML_DIR = breathe_projects[breathe_default_project]
+    _generate_doxygen_rst(DOXYGEN_XML_DIR, app.builder.srcdir + '/api')	
 
 # -- Options for LaTeX page output ---------------------------------------
 

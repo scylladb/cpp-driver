@@ -185,17 +185,17 @@ Modified by ScyllaDB &copy; 2020
 
 [ScyllaDB]: http://scylladb.com
 [DataStax Enterprise]: http://www.datastax.com/products/datastax-enterprise
-[Examples]: examples/
+[Examples]: https://github.com/scylladb/cpp-driver/tree/master/examples
 [GitHub]: https://github.com/scylladb/cpp-driver
 [Home]: http://docs.datastax.com/en/developer/cpp-driver/latest
 [API]: http://docs.datastax.com/en/developer/cpp-driver/latest/api
 [Getting Started]: https://university.scylladb.com/courses/using-scylla-drivers/lessons/cpp-driver-part-1/
 [Building]: http://docs.datastax.com/en/developer/cpp-driver/latest/topics/building
 [Provide your input]: http://goo.gl/forms/ihKC5uEQr6
-[Installation]:topics/index.html#installation
+[Installation]: topics/
 [Kerberos]: https://web.mit.edu/kerberos
 
-[Shard-Awareness]:topics/scylla_specific/index.html
+[Shard-Awareness]:topics/scylla_specific/
 [Asynchronous API]: http://datastax.github.io/cpp-driver/topics/#futures
 [Simple]: http://datastax.github.io/cpp-driver/topics/#executing-queries
 [Prepared]: http://datastax.github.io/cpp-driver/topics/basics/prepared_statements/
