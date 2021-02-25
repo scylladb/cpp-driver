@@ -58,7 +58,7 @@ public:
    * Apache Cassandra version is returned.
    * @return The highest protocol version.
    */
-  static ProtocolVersion highest_supported(bool is_dse = true);
+  static ProtocolVersion highest_supported(bool is_dse = false);
 
   /**
    * Returns the newest supported beta protocol version.
