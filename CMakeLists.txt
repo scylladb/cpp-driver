@@ -136,7 +136,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
       set(CASS_USE_STD_ATOMIC ON)
     endif()
   endif()
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR 
+       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
   # Version determined from: http://clang.llvm.org/cxx_status.html
   # 3.2 includes the full C++11 memory model, but 3.1 had atomic
   # support.
@@ -166,6 +167,7 @@ endif()
 set (CMAKE_CXX_STANDARD ${CASS_CPP_STANDARD})
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
+   "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang" OR
    "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
   # OpenSSL is deprecated on later versions of Mac OS X. The long-term solution
@@ -174,7 +176,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
   endif()
 
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") 
+  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
+     "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang") 
     # Clang/Intel specific compiler options
     # I disabled long-long warning because boost generates about 50 such warnings
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Wno-long-long -Wno-unused-parameter")
