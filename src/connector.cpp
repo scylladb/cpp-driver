@@ -223,9 +223,13 @@ void Connector::connect(uv_loop_t* loop) {
   socket_connector_->with_settings(settings_.socket_settings);
   const auto& si = host_->sharding_info();
   if (desired_shard_num_ && shard_port_calculator_ && si) {
-    const int port_num = shard_port_calculator_->calc_outgoing_port_num(si->get_shards_count(), *desired_shard_num_);
-    socket_connector_->set_local_port(port_num);
-    socket_connector_->set_remote_port(*(si->shard_aware_port() ? si->shard_aware_port() : si->shard_aware_port_ssl()));
+    const int local_port_num = shard_port_calculator_->calc_outgoing_port_num(si->get_shards_count(), *desired_shard_num_);
+    socket_connector_->set_local_port(local_port_num);
+    if (si->shard_aware_port_ssl() && settings_.socket_settings.ssl_context) {
+      socket_connector_->set_remote_port(*si->shard_aware_port_ssl());
+    } else if (si->shard_aware_port()) {
+      socket_connector_->set_remote_port(*si->shard_aware_port());
+    }
   }
   socket_connector_->connect(loop);
   if (settings_.connect_timeout_ms > 0) {
