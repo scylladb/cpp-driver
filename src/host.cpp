@@ -177,7 +177,7 @@ void Host::set(const Row* row, bool use_tokens) {
   }
 }
 
-std::list<Connection::Ptr> Host::get_unpooled_connections(int shard_id, int how_many) {
+std::list<ExportedConnection::Ptr> Host::get_unpooled_connections(int shard_id, int how_many) {
   ScopedMutex lock(&mutex_);
   LOG_DEBUG("Requesting %d connection(s) to shard %d on host %s from the marketplace", how_many, shard_id, address_.to_string(true).c_str());
   auto conn_list_to_selected_shard_it = unpooled_connections_per_shard_.find(shard_id);
@@ -189,7 +189,7 @@ std::list<Connection::Ptr> Host::get_unpooled_connections(int shard_id, int how_
   const auto begin_move_from = list_move_from.begin();
   const auto end_move_from = std::next(begin_move_from, std::min(how_many, (int)list_move_from.size()));
 
-  std::list<Connection::Ptr> ret;
+  std::list<ExportedConnection::Ptr> ret;
   ret.splice(ret.begin(), list_move_from, begin_move_from, end_move_from);
   return ret;
 }
@@ -197,15 +197,19 @@ std::list<Connection::Ptr> Host::get_unpooled_connections(int shard_id, int how_
 void Host::add_unpooled_connection(Connection::Ptr conn) {
   ScopedMutex lock(&mutex_);
   LOG_DEBUG("Connection marketplace consumes a connection to shard %d on host %s", conn->shard_id(), address_.to_string(true).c_str());
-  unpooled_connections_per_shard_[conn->shard_id()].push_back(std::move(conn));
+  int32_t shard_id = conn->shard_id();
+  ExportedConnection::Ptr exported(new ExportedConnection(std::move(conn)));
+  unpooled_connections_per_shard_[shard_id].push_back(std::move(exported));
 }
 
-void Host::close_unpooled_connections() {
+void Host::close_unpooled_connections(uv_loop_t *loop) {
   ScopedMutex lock(&mutex_);
   for (auto& conn_list : unpooled_connections_per_shard_) {
     for (auto& c : conn_list.second) {
-      c->close();
+      c->import_connection(loop)->close();
     }
+    // We don't want to import same connection twice, everything would probably break.
+    conn_list.second.clear();
   }
 }
 

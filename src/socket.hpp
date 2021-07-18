@@ -273,6 +273,7 @@ protected:
 class Socket : public RefCounted<Socket> {
   friend class SocketConnector;
   friend class SocketWriteBase;
+  friend class ExportedConnection;
 
 public:
   typedef SharedRefPtr<Socket> Ptr;

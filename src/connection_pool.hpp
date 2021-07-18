@@ -167,7 +167,7 @@ public:
   void set_listener(ConnectionPoolListener* listener = NULL);
 
 public:
-  const uv_loop_t* loop() const { return loop_; }
+  uv_loop_t* loop() { return loop_; }
   const Address& address() const { return host_->address(); }
   ProtocolVersion protocol_version() const { return protocol_version_; }
   const String& keyspace() const { return keyspace_; }

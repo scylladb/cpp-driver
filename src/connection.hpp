@@ -40,6 +40,15 @@ public:
   virtual void on_read(Socket* socket, ssize_t nread, const uv_buf_t* buf);
   virtual void on_write(Socket* socket, int status, SocketRequest* request);
   virtual void on_close();
+  /**
+   * Method used by connection-exporting mechanism (moving 
+   * connections between event loops). As the new Connection object is
+   * constructed during such move, we need to be able to change
+   * object referenced by handler.
+   */
+  void set_connection(Connection *connection) {
+    this->connection_ = connection;
+  };
 
 private:
   Connection* connection_;
@@ -57,6 +66,15 @@ public:
   virtual void on_ssl_read(Socket* socket, char* buf, size_t size);
   virtual void on_write(Socket* socket, int status, SocketRequest* request);
   virtual void on_close();
+  /**
+   * Method used by connection-exporting mechanism (moving 
+   * connections between event loops). As the new Connection object is
+   * constructed during such move, we need to be able to change
+   * object referenced by handler.
+   */
+  void set_connection(Connection *connection) {
+    this->connection_ = connection;
+  };
 
 private:
   Connection* connection_;
@@ -124,6 +142,7 @@ class Connection : public RefCounted<Connection> {
   friend class ConnectionHandler;
   friend class SslConnectionHandler;
   friend class HeartbeatCallback;
+  friend class ExportedConnection;
 
 public:
   typedef SharedRefPtr<Connection> Ptr;

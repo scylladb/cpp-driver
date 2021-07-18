@@ -32,6 +32,7 @@
 #include "vector.hpp"
 #include "sharding_info.hpp"
 #include "optional.hpp"
+#include "exported_connection.hpp"
 
 #include <list>
 #include <math.h>
@@ -186,9 +187,9 @@ public:
    * within one instance of `Host`, so one thread can make use of a connection
    * that didn't fit into another thread's `ConnectionPool`.
    */
-  std::list<SharedRefPtr<Connection>> get_unpooled_connections(int shard_id, int how_many);
+  std::list<SharedRefPtr<ExportedConnection>> get_unpooled_connections(int shard_id, int how_many);
   void add_unpooled_connection(SharedRefPtr<Connection> conn);
-  void close_unpooled_connections();
+  void close_unpooled_connections(uv_loop_t *loop);
 
   void increment_inflight_requests() { inflight_request_count_.fetch_add(1, MEMORY_ORDER_RELAXED); }
 
@@ -240,7 +241,7 @@ private:
   ScopedPtr<LatencyTracker> latency_tracker_;
 
   uv_mutex_t mutex_;
-  std::map<int, std::list<SharedRefPtr<Connection>>> unpooled_connections_per_shard_;
+  std::map<int, std::list<SharedRefPtr<ExportedConnection>>> unpooled_connections_per_shard_;
 
 private:
   DISALLOW_COPY_AND_ASSIGN(Host);

@@ -282,7 +282,7 @@ void ConnectionPool::internal_close() {
       (*it)->cancel();
     }
 
-    host_->close_unpooled_connections();
+    host_->close_unpooled_connections(loop());
 
     close_state_ = CLOSE_STATE_WAITING_FOR_CONNECTIONS;
     maybe_closed();
@@ -323,9 +323,7 @@ bool ConnectionPool::grab_unpooled_connections_from_host(int shard_id) {
   auto unpooled_connections = host_->get_unpooled_connections(shard_id, num_needed_connections);
 
   for (const auto& connection : unpooled_connections) {
-    if (connection && !connection->is_closing()) {
-      add_connection(PooledConnection::Ptr(new PooledConnection(this, connection)));
-    }
+    add_connection(PooledConnection::Ptr(new PooledConnection(this, connection->import_connection(loop_))));
   }
 
   return connections_by_shard_[shard_id].size() == num_connections_per_shard_;
