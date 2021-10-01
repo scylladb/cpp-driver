@@ -32,7 +32,11 @@ void prepare_statement(CassSession* session) {
   cass_statement_bind_string_by_name(statement, "key", "abc");
   cass_statement_bind_int32_by_name(statement, "value", 123);
 
-  /* Execute statement (same as the non-prepared code) */
+  /* Execute statement - same as the non-prepared code.
+     Here we'll discard the result. */
+  CassFuture* execute_future = cass_session_execute(session, statement);
+  cass_future_wait(execute_future);
+  cass_future_free(execute_future);
 
   /* The prepared object must be freed */
   cass_prepared_free(prepared);
