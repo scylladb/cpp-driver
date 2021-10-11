@@ -163,11 +163,6 @@ html_style = ''
 # documentation.
 #
 html_theme_options = {
-    'header_links': [
-    ('C/C++ Driver', 'https://cpp-driver.docs.scylladb.com/'),
-    ('Scylla Cloud', 'https://docs.scylladb.com/scylla-cloud/'),
-    ('Scylla University', 'https://university.scylladb.com/'),
-    ('ScyllaDB Home', 'https://www.scylladb.com/')],
     'github_issues_repository': 'scylladb/cpp-driver',
 }
 
