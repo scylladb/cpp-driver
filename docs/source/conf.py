@@ -164,6 +164,7 @@ html_style = ''
 #
 html_theme_options = {
     'github_issues_repository': 'scylladb/cpp-driver',
+    'hide_sidebar_index': 'false'
 }
 
 extlinks = {}
