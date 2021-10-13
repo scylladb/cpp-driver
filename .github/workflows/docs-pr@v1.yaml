@@ -22,6 +22,8 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
+      - name: Set up Doxygen	    
+        run: sudo apt-get install doxygen	
       - name: Build docs
         run: |
           export PATH=$PATH:~/.local/bin
