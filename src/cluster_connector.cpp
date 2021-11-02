@@ -118,13 +118,13 @@ void ClusterConnector::internal_resolve_and_connect() {
   resolver_ = settings_.cluster_metadata_resolver_factory->new_instance(settings_);
 
   resolver_->resolve(event_loop_->loop(), contact_points_,
-                     bind_callback(&ClusterConnector::on_resolve, this));
+                     bind_callback(&ClusterConnector::on_resolve, Ptr(this)));
 }
 
 void ClusterConnector::internal_connect(const Address& address, ProtocolVersion version) {
   Host::Ptr host(new Host(address));
   ControlConnector::Ptr connector(
-      new ControlConnector(host, version, bind_callback(&ClusterConnector::on_connect, this)));
+      new ControlConnector(host, version, bind_callback(&ClusterConnector::on_connect, Ptr(this))));
   connectors_[address] = connector; // Keep track of the connectors so they can be canceled.
   connector->with_metrics(metrics_)
       ->with_settings(settings_.control_connection_settings)
