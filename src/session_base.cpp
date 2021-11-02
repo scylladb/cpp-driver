@@ -46,10 +46,6 @@ SessionBase::SessionBase()
 }
 
 SessionBase::~SessionBase() {
-  if (event_loop_) {
-    event_loop_->close_handles();
-    event_loop_->join();
-  }
   uv_mutex_destroy(&mutex_);
 }
 
@@ -63,22 +59,24 @@ Future::Ptr SessionBase::connect(const Config& config, const String& keyspace) {
     return future;
   }
 
-  if (!event_loop_) {
+  EventLoop *event_loop = nullptr;
+  {
     int rc = 0;
-    event_loop_.reset(new EventLoop());
+    event_loop = new EventLoop();
 
-    rc = event_loop_->init("Session/Control Connection");
+    rc = event_loop->init("Session/Control Connection");
     if (rc != 0) {
       future->set_error(CASS_ERROR_LIB_UNABLE_TO_INIT, "Unable to initialize cluster event loop");
       return future;
     }
 
-    rc = event_loop_->run();
+    rc = event_loop->run();
     if (rc != 0) {
       future->set_error(CASS_ERROR_LIB_UNABLE_TO_INIT, "Unable to run cluster event loop");
       return future;
     }
   }
+
 
   if (config.is_client_id_set()) {
     client_id_ = config.client_id();
@@ -112,7 +110,7 @@ Future::Ptr SessionBase::connect(const Config& config, const String& keyspace) {
       ->with_settings(settings)
       ->with_random(random_.get())
       ->with_metrics(metrics_.get())
-      ->connect(event_loop_.get());
+      ->connect(event_loop);
 
   return future;
 }

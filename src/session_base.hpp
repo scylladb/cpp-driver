@@ -150,7 +150,6 @@ private:
 private:
   mutable uv_mutex_t mutex_;
   State state_;
-  ScopedPtr<EventLoop> event_loop_;
   Cluster::Ptr cluster_;
   Config config_;
   ScopedPtr<Random> random_;

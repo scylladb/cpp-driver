@@ -269,6 +269,8 @@ public:
           const LoadBalancingPolicy::Vec& load_balancing_policies, const String& local_dc,
           const StringMultimap& supported_options, const ClusterSettings& settings);
 
+  virtual ~Cluster();
+
   /**
    * Set the listener that will handle events for the cluster
    * (*NOT* thread-safe).
@@ -437,7 +439,7 @@ private:
   ControlConnection::Ptr connection_;
   ControlConnector::Ptr reconnector_;
   ClusterListener* listener_;
-  EventLoop* const event_loop_;
+  ScopedPtr<EventLoop> event_loop_;
   const LoadBalancingPolicy::Ptr load_balancing_policy_;
   LoadBalancingPolicy::Vec load_balancing_policies_;
   const ClusterSettings settings_;

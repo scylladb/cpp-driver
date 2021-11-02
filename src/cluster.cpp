@@ -262,6 +262,13 @@ Cluster::Cluster(const ControlConnection::Ptr& connection, ClusterListener* list
   listener_->on_reconnect(this);
 }
 
+Cluster::~Cluster() {
+  if (event_loop_) {
+    event_loop_->close_handles();
+    event_loop_->join();
+  }
+}
+
 void Cluster::close() { event_loop_->add(new ClusterRunClose(Ptr(this))); }
 
 void Cluster::notify_host_up(const Address& address) {
@@ -520,7 +527,7 @@ void Cluster::internal_notify_host_up(const Address& address) {
     return; // Ignore host
   }
 
-  if (!prepare_host(host, bind_callback(&Cluster::on_prepare_host_up, this))) {
+  if (!prepare_host(host, bind_callback(&Cluster::on_prepare_host_up, Cluster::Ptr(this)))) {
     notify_host_up_after_prepare(host);
   }
 }
@@ -613,7 +620,7 @@ void Cluster::notify_host_add(const Host::Ptr& host) {
     return; // Ignore host
   }
 
-  if (!prepare_host(host, bind_callback(&Cluster::on_prepare_host_add, this))) {
+  if (!prepare_host(host, bind_callback(&Cluster::on_prepare_host_add, Cluster::Ptr(this)))) {
     notify_host_add_after_prepare(host);
   }
 }

@@ -65,6 +65,11 @@ public:
                    const Callback& callback);
 
   /**
+   * Destructor - it needs to close and join event loop if it wasn't passed to Cluster.
+   */
+  virtual ~ClusterConnector();
+
+  /**
    * Set the cluster listener to use for handle cluster events.
    *
    * @param listener A listener that handles cluster events.
@@ -165,7 +170,7 @@ private:
   AddressVec contact_points_;
   ProtocolVersion protocol_version_;
   ClusterListener* listener_;
-  EventLoop* event_loop_;
+  ScopedPtr<EventLoop> event_loop_;
   Random* random_;
   Metrics* metrics_;
   String local_dc_;

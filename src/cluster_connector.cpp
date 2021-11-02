@@ -69,6 +69,13 @@ ClusterConnector::ClusterConnector(const AddressVec& contact_points,
     , error_code_(CLUSTER_OK)
     , ssl_error_code_(CASS_OK) {}
 
+ClusterConnector::~ClusterConnector() {
+  if (event_loop_) {
+    event_loop_->close_handles();
+    event_loop_->join();
+  }
+}
+
 ClusterConnector* ClusterConnector::with_listener(ClusterListener* listener) {
   listener_ = listener;
   return this;
@@ -85,7 +92,7 @@ ClusterConnector* ClusterConnector::with_metrics(Metrics* metrics) {
 }
 
 void ClusterConnector::connect(EventLoop* event_loop) {
-  event_loop_ = event_loop;
+  event_loop_.reset(event_loop);
   event_loop_->add(new RunResolveAndConnectCluster(Ptr(this)));
 }
 
@@ -256,7 +263,7 @@ void ClusterConnector::on_connect(ControlConnector* connector) {
       return;
     }
 
-    cluster_.reset(new Cluster(connector->release_connection(), listener_, event_loop_,
+    cluster_.reset(new Cluster(connector->release_connection(), listener_, event_loop_.release(),
                                connected_host, hosts, connector->schema(), default_policy, policies,
                                local_dc_, connector->supported_options(), settings_));
 
