@@ -272,9 +272,16 @@ endif()
 # Install the dynamic/shared library
 if(CASS_BUILD_SHARED)
   install(TARGETS scylla-cpp-driver
+    EXPORT ScyllaCppDriver
     RUNTIME DESTINATION ${INSTALL_DLL_EXE_DIR}  # for dll/executable/pdb files
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}  # for shared library
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}) # for static library
+  # Install the export file
+  install(EXPORT ScyllaCppDriver
+    FILE ScyllaCppDriver.cmake
+    NAMESPACE ScyllaCppDriver::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ScyllaCppDriver
+  )
   if(CASS_INSTALL_PKG_CONFIG)
     if(NOT WIN32)
       if(PKG_CONFIG_FOUND)
@@ -293,9 +300,16 @@ endif()
 
 if(CASS_BUILD_STATIC)
   install(TARGETS cassandra_static
+    EXPORT ScyllaCppDriverStatic
     RUNTIME DESTINATION ${INSTALL_DLL_EXE_DIR}  # for dll/executable/pdb files
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}  # for shared library
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}) # for static library
+  
+  install(EXPORT ScyllaCppDriverStatic
+    FILE ScyllaCppDriverStatic.cmake
+    NAMESPACE ScyllaCppDriverStatic::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ScyllaCppDriverStatic
+  )
   if(CASS_INSTALL_PKG_CONFIG)
     if(NOT WIN32)
       if(PKG_CONFIG_FOUND)
