@@ -282,6 +282,11 @@ if(CASS_BUILD_SHARED)
     NAMESPACE ScyllaCppDriver::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ScyllaCppDriver
   )
+  # Export our library target so someone can build it as part of their build
+  export(EXPORT ScyllaCppDriver
+       FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/ScyllaCppDriver.cmake"
+       NAMESPACE ScyllaCppDriver::
+  )
   if(CASS_INSTALL_PKG_CONFIG)
     if(NOT WIN32)
       if(PKG_CONFIG_FOUND)
@@ -309,6 +314,11 @@ if(CASS_BUILD_STATIC)
     FILE ScyllaCppDriverStatic.cmake
     NAMESPACE ScyllaCppDriverStatic::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ScyllaCppDriverStatic
+  )
+  # Export our library target so someone can build it as part of their build
+  export(EXPORT ScyllaCppDriverStatic
+       FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/ScyllaCppDriverStatic.cmake"
+       NAMESPACE ScyllaCppDriverStatic::
   )
   if(CASS_INSTALL_PKG_CONFIG)
     if(NOT WIN32)
