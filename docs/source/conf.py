@@ -3,9 +3,8 @@ import os
 import re
 import sys
 from datetime import date
-from docutils import nodes
 from recommonmark.transform import AutoStructify
-from recommonmark.parser import CommonMarkParser, splitext, urlparse
+from recommonmark.parser import CommonMarkParser
 from sphinx_scylladb_theme.utils import multiversion_regex_builder
 
 # -- General configuration ------------------------------------------------
@@ -34,37 +33,8 @@ source_suffix = {
 }
 autosectionlabel_prefix_document = True
 
-class CustomCommonMarkParser(CommonMarkParser):
-    
-    def visit_document(self, node):
-        pass
-    
-    def visit_link(self, mdnode):
-        # Override to avoid checking if relative links exists
-        ref_node = nodes.reference()
-        destination = mdnode.destination
-        _, ext = splitext(destination)
-
-        url_check = urlparse(destination)
-        scheme_known = bool(url_check.scheme)
-
-        if not scheme_known and ext.replace('.', '') in self.supported:
-            destination = destination.replace(ext, '')
-        ref_node['refuri'] = destination
-        ref_node.line = self._get_line(mdnode)
-        if mdnode.title:
-            ref_node['title'] = mdnode.title
-        next_node = ref_node
-
-        self.current_node.append(next_node)
-        self.current_node = ref_node
-
-def replace_relative_links(app, docname, source):
-    result = source[0]
-    for item in app.config.replacements:
-        for key, value in item.items():
-            result = re.sub(key, value, result)
-    source[0] = result
+# A list of warning types to suppress arbitrary warning messages.
+suppress_warnings = ['ref.*']
 
 # The encoding of source files.
 #
@@ -95,26 +65,6 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
-
-# Setup Sphinx
-def setup(app):
-    app.add_source_parser(CustomCommonMarkParser)
-    app.add_config_value('recommonmark_config', {
-        'enable_eval_rst': True,
-        'enable_auto_toc_tree': False,
-    }, True)
-    app.add_transform(AutoStructify)
-
-    # Workaround to replace DataStax links
-    replacements = [
-        {"http://datastax.github.io/cpp-driver/api/cassandra.h/": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version + "/api"},
-        {"http://datastax.github.io/cpp-driver": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
-        {"http://docs.datastax.com/en/developer/cpp-driver/latest": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
-    ]
-    app.add_config_value('replacements', replacements, True)
-    app.connect('source-read', replace_relative_links)
-    app.connect("builder-inited", generate_doxygen)	
-
 
 # -- Options for not found extension -------------------------------------------
 
@@ -155,6 +105,7 @@ breathe_projects = {
 breathe_default_project = 'API'
 breathe_default_members = ('members', 'undoc-members')
 
+# Autogenerate API reference
 def _generate_structs(outdir, structs, project):	
     """Write structs docs in the designated outdir folder"""	
     for obj in structs:	
@@ -216,3 +167,32 @@ html_baseurl = 'https://cpp-driver.docs.scylladb.com'
 
 # Dictionary of values to pass into the template engine’s context for all pages
 html_context = {'html_baseurl': html_baseurl}
+
+
+# Initialize Sphinx
+
+def replace_relative_links(app, docname, source):
+    result = source[0]
+    for item in app.config.replacements:
+        for key, value in item.items():
+            result = re.sub(key, value, result)
+    source[0] = result
+
+def setup(app):
+    # Setup MarkDown
+    app.add_source_parser(CommonMarkParser)
+    app.add_config_value('recommonmark_config', {
+        'enable_eval_rst': True,
+        'enable_auto_toc_tree': False,
+    }, True)
+    app.add_transform(AutoStructify)
+
+    # Workaround to replace DataStax links
+    replacements = [
+        {"http://datastax.github.io/cpp-driver/api/cassandra.h/": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version + "/api"},
+        {"http://datastax.github.io/cpp-driver": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
+        {"http://docs.datastax.com/en/developer/cpp-driver/latest": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
+    ]
+    app.add_config_value('replacements', replacements, True)
+    app.connect('source-read', replace_relative_links)
+    app.connect("builder-inited", generate_doxygen)	
