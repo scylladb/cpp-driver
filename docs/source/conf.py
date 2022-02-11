@@ -169,8 +169,6 @@ html_baseurl = 'https://cpp-driver.docs.scylladb.com'
 html_context = {'html_baseurl': html_baseurl}
 
 
-# Initialize Sphinx
-
 def replace_relative_links(app, docname, source):
     result = source[0]
     for item in app.config.replacements:
@@ -178,6 +176,7 @@ def replace_relative_links(app, docname, source):
             result = re.sub(key, value, result)
     source[0] = result
 
+# Initialize Sphinx
 def setup(app):
     # Setup MarkDown
     app.add_source_parser(CommonMarkParser)
@@ -195,4 +194,6 @@ def setup(app):
     ]
     app.add_config_value('replacements', replacements, True)
     app.connect('source-read', replace_relative_links)
+    
+    # Autogenerate API Reference
     app.connect("builder-inited", generate_doxygen)	
