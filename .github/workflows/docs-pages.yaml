@@ -1,4 +1,6 @@
 name: "Docs / Publish"
+# For more information, 
+# see https://sphinx-theme.scylladb.com/stable/github-pages.html#available-workflows
 
 on:
   push:
@@ -19,9 +21,11 @@ jobs:
         persist-credentials: false
         fetch-depth: 0
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2.3.1
       with:
         python-version: 3.7
+    - name: Set up Poetry
+      run: curl -sSL https://install.python-poetry.org | python -
     - name: Set up Doxygen
       run: sudo apt-get install doxygen
     - name: Build docs

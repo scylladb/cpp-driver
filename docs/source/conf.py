@@ -2,8 +2,6 @@
 import os
 import re
 import sys
-import yaml
-import subprocess
 from datetime import date
 from docutils import nodes
 from recommonmark.transform import AutoStructify
@@ -107,7 +105,7 @@ def setup(app):
     }, True)
     app.add_transform(AutoStructify)
 
-    # Replace DataStax links
+    # Workaround to replace DataStax links
     replacements = [
         {"http://datastax.github.io/cpp-driver/api/cassandra.h/": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version + "/api"},
         {"http://datastax.github.io/cpp-driver": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version},
@@ -198,7 +196,6 @@ html_theme_options = {
     'github_repository': 'scylladb/cpp-driver',
     'github_issues_repository': 'scylladb/cpp-driver',
     'hide_edit_this_page_button': 'false',
-    'hide_sidebar_index': 'false'
 }
 
 # If not None, a 'Last updated on:' timestamp is inserted at every page
