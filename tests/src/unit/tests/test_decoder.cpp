@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 
 #include "decoder.hpp"
+#include "value.hpp"
 #include "logger.hpp"
 
 using namespace datastax;
@@ -1001,4 +1002,49 @@ TEST_F(DecoderUnitTest, DecodeWarnings) {
   // FAIL
   ASSERT_FALSE(decoder.decode_warnings(value));
   ASSERT_TRUE(failure_logged_);
+}
+
+TEST_F(DecoderUnitTest, DecodeEmpty) {
+  CassValueType nonzero_length_scalars[] = {
+    CASS_VALUE_TYPE_BIGINT, 
+    CASS_VALUE_TYPE_BOOLEAN,
+    CASS_VALUE_TYPE_COUNTER,
+    CASS_VALUE_TYPE_DECIMAL,  
+    CASS_VALUE_TYPE_DOUBLE,  
+    CASS_VALUE_TYPE_FLOAT,  
+    CASS_VALUE_TYPE_INT,  
+    CASS_VALUE_TYPE_TIMESTAMP, 
+    CASS_VALUE_TYPE_UUID,  
+    CASS_VALUE_TYPE_TIMEUUID,  
+    CASS_VALUE_TYPE_INET,  
+    CASS_VALUE_TYPE_DATE,  
+    CASS_VALUE_TYPE_TIME,  
+    CASS_VALUE_TYPE_SMALL_INT, 
+    CASS_VALUE_TYPE_TINY_INT,  
+    CASS_VALUE_TYPE_DURATION,
+  };
+  CassValueType variable_length_scalars[] = {
+    CASS_VALUE_TYPE_CUSTOM,
+    CASS_VALUE_TYPE_ASCII,
+    CASS_VALUE_TYPE_BLOB,
+    CASS_VALUE_TYPE_TEXT,
+    CASS_VALUE_TYPE_VARCHAR,
+    CASS_VALUE_TYPE_VARINT,
+  };
+  for (CassValueType t : nonzero_length_scalars) {
+    const char input[4] = { 0, 0, 0, 0 };
+    TestDecoder decoder((const char*)input, 4);
+    DataType::ConstPtr type_ptr(new DataType(t));
+    Value val = decoder.decode_value(type_ptr);
+    // Empty types are deserialized without errors and treated as null
+    ASSERT_TRUE(val.is_null());
+  }
+  for (CassValueType t : variable_length_scalars) {
+    const char input[4] = { 0, 0, 0, 0 };
+    TestDecoder decoder((const char*)input, 4);
+    DataType::ConstPtr type_ptr(new DataType(t));
+    Value val = decoder.decode_value(type_ptr);
+    // Empty types with variable size are simply empty, not null
+    ASSERT_FALSE(val.is_null());
+  }
 }
