@@ -5,6 +5,7 @@ version = "0.1"
 authors = ["ScyllaDB Documentation Contributors"]
 
 [tool.poetry.dependencies]
+breathe="4.32.0"
 python = "^3.7"
 pyyaml = "6.0"
 pygments = "2.2.0"
