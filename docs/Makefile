@@ -1,5 +1,5 @@
 # You can set these variables from the command line.
-POETRY        = $(HOME)/.poetry/bin/poetry
+POETRY        = poetry
 SPHINXOPTS    =
 SPHINXBUILD   = $(POETRY) run sphinx-build
 PAPER         =
@@ -7,28 +7,40 @@ BUILDDIR      = _build
 SOURCEDIR     = _source
 DOXYGENDIR    = ../doxygen
 
-# Internal variables.
+# Internal variables
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) $(SOURCEDIR)
 TESTSPHINXOPTS  = $(ALLSPHINXOPTS) -W --keep-going
-
-# the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) $(SOURCEDIR)
+
+# Windows variables
+ifeq ($(OS),Windows_NT)
+    POETRY = $(APPDATA)\Python\Scripts\poetry
+endif
 
 .PHONY: all
 all: dirhtml
 
-.PHONY: pristine
-pristine: clean
-	git clean -dfX
+# Setup commands
+.PHONY: setupenv
+setupenv:
+	pip install -q poetry
+	sudo apt-get install doxygen
 
 .PHONY: setup
 setup:
-	./_utils/setup.sh
+	$(POETRY) install
+	$(POETRY) update
 	cd .. && doxygen Doxyfile.in
-	cp -TLr source $(SOURCEDIR)
+	cp -r source/* $(SOURCEDIR)
+	cp -r ../topics $(SOURCEDIR)/topics
 	cd $(SOURCEDIR) && find . -name README.md -execdir mv '{}' index.md ';'
+
+# Clean commands
+.PHONY: pristine
+pristine: clean
+	git clean -dfX
 
 .PHONY: clean
 clean:
@@ -36,10 +48,7 @@ clean:
 	rm -rf $(SOURCEDIR)/*
 	rm -rf $(DOXYGENDIR)/*
 
-.PHONY: preview
-preview: setup
-	$(POETRY) run sphinx-autobuild -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml --port 5500 --re-ignore api/*
-
+# Generate output commands
 .PHONY: dirhtml
 dirhtml: setup
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
@@ -52,41 +61,46 @@ singlehtml: setup
 	@echo
 	@echo "Build finished. The HTML page is in $(BUILDDIR)/singlehtml."
 
+.PHONY: multiversion
+multiversion: setup
+	$(POETRY) run ./_utils/multiversion.sh
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
+
 .PHONY: epub
-epub: 	setup
+epub: setup
 	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(BUILDDIR)/epub
 	@echo
 	@echo "Build finished. The epub file is in $(BUILDDIR)/epub."
 
 .PHONY: epub3
-epub3:	setup
+epub3:setup
 	$(SPHINXBUILD) -b epub3 $(ALLSPHINXOPTS) $(BUILDDIR)/epub3
 	@echo
 	@echo "Build finished. The epub3 file is in $(BUILDDIR)/epub3."
 
 .PHONY: dummy
-dummy: 	setup
+dummy: setup
 	$(SPHINXBUILD) -b dummy $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
 
-.PHONY: linkcheck
-linkcheck: setup
-	$(SPHINXBUILD) -b linkcheck $(SOURCEDIR) $(BUILDDIR)/linkcheck
-
-.PHONY: multiversion
-multiversion: setup
-	@mkdir -p $(HOME)/.cache/pypoetry/virtualenvs
-	$(POETRY) run ./_utils/multiversion.sh
-	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
+# Preview commands
+.PHONY: preview
+preview: setup
+	$(POETRY) run sphinx-autobuild -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml --port 5500 --re-ignore 'api/*'
 
 .PHONY: multiversionpreview
 multiversionpreview: multiversion
 	$(POETRY) run python3 -m http.server 5500 --directory $(BUILDDIR)/dirhtml
 
+# Test commands
 .PHONY: test
 test: setup
 	$(SPHINXBUILD) -b dirhtml $(TESTSPHINXOPTS) $(BUILDDIR)/dirhtml
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
+
+.PHONY: linkcheck
+linkcheck: setup
+	$(SPHINXBUILD) -b linkcheck $(SOURCEDIR) $(BUILDDIR)/linkcheck
