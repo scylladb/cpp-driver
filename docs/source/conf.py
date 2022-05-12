@@ -183,7 +183,6 @@ html_baseurl = 'https://cpp-driver.docs.scylladb.com'
 # Dictionary of values to pass into the template engine’s context for all pages
 html_context = {'html_baseurl': html_baseurl}
 
-
 def replace_relative_links(app, docname, source):
     result = source[0]
     for item in app.config.replacements:

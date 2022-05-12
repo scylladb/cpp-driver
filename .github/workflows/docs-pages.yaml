@@ -26,8 +26,6 @@ jobs:
           python-version: 3.7
       - name: Set up env
         run: make -C docs setupenv
-      - name: Build driver
-        run: python setup.py develop
       - name: Build docs
         run: make -C docs multiversion
       - name: Deploy docs to GitHub Pages
