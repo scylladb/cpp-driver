@@ -33,9 +33,7 @@ setup:
 	$(POETRY) install
 	$(POETRY) update
 	cd .. && doxygen Doxyfile.in
-	mkdir -p $(SOURCEDIR)
-	cp -r source/* $(SOURCEDIR)
-	cp -r ../topics $(SOURCEDIR)/topics
+	cp -TLr source $(SOURCEDIR)
 	cd $(SOURCEDIR) && find . -name README.md -execdir mv '{}' index.md ';'
 
 # Clean commands
