@@ -451,11 +451,11 @@ recommended that your application decrease this value if computationally
 expensive or long-running future callbacks are used (via
 `cass_future_set_callback()`), otherwise this can be left unchanged.
 
-[`allow_remote_dcs_for_local_cl`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster/#1a46b9816129aaa5ab61a1363489dccfd0
+[`allow_remote_dcs_for_local_cl`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster#1a46b9816129aaa5ab61a1363489dccfd0
 [`OPTIONS`]: https://github.com/apache/cassandra/blob/cassandra-3.0/doc/native_protocol_v3.spec
-[token-aware]: http://datastax.github.io/cpp-driver/topics/configuration/#latency-aware-routing
-[latency-aware]: http://datastax.github.io/cpp-driver/topics/configuration/#token-aware-routing
-[paging]: http://datastax.github.io/cpp-driver/topics/basics/handling_results/#paging
+[token-aware]: http://datastax.github.io/cpp-driver/topics/configuration#latency-aware-routing
+[latency-aware]: http://datastax.github.io/cpp-driver/topics/configuration#token-aware-routing
+[paging]: http://datastax.github.io/cpp-driver/topics/basics/handling_results#paging
 
 ```eval_rst
 .. toctree::

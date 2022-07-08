@@ -298,14 +298,14 @@ with other drivers. Such features can be found (and requested) on our [GH].
 [cpp-driver-releases]: https://github.com/scylladb/cpp-driver/releases
 [built from source]: http://github.com/scylladb/cpp-driver/tree/master/topics/building/
 [prepared statements]: http://github.com/scylladb/cpp-driver/tree/master/topics/basics/prepared_statements/
-[`cass_int32_t`]: http://datastax.github.io/cpp-driver/api/cassandra.h/#cass-int32-t
+[`cass_int32_t`]: http://datastax.github.io/cpp-driver/api/cassandra.h#cass-int32-t
 [`cass_result_first_row()`]: http://datastax.github.io/cpp-driver/api/struct.CassResult/#cass-result-first-row
-[`cass_cluster_set_num_threads_io()`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster/#function-cass_cluster_set_num_threads_io
-[`CassCluster`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster/
-[`CassFuture`]: http://datastax.github.io/cpp-driver/api/struct.CassFuture/
-[`CassStatement`]: http://datastax.github.io/cpp-driver/api/struct.CassStatement/
-[`CassIterator`]: http://datastax.github.io/cpp-driver/api/struct.CassIterator/
-[`CassSession`]: http://datastax.github.io/cpp-driver/api/struct.CassSession/
+[`cass_cluster_set_num_threads_io()`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster#function-cass_cluster_set_num_threads_io
+[`CassCluster`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster
+[`CassFuture`]: http://datastax.github.io/cpp-driver/api/struct.CassFuture
+[`CassStatement`]: http://datastax.github.io/cpp-driver/api/struct.CassStatement
+[`CassIterator`]: http://datastax.github.io/cpp-driver/api/struct.CassIterator
+[`CassSession`]: http://datastax.github.io/cpp-driver/api/struct.CassSession
 [post]: http://www.datastax.com/dev/blog/4-simple-rules-when-using-the-datastax-drivers-for-cassandra
 [GH]: https://github.com/scylladb/cpp-driver/issues
 

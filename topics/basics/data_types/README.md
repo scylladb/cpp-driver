@@ -132,13 +132,13 @@ cass_tuple_free(address);
 cass_collection_free(phone_numbers);
 ```
 
-[`CassDataType`]: http://datastax.github.io/cpp-driver/api/struct.CassDataType/
-[`CassUserType`]: http://datastax.github.io/cpp-driver/api/struct.CassUserType/
-[`CassPrepared`]: http://datastax.github.io/cpp-driver/api/struct.CassPrepared/
-[`CassResult`]: http://datastax.github.io/cpp-driver/api/struct.CassResult/
-[`CassValue`]: http://datastax.github.io/cpp-driver/api/struct.CassValue/
-[`CassSchemaMeta`]: http://datastax.github.io/cpp-driver/api/struct.CassSchemaMeta/
-[`cass_user_type_new_from_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassUserType/#cass-user-type-new-from-data-type
-[`cass_result_column_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassResult/#cass-result-column-data-type
-[`cass_prepared_parameter_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassPrepared/#cass-prepared-parameter-data-type
-[`cass_value_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassValue/#cass-value-data-type
+[`CassDataType`]: http://datastax.github.io/cpp-driver/api/struct.CassDataType
+[`CassUserType`]: http://datastax.github.io/cpp-driver/api/struct.CassUserType
+[`CassPrepared`]: http://datastax.github.io/cpp-driver/api/struct.CassPrepared
+[`CassResult`]: http://datastax.github.io/cpp-driver/api/struct.CassResult
+[`CassValue`]: http://datastax.github.io/cpp-driver/api/struct.CassValue
+[`CassSchemaMeta`]: http://datastax.github.io/cpp-driver/api/struct.CassSchemaMeta
+[`cass_user_type_new_from_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassUserType#cass-user-type-new-from-data-type
+[`cass_result_column_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassResult#cass-result-column-data-type
+[`cass_prepared_parameter_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassPrepared#cass-prepared-parameter-data-type
+[`cass_value_data_type()`]: http://datastax.github.io/cpp-driver/api/struct.CassValue#cass-value-data-type

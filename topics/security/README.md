@@ -136,7 +136,7 @@ int main() {
 ```
 
 
-[`cass_cluster_set_credentials()`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster/#function-cass_cluster_set_credentials_n
+[`cass_cluster_set_credentials()`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster#function-cass_cluster_set_credentials_n
 
 ```eval_rst
 .. toctree::
