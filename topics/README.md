@@ -299,7 +299,7 @@ with other drivers. Such features can be found (and requested) on our [GH].
 [built from source]: http://github.com/scylladb/cpp-driver/tree/master/topics/building/
 [prepared statements]: http://github.com/scylladb/cpp-driver/tree/master/topics/basics/prepared_statements/
 [`cass_int32_t`]: http://datastax.github.io/cpp-driver/api/cassandra.h#cass-int32-t
-[`cass_result_first_row()`]: http://datastax.github.io/cpp-driver/api/struct.CassResult/#cass-result-first-row
+[`cass_result_first_row()`]: http://datastax.github.io/cpp-driver/api/struct.CassResult#cass-result-first-row
 [`cass_cluster_set_num_threads_io()`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster#function-cass_cluster_set_num_threads_io
 [`CassCluster`]: http://datastax.github.io/cpp-driver/api/struct.CassCluster
 [`CassFuture`]: http://datastax.github.io/cpp-driver/api/struct.CassFuture
