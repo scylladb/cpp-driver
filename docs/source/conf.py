@@ -19,7 +19,7 @@ LATEST_VERSION = 'master'
 # Set which versions are not released yet.
 UNSTABLE_VERSIONS = []
 # Set which versions are deprecated
-DEPRECATED_VERSIONS = ['']
+DEPRECATED_VERSIONS = []
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
