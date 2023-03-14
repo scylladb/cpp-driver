@@ -9,7 +9,7 @@ The following features are specific to Scylla Drivers and are not found in a non
 
 ## Shard-Awareness
 
-Scylla is built around the concept o a *sharded architecture*. What it means for
+Scylla is built around the concept of a *sharded architecture*. What it means for
 clients is that each piece of data is bound to specific CPU(s) on specific
 node(s). The ability of the driver to query specific shard (CPU) is called
 "shard-awareness".
