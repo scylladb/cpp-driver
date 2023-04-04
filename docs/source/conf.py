@@ -157,6 +157,7 @@ html_theme_options = {
     'hide_edit_this_page_button': 'false',
     'versions_unstable': UNSTABLE_VERSIONS,
     'versions_deprecated': DEPRECATED_VERSIONS,
+    'skip_warnings': 'document_has_underscores'
 }
 
 # If not None, a 'Last updated on:' timestamp is inserted at every page
