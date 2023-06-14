@@ -98,7 +98,7 @@ ConnectionPool::ConnectionPool(const Connection::Vec& connections, ConnectionPoo
       if (connections_by_shard_[connection->shard_id()].size() < num_connections_per_shard_) {
         add_connection(PooledConnection::Ptr(new PooledConnection(this, connection)));
       } else {
-        host_->add_unpooled_connection(std::move(connection));
+        host_->add_unpooled_connection(connection);
       }
     }
   }
