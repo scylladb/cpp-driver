@@ -175,39 +175,39 @@ if(CASS_BUILD_SHARED)
 endif()
 
 if(CASS_BUILD_STATIC)
-  add_library(cassandra_static STATIC
+  add_library(scylla-cpp-driver_static STATIC
     ${SOURCES}
     $<TARGET_OBJECTS:curl_hostcheck_static>
     $<TARGET_OBJECTS:hdr_histogram_static>
     $<TARGET_OBJECTS:http-parser_static>
     $<TARGET_OBJECTS:minizip_static>)
-  target_link_libraries(cassandra_static ${CASS_LIBS})
-  target_include_directories(cassandra_static PRIVATE ${INCLUDE_DIRS} ${CASS_INCLUDES})
+  target_link_libraries(scylla-cpp-driver_static ${CASS_LIBS})
+  target_include_directories(scylla-cpp-driver_static PRIVATE ${INCLUDE_DIRS} ${CASS_INCLUDES})
 
-  set_target_properties(cassandra_static PROPERTIES OUTPUT_NAME scylla-cpp-driver_static)
-  set_target_properties(cassandra_static PROPERTIES VERSION ${PROJECT_VERSION_STRING} SOVERSION ${PROJECT_VERSION_MAJOR})
-  set_target_properties(cassandra_static PROPERTIES
-      COMPILE_PDB_NAME "cassandra_static"
+  set_target_properties(scylla-cpp-driver_static PROPERTIES OUTPUT_NAME scylla-cpp-driver_static)
+  set_target_properties(scylla-cpp-driver_static PROPERTIES VERSION ${PROJECT_VERSION_STRING} SOVERSION ${PROJECT_VERSION_MAJOR})
+  set_target_properties(scylla-cpp-driver_static PROPERTIES
+      COMPILE_PDB_NAME "scylla-cpp-driver_static"
       COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
-  set_target_properties(cassandra_static PROPERTIES
+  set_target_properties(scylla-cpp-driver_static PROPERTIES
       ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
       LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
       RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-  set_target_properties(cassandra_static PROPERTIES FOLDER "Driver")
+  set_target_properties(scylla-cpp-driver_static PROPERTIES FOLDER "Driver")
 
-  target_compile_definitions(cassandra_static PRIVATE CASS_STATIC)
+  target_compile_definitions(scylla-cpp-driver_static PRIVATE CASS_STATIC)
 
   if(CASS_USE_BOOST_ATOMIC AND BOOST_LIBRARY_NAME)
-    add_dependencies(cassandra_static ${BOOST_LIBRARY_NAME})
+    add_dependencies(scylla-cpp-driver_static ${BOOST_LIBRARY_NAME})
   endif()
   if(LIBUV_LIBRARY_NAME)
-    add_dependencies(cassandra_static ${LIBUV_LIBRARY_NAME})
+    add_dependencies(scylla-cpp-driver_static ${LIBUV_LIBRARY_NAME})
   endif()
   if(OPENSSL_LIBRARY_NAME)
-    add_dependencies(cassandra_static ${OPENSSL_LIBRARY_NAME})
+    add_dependencies(scylla-cpp-driver_static ${OPENSSL_LIBRARY_NAME})
   endif()
   if(ZLIB_LIBRARY_NAME)
-    add_dependencies(cassandra_static ${ZLIB_LIBRARY_NAME})
+    add_dependencies(scylla-cpp-driver_static ${ZLIB_LIBRARY_NAME})
   endif()
 endif()
 
@@ -293,7 +293,7 @@ if(CASS_BUILD_SHARED)
 endif()
 
 if(CASS_BUILD_STATIC)
-  install(TARGETS cassandra_static
+  install(TARGETS scylla-cpp-driver_static
     RUNTIME DESTINATION ${INSTALL_DLL_EXE_DIR}  # for dll/executable/pdb files
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}  # for shared library
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}) # for static library
