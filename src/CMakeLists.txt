@@ -129,7 +129,8 @@ set(HAVE_ZLIB ${CASS_USE_ZLIB})
 # Generate the driver_config.hpp file
 configure_file(
   ${CASS_ROOT_DIR}/driver_config.hpp.in 
-  ${CMAKE_CURRENT_SOURCE_DIR}/driver_config.hpp)
+  ${CMAKE_CURRENT_BINARY_DIR}/generated/driver_config.hpp)
+list(APPEND INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/generated)
 
 
 #------------------------------
