@@ -19,7 +19,7 @@ LATEST_VERSION = 'master'
 # Set which versions are not released yet.
 UNSTABLE_VERSIONS = []
 # Set which versions are deprecated
-DEPRECATED_VERSIONS = ['']
+DEPRECATED_VERSIONS = []
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -86,7 +86,6 @@ notfound_template =  '404.html'
 notfound_urls_prefix = ''
 
 # -- Options for redirect extension
-
 # Read a YAML dictionary of redirections and generate an HTML file for each
 redirects_file = "_utils/redirections.yaml"
 
@@ -140,7 +139,7 @@ def generate_doxygen(app):
 
 # -- Options for sitemap extension
 
-sitemap_url_scheme = 'stable/{link}'
+sitemap_url_scheme = '/stable/{link}'
 
 # -- Options for HTML output
 
@@ -159,8 +158,10 @@ html_theme_options = {
     'github_repository': 'scylladb/cpp-driver',
     'github_issues_repository': 'scylladb/cpp-driver',
     'hide_edit_this_page_button': 'false',
+    'hide_feedback_buttons': 'false',
     'versions_unstable': UNSTABLE_VERSIONS,
     'versions_deprecated': DEPRECATED_VERSIONS,
+    'skip_warnings': 'document_has_underscores'
 }
 
 # If not None, a 'Last updated on:' timestamp is inserted at every page

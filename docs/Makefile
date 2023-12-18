@@ -41,6 +41,7 @@ clean:
 	rm -rf $(BUILDDIR)/*
 	rm -rf $(SOURCEDIR)/*
 	rm -rf $(DOXYGENDIR)/*
+	rm -f poetry.lock
 
 # Generate output commands
 .PHONY: dirhtml
@@ -78,6 +79,12 @@ dummy: setup
 	$(SPHINXBUILD) -b dummy $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+.PHONY: redirects
+redirects: setup
+	$(POETRY) run redirects-cli fromfile --yaml-file _utils/redirects.yaml --output-dir $(BUILDDIR)/dirhtml
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
 
 # Preview commands
 .PHONY: preview

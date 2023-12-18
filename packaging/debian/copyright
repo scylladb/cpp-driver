@@ -4,8 +4,7 @@ Source: https://github.com/scylladb/cpp-driver
 
 Files: *
 Copyright: Copyright (c) DataStax, Inc.
- Copyright (c) 2020 ScyllaDB
-License: Apache-2.0, AGPL-3
+License: Apache-2.0
   On Debian systems, the complete text of the Apache License Version 2.0
   can be found in `/usr/share/common-licenses/Apache-2.0'.
 

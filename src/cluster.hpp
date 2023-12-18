@@ -257,6 +257,7 @@ public:
    * determining the next control connection host.
    * @param load_balancing_policies
    * @param local_dc The local datacenter determined by the metadata service for initializing the
+   * @param local_rack The local rack determined by the metadata service for initializing the
    * load balancing policies.
    * @param supported_options Supported options discovered during control connection.
    * @param settings The control connection settings to use for reconnecting the
@@ -267,6 +268,7 @@ public:
           const ControlConnectionSchema& schema,
           const LoadBalancingPolicy::Ptr& load_balancing_policy,
           const LoadBalancingPolicy::Vec& load_balancing_policies, const String& local_dc,
+	  const String& local_rack,
           const StringMultimap& supported_options, const ClusterSettings& settings);
 
   /**
@@ -361,6 +363,7 @@ public:
   const Host::Ptr& connected_host() const { return connected_host_; }
   const TokenMap::Ptr& token_map() const { return token_map_; }
   const String& local_dc() const { return local_dc_; }
+  const String& local_rack() const { return local_rack_; }
   const VersionNumber& dse_server_version() const { return connection_->dse_server_version(); }
   const StringMultimap& supported_options() const { return supported_options_; }
   const ShardPortCalculator* shard_port_calculator() const { return shard_port_calculator_.get(); }
@@ -449,6 +452,7 @@ private:
   PreparedMetadata prepared_metadata_;
   TokenMap::Ptr token_map_;
   String local_dc_;
+  String local_rack_;
   StringMultimap supported_options_;
   Timer timer_;
   bool is_recording_events_;
