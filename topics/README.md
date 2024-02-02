@@ -309,7 +309,7 @@ with other drivers. Such features can be found (and requested) on our [GH].
 [post]: http://www.datastax.com/dev/blog/4-simple-rules-when-using-the-datastax-drivers-for-cassandra
 [GH]: https://github.com/scylladb/cpp-driver/issues
 
-```eval_rst
+```{eval-rst}
 .. toctree::
   :hidden:
   :glob:

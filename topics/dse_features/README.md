@@ -3,7 +3,7 @@
 * [DSE plaintext and GSSAPI authentication](authentication)
 * [DSE geospatial types](geotypes)
 
-```eval_rst
+```{eval-rst}
 .. toctree::
    :hidden:
    :glob:

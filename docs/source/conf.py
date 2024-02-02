@@ -3,8 +3,6 @@ import os
 import re
 import sys
 from datetime import date
-from recommonmark.transform import AutoStructify
-from recommonmark.parser import CommonMarkParser
 from sphinx_scylladb_theme.utils import multiversion_regex_builder
 
 # -- General configuration
@@ -32,16 +30,14 @@ extensions = [
     'sphinx_sitemap',
     'sphinx_scylladb_theme',
     'sphinx_multiversion',
-    'breathe'
+    'breathe',
+    'sphinx_scylladb_markdown'
 ]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
+source_suffix = ['.rst']
 autosectionlabel_prefix_document = True
 
 # A list of warning types to suppress arbitrary warning messages.
@@ -78,6 +74,11 @@ notfound_template =  '404.html'
 
 # Prefix added to all the URLs generated in the 404 page.
 notfound_urls_prefix = ''
+
+# -- Options for markdown extension
+scylladb_markdown_enable = True
+scylladb_markdown_recommonmark_versions = []
+suppress_warnings = ["myst.header","myst.xref_missing"]
 
 # -- Options for redirect extension
 # Read a YAML dictionary of redirections and generate an HTML file for each
@@ -186,14 +187,6 @@ def replace_relative_links(app, docname, source):
 
 # Initialize Sphinx
 def setup(app):
-    # Setup MarkDown
-    app.add_source_parser(CommonMarkParser)
-    app.add_config_value('recommonmark_config', {
-        'enable_eval_rst': True,
-        'enable_auto_toc_tree': False,
-    }, True)
-    app.add_transform(AutoStructify)
-
     # Workaround to replace DataStax links
     replacements = [
         {"http://datastax.github.io/cpp-driver/api/cassandra.h/": "https://cpp-driver.docs.scylladb.com/" + smv_latest_version + "/api"},
