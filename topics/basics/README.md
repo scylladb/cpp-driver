@@ -107,7 +107,7 @@
   </tbody>
 </table>
 
-```eval_rst
+```{eval-rst}
 .. toctree::
   :hidden:
   :glob:
