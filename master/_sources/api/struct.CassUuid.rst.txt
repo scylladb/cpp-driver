@@ -1,0 +1,5 @@
+CassUuid
+========
+
+.. doxygenstruct:: CassUuid 
+  :project: API

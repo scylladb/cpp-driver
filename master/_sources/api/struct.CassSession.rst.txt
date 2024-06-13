@@ -1,0 +1,5 @@
+CassSession
+===========
+
+.. doxygenstruct:: CassSession 
+  :project: API

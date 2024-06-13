@@ -1,0 +1,5 @@
+CassIndexMeta
+=============
+
+.. doxygenstruct:: CassIndexMeta 
+  :project: API

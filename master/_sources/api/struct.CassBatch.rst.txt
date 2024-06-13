@@ -1,0 +1,5 @@
+CassBatch
+=========
+
+.. doxygenstruct:: CassBatch 
+  :project: API

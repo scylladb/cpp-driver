@@ -1,0 +1,5 @@
+CassUserType
+============
+
+.. doxygenstruct:: CassUserType 
+  :project: API
