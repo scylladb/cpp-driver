@@ -177,6 +177,7 @@ void SocketConnector::internal_connect(uv_loop_t* loop) {
   // This needs to be done after setting the socket to properly cleanup.
   const Address& local_address = settings_.local_address;
   if (local_address.is_valid()) {
+    // use configured local address
     Address::SocketStorage storage;
     LOG_DEBUG("Binding socket. local_address=%s, remote=%s",
         local_address.to_string(true).c_str(), socket_->address().to_string(true).c_str());
@@ -187,7 +188,34 @@ void SocketConnector::internal_connect(uv_loop_t* loop) {
       return;
     }
   } else {
-    LOG_WARN("Cannot bind to an invalid `local_address` %s:%d", local_address.to_string().c_str(), local_address.port());
+    // determine local address matching resolved addresses family
+    if (resolved_address_.family() == Address::IPv4) {
+      Address::SocketStorage storage;
+      storage.addr_in()->sin_family = AF_INET;
+      storage.addr_in()->sin_addr.s_addr = INADDR_ANY;
+      storage.addr_in()->sin_port = local_address.port();
+      int rc = uv_tcp_bind(socket->handle(), storage.addr(), 0);
+      if (rc != 0) {
+        on_error(SOCKET_ERROR_BIND, "Unable to bind local address: " + String(uv_strerror(rc)));
+
+        return;
+      }
+    } else if (resolved_address_.family() == Address::IPv6) {
+      Address::SocketStorage storage;
+      storage.addr_in6()->sin6_family = AF_INET6;
+      storage.addr_in6()->sin6_addr = in6addr_any;
+      storage.addr_in6()->sin6_port = local_address.port();
+      storage.addr_in6()->sin6_flowinfo = 0;
+      storage.addr_in6()->sin6_scope_id = 0;
+      int rc = uv_tcp_bind(socket->handle(), storage.addr(), 0);
+      if (rc != 0) {
+        on_error(SOCKET_ERROR_BIND, "Unable to bind local address: " + String(uv_strerror(rc)));
+
+        return;
+      }
+    } else {
+      LOG_WARN("Cannot bind to local address for unknown family (%d) of resolved address %s.", resolved_address_.family(), resolved_address_.to_string().c_str());
+    }
   }
 
   if (settings_.ssl_context) {
