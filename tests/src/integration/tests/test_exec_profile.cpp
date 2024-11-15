@@ -33,6 +33,16 @@ public:
     is_beta_protocol_ = false; // Issue with beta protocol v5 and functions on Cassandra v3.10.0+
   }
 
+  virtual void set_insert_statement() {
+    // By default, use LWT statement. These are OK for single dc tests.
+    // LWT is needed for SerialConsistency test.
+    insert_ = Statement(format_string("INSERT INTO %s (key, value) VALUES (?, ?) IF NOT EXISTS",
+                                      table_name_.c_str()),
+                        2);
+    insert_.bind<Text>(0, Text(test_name_));
+    insert_.bind<Integer>(1, Integer(1000));
+  }
+
   void SetUp() {
     // Calculate the total number of nodes being used
     total_nodes_ = number_dc1_nodes_ + number_dc2_nodes_;
@@ -71,11 +81,7 @@ public:
         format_string("CREATE TABLE %s (key text PRIMARY KEY, value int)", table_name_.c_str()));
 
     // Create the insert statement for later use
-    insert_ = Statement(format_string("INSERT INTO %s (key, value) VALUES (?, ?) IF NOT EXISTS",
-                                      table_name_.c_str()),
-                        2);
-    insert_.bind<Text>(0, Text(test_name_));
-    insert_.bind<Integer>(1, Integer(1000));
+    set_insert_statement();
 
     // Insert an expected value (if not the serial consistency test)
     session_.execute(insert_);
@@ -184,6 +190,17 @@ private:
 class DCExecutionProfileTest : public ExecutionProfileTest {
 public:
   DCExecutionProfileTest() { number_dc2_nodes_ = 1; }
+
+  void set_insert_statement() {
+    // Create the insert statement for later use
+    // For multi-dc tests do not use LWT statements as it causes following error:
+    // Cannot use LightWeight Transactions for table ...
+    insert_ = Statement(format_string("INSERT INTO %s (key, value) VALUES (?, ?)",
+                                      table_name_.c_str()),
+                        2);
+    insert_.bind<Text>(0, Text(test_name_));
+    insert_.bind<Integer>(1, Integer(1000));
+  }
 
   void SetUp() {
     // Create the execution profiles for the test cases
