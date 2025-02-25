@@ -51,7 +51,7 @@ suppress_warnings = ['ref.*']
 master_doc = 'contents'
 
 # General information about the project.
-project = 'Scylla C/C++ Driver Documentation'
+project = 'Scylla C/C++ Driver'
 copyright = str(date.today().year) + ', ScyllaDB. All rights reserved.'
 author = u'Scylla Project Contributors'
 
