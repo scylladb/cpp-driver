@@ -1,0 +1,5 @@
+CassCollection
+==============
+
+.. doxygenstruct:: CassCollection 
+  :project: API

@@ -1,0 +1,5 @@
+CassSpeculativeExecutionMetrics
+===============================
+
+.. doxygenstruct:: CassSpeculativeExecutionMetrics 
+  :project: API
