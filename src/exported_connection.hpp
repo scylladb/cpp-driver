@@ -40,7 +40,7 @@ private:
     unsigned int heartbeat_interval_secs_;
 
     // Socket fields
-    int fd;
+    uv_os_sock_t fd;
     SocketHandlerBase *handler_;
     bool is_defunct_;
     size_t max_reusable_write_objects_;
