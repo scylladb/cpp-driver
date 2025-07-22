@@ -1,0 +1,5 @@
+DseLineString
+=============
+
+.. doxygenstruct:: DseLineString 
+  :project: API
