@@ -1,0 +1,5 @@
+DseLineStringIterator
+=====================
+
+.. doxygenstruct:: DseLineStringIterator 
+  :project: API

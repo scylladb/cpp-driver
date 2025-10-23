@@ -1,0 +1,986 @@
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" style="visibility: hidden;">
+    
+    
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+             CassSession | ScyllaDB Docs 
+        </title>
+        <meta name="description" content="ScyllaDB is an Apache Cassandra-compatible NoSQL data store that can handle 1 million transactions per second on a single server." />
+        <link rel="icon" href="../_static/img/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../_static/img/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="../_static/img/favicon-228x228.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="../_static/img/favicon-228x228.png" />
+        <meta name="msapplication-TileImage" href="../_static/img/favicon-228x228.png" />
+
+        
+            
+            
+        
+
+        
+            
+            <link rel="canonical" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassSession.html"/>
+        
+
+        <link rel="author" href="mailto:info@scylladb.com" />
+
+        
+            
+        <!-- increase expertrec loading priority-->
+        <link rel="dns-prefetch" href="https://cse.expertrec.com">
+
+        <!-- increase font loading priority -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- async CSS -->
+        <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- no-JS fallback -->
+        <noscript>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+        </noscript>
+
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.esm.js"></script>
+        
+        
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/css/main.css?v=e3ce25dc" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/sphinx_collapse.css?v=226d88b4" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+            
+        
+    
+        
+        
+            
+        <script type="text/javascript" src="../_static/js/runtime.bundle.js"></script>
+        <script type="text/javascript" src="../_static/js/main.bundle.js"></script>
+        
+            
+                <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+            
+        
+            
+                <script src="../_static/doctools.js?v=9a2dae69"></script>
+            
+        
+            
+                <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            
+        
+            
+                <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+            
+        
+            
+                <script src="../_static/copybutton.js?v=f281be69"></script>
+            
+        
+    
+            
+                <!-- Local meta tags -->
+            
+            
+                <!-- Google Tag Manager docs -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-54NWVS4");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager global -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-T8P2JP");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Expertrec -->
+<script>
+    var id = "e2077224-9ccf-11e9-a0c9-0242ac130002";
+    var ci_search = document.createElement("script");
+    ci_search.type = "text/javascript";
+    ci_search.async = true;
+    ci_search.src = "https://cse.expertrec.com/api/js/ci_common.js?id=" + id;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(ci_search, s);
+</script>
+<!-- End Expertrec -->
+            
+        
+    </head>
+
+    <body class="brand-product">
+        <section class="promo-banner  promo-banner--hide" style="display: none;">
+    <div class="promo-banner-wrapper">
+        
+        <div class="promo-banner__title">ScyllaDB University Live | Free Virtual Training Event</div>
+        <a class="promo-banner__button button button--reverse" href="#"
+           target="_blank" rel="noopener noreferrer">Learn more</a>
+        <button class="promo-banner__close">
+            <i class="icon-cancel"></i>
+        </button>
+    </div>
+</section>
+        <header class="header">
+    <div class="header-logo">
+        <a class="header-logo__img" href="https://scylladb.com/">
+            <img src="../_static/img/scylladb-logo-horizontal.svg" alt="ScyllaDB Documentation Logo" />
+        </a>
+        <span class="header-logo__bar"></span>
+        <a class="header-logo__text" href="https://docs.scylladb.com/">
+            Documentation
+        </a>
+    </div>
+    <div class="header-navigation">
+        <ul class="dropdown menu scylla-dropdown scylla-dropdown--header" data-dropdown-menu>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Deployments <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/scylla-cloud/">
+                            <i class="icon-docs-cloud"></i>Cloud</a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/">
+                            <i class="icon-server"></i>Server</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Tools <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://manager.docs.scylladb.com/">
+                            <i class="icon-docs-manager"></i>ScyllaDB Manager</a>
+                    </li>
+                    <li>
+                        <a href="https://monitoring.docs.scylladb.com/">
+                            <i class="icon-docs-monitoring"></i>ScyllaDB
+                            Monitoring Stack</a>
+                    </li>
+                    <li>
+                        <a href="https://operator.docs.scylladb.com/">
+                            <i class="icon-docs-operator"></i>ScyllaDB Operator
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Drivers <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/cql-drivers/">
+                            <i class="icon-docs-nsql-guides"></i>CQL Drivers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/dynamo-drivers/">
+                            <i class="icon-docs-alternator"></i>DynamoDB Drivers
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Resources
+                    <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://university.scylladb.com">
+                            <i class="icon-university"></i>
+                            ScyllaDB University
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://forum.scylladb.com">
+                            <i class="icon-docs-community"></i>
+                            Community Forum
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html">
+                            <i class="icon-docs-training"></i>
+                            Tutorials
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="header-button">
+            <a href="https://docs.scylladb.com/manual/stable/getting-started/installation-common/scylla-web-installer.html" class="button"><i class="icon-download me-2"></i> Install</a>
+        </div>
+    </div>
+    <div class="header-search-box">
+        <i class="dark-theme-toggler icon-theme"></i>
+        <div class="search-box">
+            <ci-search></ci-search>
+        </div>
+        
+            <biel-button class="header-ask-ai" project="ddfdo8m94k" 
+                header-title="ScyllaDB chatbot (beta)"
+                button-position="default"
+                modal-position="bottom-right"
+                button-style="dark">
+                Ask AI
+            </biel-button>
+        
+    </div>
+    <div class="side-nav-toggle">
+    <i class="dark-theme-toggler icon-theme"></i>
+    <div class="side-nav-toggle__button" data-toggle="side-nav">
+        <i class="icon-menu"></i>
+    </div>
+</div>
+</header>
+        <div class="title"></div>
+        <section
+            class="layout  layout--sidebar layout--has-secondary-sidebar ">
+            <div class="content large-order-2">
+                
+                    <div class="pre-content">
+                        <div class="breadcrumbs">
+    <span class="bread__item">
+        <a href="https://docs.scylladb.com"
+           class="bread__highlight">
+            <i class="icon-home"></i> ScyllaDB Docs
+        </a>
+    </span>
+    <span class="bread__item">
+        <a href="https://cpp-driver.docs.scylladb.com"
+           class="bread__highlight">
+            Scylla C/C++ Driver
+        </a>
+    </span>
+    
+        <span class="bread__item">
+            <a href="index.html" class="bread__highlight">
+                API Documentation
+            </a>
+        </span>
+    
+    <span class="bread__item bread__item--last">CassSession</span>
+</div>
+                    </div>
+                
+                
+                <div class="sidebar-right-layout">
+                    <div class="body-container">
+                
+
+                    <div class="content-body">
+                        
+                            
+                        
+                        
+                        <section id="casssession">
+<h1>CassSession<a class="headerlink" href="#casssession" title="Link to this heading">¶</a></h1>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv411CassSession">
+<span id="_CPPv311CassSession"></span><span id="_CPPv211CassSession"></span><span id="CassSession"></span><span class="target" id="struct_cass_session"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CassSession</span></span></span><a class="headerlink" href="#_CPPv411CassSession" title="Link to this definition">¶</a><br /></dt>
+<dd><p>A session object is used to execute queries and maintains cluster state through the control connection. The control connection is used to auto-discover nodes and monitor cluster changes (topology and schema). Each session also maintains multiple pools of connections to cluster nodes which are used to query the cluster.</p>
+<p>Instances of the session object are thread-safe to execute queries. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession16cass_session_newEv">
+<span id="_CPPv3N11CassSession16cass_session_newEv"></span><span id="_CPPv2N11CassSession16cass_session_newEv"></span><span id="CassSession::cass_session_new"></span><span class="target" id="struct_cass_session_1aef9e8b790b26fb33b4506c139c8b0aa7"></span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_new</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession16cass_session_newEv" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Creates a new session.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#struct_cass_session_1a229560729cc11bbcb32562e82030e319"><span class="std std-ref">cass_session_free()</span></a></p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns a session that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession17cass_session_freeEP11CassSession">
+<span id="_CPPv3N11CassSession17cass_session_freeEP11CassSession"></span><span id="_CPPv2N11CassSession17cass_session_freeEP11CassSession"></span><span id="CassSession::cass_session_free__CassSessionP"></span><span class="target" id="struct_cass_session_1a229560729cc11bbcb32562e82030e319"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_free</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession17cass_session_freeEP11CassSession" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Frees a session instance. If the session is still connected it will be synchronously closed before being deallocated.</p>
+<p>Important: Do not free a session in a future callback. Freeing a session in a future callback will cause a deadlock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – <strong>[in]</strong> </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession20cass_session_connectEP11CassSessionPK11CassCluster">
+<span id="_CPPv3N11CassSession20cass_session_connectEP11CassSessionPK11CassCluster"></span><span id="_CPPv2N11CassSession20cass_session_connectEP11CassSessionPK11CassCluster"></span><span id="CassSession::cass_session_connect__CassSessionP.CassClusterCP"></span><span class="target" id="struct_cass_session_1a895c499eaf09024028bacb2331cc6741"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_connect</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="struct.CassCluster.html#_CPPv411CassCluster" title="CassCluster"><span class="n"><span class="pre">CassCluster</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cluster</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession20cass_session_connectEP11CassSessionPK11CassCluster" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Connects a session.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#struct_cass_session_1a1546f13faa053521d08a672241978c17"><span class="std std-ref">cass_session_close()</span></a></p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>cluster</strong> – <strong>[in]</strong> The cluster configuration is copied into the session and is immutable after connection. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession29cass_session_connect_keyspaceEP11CassSessionPK11CassClusterPKc">
+<span id="_CPPv3N11CassSession29cass_session_connect_keyspaceEP11CassSessionPK11CassClusterPKc"></span><span id="_CPPv2N11CassSession29cass_session_connect_keyspaceEP11CassSessionPK11CassClusterPKc"></span><span id="CassSession::cass_session_connect_keyspace__CassSessionP.CassClusterCP.cCP"></span><span class="target" id="struct_cass_session_1a0f2cc859e63e334d46ad23f54e70b154"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_connect_keyspace</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="struct.CassCluster.html#_CPPv411CassCluster" title="CassCluster"><span class="n"><span class="pre">CassCluster</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cluster</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">keyspace</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession29cass_session_connect_keyspaceEP11CassSessionPK11CassClusterPKc" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Connects a session and sets the keyspace.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#struct_cass_session_1a1546f13faa053521d08a672241978c17"><span class="std std-ref">cass_session_close()</span></a></p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>cluster</strong> – <strong>[in]</strong> The cluster configuration is copied into the session and is immutable after connection. </p></li>
+<li><p><strong>keyspace</strong> – <strong>[in]</strong> </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession31cass_session_connect_keyspace_nEP11CassSessionPK11CassClusterPKc6size_t">
+<span id="_CPPv3N11CassSession31cass_session_connect_keyspace_nEP11CassSessionPK11CassClusterPKc6size_t"></span><span id="_CPPv2N11CassSession31cass_session_connect_keyspace_nEP11CassSessionPK11CassClusterPKc6size_t"></span><span id="CassSession::cass_session_connect_keyspace_n__CassSessionP.CassClusterCP.cCP.s"></span><span class="target" id="struct_cass_session_1a3a1aac496e38b279124693f97f90ee45"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_connect_keyspace_n</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="struct.CassCluster.html#_CPPv411CassCluster" title="CassCluster"><span class="n"><span class="pre">CassCluster</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cluster</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">keyspace</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">keyspace_length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession31cass_session_connect_keyspace_nEP11CassSessionPK11CassClusterPKc6size_t" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Same as <a class="reference internal" href="#struct_cass_session_1a0f2cc859e63e334d46ad23f54e70b154"><span class="std std-ref">cass_session_connect_keyspace()</span></a>, but with lengths for string parameters.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#struct_cass_session_1a0f2cc859e63e334d46ad23f54e70b154"><span class="std std-ref">cass_session_connect_keyspace()</span></a></p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>cluster</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>keyspace</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>keyspace_length</strong> – <strong>[in]</strong> </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>same as <a class="reference internal" href="#struct_cass_session_1a0f2cc859e63e334d46ad23f54e70b154"><span class="std std-ref">cass_session_connect_keyspace()</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession18cass_session_closeEP11CassSession">
+<span id="_CPPv3N11CassSession18cass_session_closeEP11CassSession"></span><span id="_CPPv2N11CassSession18cass_session_closeEP11CassSession"></span><span id="CassSession::cass_session_close__CassSessionP"></span><span class="target" id="struct_cass_session_1a1546f13faa053521d08a672241978c17"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_close</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession18cass_session_closeEP11CassSession" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Closes the session instance, outputs a close future which can be used to determine when the session has been terminated. This allows in-flight requests to finish.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – <strong>[in]</strong> </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession20cass_session_prepareEP11CassSessionPKc">
+<span id="_CPPv3N11CassSession20cass_session_prepareEP11CassSessionPKc"></span><span id="_CPPv2N11CassSession20cass_session_prepareEP11CassSessionPKc"></span><span id="CassSession::cass_session_prepare__CassSessionP.cCP"></span><span class="target" id="struct_cass_session_1aa3626dea425f6aa4fe7a24a1c6a3d605"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_prepare</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">query</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession20cass_session_prepareEP11CassSessionPKc" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Create a prepared statement.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>cass_future_get_prepared() </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>query</strong> – <strong>[in]</strong> The query is copied into the statement object; the memory pointed to by this parameter can be freed after this call. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession22cass_session_prepare_nEP11CassSessionPKc6size_t">
+<span id="_CPPv3N11CassSession22cass_session_prepare_nEP11CassSessionPKc6size_t"></span><span id="_CPPv2N11CassSession22cass_session_prepare_nEP11CassSessionPKc6size_t"></span><span id="CassSession::cass_session_prepare_n__CassSessionP.cCP.s"></span><span class="target" id="struct_cass_session_1adb14906a68fe4310e77fcb414ed0d9bf"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_prepare_n</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">query</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">query_length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession22cass_session_prepare_nEP11CassSessionPKc6size_t" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Same as <a class="reference internal" href="#struct_cass_session_1aa3626dea425f6aa4fe7a24a1c6a3d605"><span class="std std-ref">cass_session_prepare()</span></a>, but with lengths for string parameters.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#struct_cass_session_1aa3626dea425f6aa4fe7a24a1c6a3d605"><span class="std std-ref">cass_session_prepare()</span></a></p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>query</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>query_length</strong> – <strong>[in]</strong> </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>same as <a class="reference internal" href="#struct_cass_session_1aa3626dea425f6aa4fe7a24a1c6a3d605"><span class="std std-ref">cass_session_prepare()</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession34cass_session_prepare_from_existingEP11CassSessionP13CassStatement">
+<span id="_CPPv3N11CassSession34cass_session_prepare_from_existingEP11CassSessionP13CassStatement"></span><span id="_CPPv2N11CassSession34cass_session_prepare_from_existingEP11CassSessionP13CassStatement"></span><span id="CassSession::cass_session_prepare_from_existing__CassSessionP.CassStatementP"></span><span class="target" id="struct_cass_session_1a5f07dba61aeebb49a1b6054b3a476c5e"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_prepare_from_existing</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <a class="reference internal" href="struct.CassStatement.html#_CPPv413CassStatement" title="CassStatement"><span class="n"><span class="pre">CassStatement</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">statement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession34cass_session_prepare_from_existingEP11CassSessionP13CassStatement" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Create a prepared statement from an existing statement.</p>
+<p><strong>Note:</strong> Bound statements will inherit the keyspace, consistency, serial consistency, request timeout and retry policy of the existing statement.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>cass_future_get_prepared() </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>statement</strong> – <strong>[in]</strong> </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession20cass_session_executeEP11CassSessionPK13CassStatement">
+<span id="_CPPv3N11CassSession20cass_session_executeEP11CassSessionPK13CassStatement"></span><span id="_CPPv2N11CassSession20cass_session_executeEP11CassSessionPK13CassStatement"></span><span id="CassSession::cass_session_execute__CassSessionP.CassStatementCP"></span><span class="target" id="struct_cass_session_1a0bbda64254415bb48675c66ce3c56999"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_execute</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="struct.CassStatement.html#_CPPv413CassStatement" title="CassStatement"><span class="n"><span class="pre">CassStatement</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">statement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession20cass_session_executeEP11CassSessionPK13CassStatement" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Execute a query or bound statement.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>cass_future_get_result() </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>statement</strong> – <strong>[in]</strong> </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession26cass_session_execute_batchEP11CassSessionPK9CassBatch">
+<span id="_CPPv3N11CassSession26cass_session_execute_batchEP11CassSessionPK9CassBatch"></span><span id="_CPPv2N11CassSession26cass_session_execute_batchEP11CassSessionPK9CassBatch"></span><span id="CassSession::cass_session_execute_batch__CassSessionP.CassBatchCP"></span><span class="target" id="struct_cass_session_1a8a0dd4b44b2c95bc2107e4f5ad5fce4a"></span><a class="reference internal" href="struct.CassFuture.html#_CPPv410CassFuture" title="CassFuture"><span class="n"><span class="pre">CassFuture</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_execute_batch</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="struct.CassBatch.html#_CPPv49CassBatch" title="CassBatch"><span class="n"><span class="pre">CassBatch</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">batch</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession26cass_session_execute_batchEP11CassSessionPK9CassBatch" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Execute a batch statement.</p>
+<p><strong>Requires Apache Cassandra:</strong> 2.0+</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>cass_future_get_result() </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>batch</strong> – <strong>[in]</strong> </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A future that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession28cass_session_get_schema_metaEPK11CassSession">
+<span id="_CPPv3N11CassSession28cass_session_get_schema_metaEPK11CassSession"></span><span id="_CPPv2N11CassSession28cass_session_get_schema_metaEPK11CassSession"></span><span id="CassSession::cass_session_get_schema_meta__CassSessionCP"></span><span class="target" id="struct_cass_session_1a4bcf313991aa2a08117d2f1101327dc6"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="struct.CassSchemaMeta.html#_CPPv414CassSchemaMeta" title="CassSchemaMeta"><span class="n"><span class="pre">CassSchemaMeta</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_get_schema_meta</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession28cass_session_get_schema_metaEPK11CassSession" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Gets a snapshot of this session’s schema metadata. The returned snapshot of the schema metadata is not updated. This function must be called again to retrieve any schema changes since the previous call.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>cass_schema_meta_free() </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – <strong>[in]</strong> </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A schema instance that must be freed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession24cass_session_get_metricsEPK11CassSessionP11CassMetrics">
+<span id="_CPPv3N11CassSession24cass_session_get_metricsEPK11CassSessionP11CassMetrics"></span><span id="_CPPv2N11CassSession24cass_session_get_metricsEPK11CassSessionP11CassMetrics"></span><span id="CassSession::cass_session_get_metrics__CassSessionCP.CassMetricsP"></span><span class="target" id="struct_cass_session_1ac046f03f6febd04196df89d0d909ff43"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_get_metrics</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <a class="reference internal" href="struct.CassMetrics.html#_CPPv411CassMetrics" title="CassMetrics"><span class="n"><span class="pre">CassMetrics</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession24cass_session_get_metricsEPK11CassSessionP11CassMetrics" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Gets a copy of this session’s performance/diagnostic metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>output</strong> – <strong>[out]</strong> </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession46cass_session_get_speculative_execution_metricsEPK11CassSessionP31CassSpeculativeExecutionMetrics">
+<span id="_CPPv3N11CassSession46cass_session_get_speculative_execution_metricsEPK11CassSessionP31CassSpeculativeExecutionMetrics"></span><span id="_CPPv2N11CassSession46cass_session_get_speculative_execution_metricsEPK11CassSessionP31CassSpeculativeExecutionMetrics"></span><span id="CassSession::cass_session_get_speculative_execution_metrics__CassSessionCP.CassSpeculativeExecutionMetricsP"></span><span class="target" id="struct_cass_session_1ab33dcb806e8df9bead8e158ac0a3285f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_get_speculative_execution_metrics</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span>, <a class="reference internal" href="struct.CassSpeculativeExecutionMetrics.html#_CPPv431CassSpeculativeExecutionMetrics" title="CassSpeculativeExecutionMetrics"><span class="n"><span class="pre">CassSpeculativeExecutionMetrics</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession46cass_session_get_speculative_execution_metricsEPK11CassSessionP31CassSpeculativeExecutionMetrics" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Gets a copy of this session’s speculative execution metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – <strong>[in]</strong> </p></li>
+<li><p><strong>output</strong> – <strong>[out]</strong> </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N11CassSession26cass_session_get_client_idEP11CassSession">
+<span id="_CPPv3N11CassSession26cass_session_get_client_idEP11CassSession"></span><span id="_CPPv2N11CassSession26cass_session_get_client_idEP11CassSession"></span><span id="CassSession::cass_session_get_client_id__CassSessionP"></span><span class="target" id="struct_cass_session_1a98ca84b28897f506facef3fb3a86a4d7"></span><a class="reference internal" href="struct.CassUuid.html#_CPPv48CassUuid" title="CassUuid"><span class="n"><span class="pre">CassUuid</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cass_session_get_client_id</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411CassSession" title="CassSession"><span class="n"><span class="pre">CassSession</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">session</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11CassSession26cass_session_get_client_idEP11CassSession" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Get the client id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – <strong>[in]</strong> </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Client id. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+                    </div>
+                    
+                        <div class="post-content">
+                            
+    <div class="feedback-container">
+        <p class="feedback-container__title">Was this page helpful?</p>
+        <span data-tooltip tabindex="1" title="Yes" data-position="top">
+            <button class="feedback-container__button" id="feedback-positive">
+                <i class="feedback-container__icon icon-docs-thumbs-up"></i>
+            </button>
+        </span>
+        <span data-tooltip tabindex="1" title="No" data-position="top">
+            <button class="feedback-container__button" id="feedback-negative">
+                <i class="feedback-container__icon icon-docs-thumbs-down"></i>
+            </button>
+        </span>
+        <div class="feedback-container__message" id="feedback-message"></div>
+    </div>
+
+    <script>
+        function resetFeedbackButtonActive() {
+            const feedbackButtons = document.getElementsByClassName('feedback-container__button');
+            for (let i = 0; i < feedbackButtons.length; i++) {
+                feedbackButtons[i].classList.remove('active');
+            }
+        }
+
+        function showMessage(liked) {
+            const feedbackMessage = document.getElementById('feedback-message');
+            const themeGithubRepository = true;
+            let message = 'Great! Thanks for your feedback.';
+            if (themeGithubRepository && !liked) {
+                message = "Thanks for your feedback! Please don't hesitate to <a href='https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page CassSession&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/api/struct.CassSession%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation'>create an issue</a> if you have any suggestions on how we can improve.";
+            }
+            feedbackMessage.innerHTML = message;
+        }
+
+        function sendGaEvent(liked) {
+            const event_label = liked ? "positive" : "negative";
+            const event = "feedback_" + event_label;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': event,
+            });
+        }
+
+        const positiveFeebackButton = document.getElementById('feedback-positive');
+        const negativeFeedbackButton = document.getElementById('feedback-negative');
+
+        positiveFeebackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(true);
+            showMessage(true);
+            positiveFeebackButton.classList.add('active');
+        });
+
+        negativeFeedbackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(false);
+            showMessage(false);
+            negativeFeedbackButton.classList.add('active');
+        });
+    </script>
+
+                            <div class="content-navigation">
+    <div class="navigation navigation--prev">
+        
+            <a class="navigation__link" href="struct.CassSchemaMeta.html">
+                <button class="navigation__button">
+                    <i class="icon-chevron-left"></i>
+                </button>
+                <div class="navigation__title">
+                    <span class="colored">PREVIOUS</span> <br />CassSchemaMeta
+                </div>
+            </a>
+        
+    </div>
+    <div class="navigation navigation--next">
+        
+            <a class="navigation__link" href="struct.CassSpeculativeExecutionMetrics.html">
+                <div class="navigation__title">
+                    <span class="colored">NEXT</span> <br />CassSpeculativeExecutionMetrics
+                </div>
+                <button class="navigation__button">
+                    <i class="icon-chevron-right"></i>
+                </button>
+            </a>
+        
+    </div>
+</div>
+                            <!-- Post content text -->
+                        </div>
+                    
+                
+                
+                    </div>
+                        <div class="sidebar-right large-order-3">
+                            <div class="secondary-side-nav custom-scroll-bar">
+    
+    <ul class="contribute">
+        <li class="contribute__item">
+            <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page CassSession&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/api/struct.CassSession%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation"
+               target="_blank">
+                <i class="icon-github" aria-hidden="true"></i>Create an issue
+            </a>
+        </li>
+        
+            <li class="contribute__item">
+                <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/edit/master/docs/source/api/struct.CassSession.rst"
+                   target="_blank">
+                    <i class="icon-edit" aria-hidden="true"></i>Edit this page
+                </a>
+            </li>
+        
+    </ul>
+
+    
+        <div class="secondary-side-nav__content">
+            <p class="topic-title">On this page</p>
+            <ul>
+<li><a class="reference internal" href="#">CassSession</a><ul>
+<li><a class="reference internal" href="#_CPPv411CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N11CassSession16cass_session_newEv"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_new()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession17cass_session_freeEP11CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_free()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession20cass_session_connectEP11CassSessionPK11CassCluster"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_connect()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession29cass_session_connect_keyspaceEP11CassSessionPK11CassClusterPKc"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_connect_keyspace()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession31cass_session_connect_keyspace_nEP11CassSessionPK11CassClusterPKc6size_t"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_connect_keyspace_n()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession18cass_session_closeEP11CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_close()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession20cass_session_prepareEP11CassSessionPKc"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_prepare()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession22cass_session_prepare_nEP11CassSessionPKc6size_t"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_prepare_n()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession34cass_session_prepare_from_existingEP11CassSessionP13CassStatement"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_prepare_from_existing()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession20cass_session_executeEP11CassSessionPK13CassStatement"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_execute()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession26cass_session_execute_batchEP11CassSessionPK9CassBatch"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_execute_batch()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession28cass_session_get_schema_metaEPK11CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_get_schema_meta()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession24cass_session_get_metricsEPK11CassSessionP11CassMetrics"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_get_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession46cass_session_get_speculative_execution_metricsEPK11CassSessionP31CassSpeculativeExecutionMetrics"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_get_speculative_execution_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N11CassSession26cass_session_get_client_idEP11CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession::cass_session_get_client_id()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    
+</div>
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="sidebar-left  large-order-1">
+                
+                    
+                        <div id="side-nav" class="side-nav custom-scroll-bar" data-closable data-toggler=".show">
+    <button class="collapsible-button">
+        <i class="icon-docs-menu-collapse"></i>
+    </button>
+    <div class="side-nav-content custom-scroll-bar">
+        <div class="side-nav__title">
+            <a href="https://cpp-driver.docs.scylladb.com">Scylla C/C++ Driver</a>
+        </div>
+        <div class="side-nav__search">
+            <div class="search-box">
+                <ci-search></ci-search>
+            </div>
+        </div>
+        <div class="side-nav__versions"><ul class="dropdown menu scylla-dropdown scylla-dropdown--versions" data-dropdown-menu>
+    <li class="scylla-dropdown__item">
+        <a class="scylla-dropdown__title" href="#">
+            
+                master
+            
+            <i class="chevron icon-docs-chevron-right"></i>
+        </a>
+        <ul class="menu scylla-dropdown__content">
+            
+                
+                    <li>
+                        <a href="struct.CassSession.html">master</a>
+                    </li>
+                
+            
+            
+        </ul>
+    </li>
+</ul></div>
+        <div class="side-nav__content">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">C/C++ Driver for ScyllaDB</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon-chevron-right"></i></label><div class="break"></div><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="struct.CassAggregateMeta.html">CassAggregateMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassAuthenticator.html">CassAuthenticator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassAuthenticatorCallbacks.html">CassAuthenticatorCallbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassBatch.html">CassBatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassCluster.html">CassCluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassCollection.html">CassCollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassColumnMeta.html">CassColumnMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassCustomPayload.html">CassCustomPayload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassDataType.html">CassDataType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassErrorResult.html">CassErrorResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassExecProfile.html">CassExecProfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassFunctionMeta.html">CassFunctionMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassFuture.html">CassFuture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassIndexMeta.html">CassIndexMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassInet.html">CassInet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassIterator.html">CassIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassKeyspaceMeta.html">CassKeyspaceMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassLogMessage.html">CassLogMessage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassMaterializedViewMeta.html">CassMaterializedViewMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassMetrics.html">CassMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassNode.html">CassNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassPrepared.html">CassPrepared</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassResult.html">CassResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassRetryPolicy.html">CassRetryPolicy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassRow.html">CassRow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassSchemaMeta.html">CassSchemaMeta</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">CassSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassSpeculativeExecutionMetrics.html">CassSpeculativeExecutionMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassSsl.html">CassSsl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassStatement.html">CassStatement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassTableMeta.html">CassTableMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassTimestampGen.html">CassTimestampGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassTuple.html">CassTuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassUserType.html">CassUserType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassUuid.html">CassUuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassUuidGen.html">CassUuidGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassValue.html">CassValue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.CassVersion.html">CassVersion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.DseDateRange.html">DseDateRange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.DseDateRangeBound.html">DseDateRangeBound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.DseLineString.html">DseLineString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.DseLineStringIterator.html">DseLineStringIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.DsePolygon.html">DsePolygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct.DsePolygonIterator.html">DsePolygonIterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topics/index.html">Features</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../topics/basics/index.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/batches/index.html">Batches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/binding_parameters/index.html">Binding Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/client_side_timestamps/index.html">Client-side timestamps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/consistency/index.html">Consistency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/data_types/index.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/date_and_time/index.html">The <code class="docutils literal notranslate"><span class="pre">date</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/futures/index.html">Futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/handling_results/index.html">Handling Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/keyspaces/index.html">Keyspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/prepared_statements/index.html">Prepared Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/schema_metadata/index.html">Schema Metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/tuples/index.html">Tuples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/user_defined_types/index.html">User-Defined Types (UDTs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/basics/uuids/index.html">UUIDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/building/index.html">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/client_configuration/index.html">Client Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/cloud/index.html">Cloud</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../topics/configuration/index.html">Configuration</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../topics/configuration/retry_policies/index.html">Retry policies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/execution_profiles/index.html">Execution Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/faq/index.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/installation/index.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/logging/index.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/metrics/index.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/scylla_specific/index.html">Scylla Specific Features</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../topics/security/index.html">Security</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../topics/security/ssl/index.html">SSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../topics/testing/index.html">Testing</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../topics/testing/ccm/index.html">Cassandra Cluster Manager (CCM)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/tracing/index.html">Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topics/dse_features/index.html">DSE Features</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label for="toctree-checkbox-7"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topics/dse_features/authentication/index.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics/dse_features/geotypes/index.html">Geospatial types</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+</div>
+                    
+                
+            </div>
+            
+        </section>
+
+        <footer class="footer">
+    <div class="footer-group">
+        <div class="footer-top">
+            <a class="footer-logo" href="https://www.scylladb.com"></a>
+            <div class="footer-links">
+                <a class="footer-links__link" href="https://docs.scylladb.com/" target="_blank">Docs</a>
+                <a class="footer-links__link" href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html" target="_blank">Tutorials</a>
+                <a class="footer-links__link" href="https://university.scylladb.com/" target="_blank">University</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/contact-us/"
+                    target="_blank">Contact Us</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/" target="_blank">About Us</a>
+            </div>
+            <div class="footer-actions">
+                <a class="footer-actions__link" href="http://slack.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="User Slack channel" data-position="bottom">
+                        <i class="icon-slack"></i>
+                    </span>
+                </a>
+                <a class="footer-actions__link" href="https://forum.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="Community forum" data-position="bottom">
+                        <i class="icon-docs-community"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        
+        <div class="footer-copyright">
+            
+                
+                    &#169; 2025, ScyllaDB. All rights reserved.
+                
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/tos/" target="_blank">Terms of Service</a>
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/privacy/" target="_blank">Privacy Policy</a>
+                | ScyllaDB, and ScyllaDB Cloud, are registered trademarks of ScyllaDB, Inc.
+            
+        </div>
+    
+
+
+        <div class="footer-bottom">
+            
+                <div class="footer-bottom__last-updated">
+                    
+                        Last updated on 23 October 2025.
+                    
+                </div>
+            
+            <div class="footer-bottom__version">
+                Powered by
+                <a class="footer-bottom__link" href="http://sphinx-doc.org/">Sphinx 7.4.7</a> &amp;
+                <a class="footer-bottom__link" href="https://sphinx-theme.scylladb.com/">ScyllaDB Theme 1.8.8</a>
+            </div>
+        </div>
+    </div>
+    
+        <biel-button class="footer-ask-ai" project="ddfdo8m94k" 
+            header-title="ScyllaDB chatbot (beta)"
+            button-position="bottom-right"
+            modal-position="bottom-right"
+            button-style="dark">
+            Ask AI
+        </biel-button>
+    
+</footer>
+
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8P2JP" height="0" width="0"
+                    style="display: none; visibility: hidden"></iframe>
+        </noscript>
+    </body>
+
+</html>

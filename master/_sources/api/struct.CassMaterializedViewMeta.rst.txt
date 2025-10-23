@@ -1,0 +1,5 @@
+CassMaterializedViewMeta
+========================
+
+.. doxygenstruct:: CassMaterializedViewMeta 
+  :project: API

@@ -1,0 +1,5 @@
+CassKeyspaceMeta
+================
+
+.. doxygenstruct:: CassKeyspaceMeta 
+  :project: API

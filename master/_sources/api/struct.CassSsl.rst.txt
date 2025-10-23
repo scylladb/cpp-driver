@@ -1,0 +1,5 @@
+CassSsl
+=======
+
+.. doxygenstruct:: CassSsl 
+  :project: API

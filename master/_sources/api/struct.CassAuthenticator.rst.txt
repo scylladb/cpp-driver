@@ -1,0 +1,5 @@
+CassAuthenticator
+=================
+
+.. doxygenstruct:: CassAuthenticator 
+  :project: API

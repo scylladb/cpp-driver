@@ -1,0 +1,5 @@
+CassAggregateMeta
+=================
+
+.. doxygenstruct:: CassAggregateMeta 
+  :project: API

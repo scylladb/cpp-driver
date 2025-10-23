@@ -1,0 +1,1076 @@
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" style="visibility: hidden;">
+    
+    
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+             Building | ScyllaDB Docs 
+        </title>
+        <meta name="description" content="ScyllaDB is an Apache Cassandra-compatible NoSQL data store that can handle 1 million transactions per second on a single server." />
+        <link rel="icon" href="../../_static/img/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../../_static/img/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="../../_static/img/favicon-228x228.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="../../_static/img/favicon-228x228.png" />
+        <meta name="msapplication-TileImage" href="../../_static/img/favicon-228x228.png" />
+
+        
+            
+        
+
+        
+            
+            <link rel="canonical" href="https://cpp-driver.docs.scylladb.com/master/topics/building/"/>
+        
+
+        <link rel="author" href="mailto:info@scylladb.com" />
+
+        
+            
+        <!-- increase expertrec loading priority-->
+        <link rel="dns-prefetch" href="https://cse.expertrec.com">
+
+        <!-- increase font loading priority -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- async CSS -->
+        <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- no-JS fallback -->
+        <noscript>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+        </noscript>
+
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.esm.js"></script>
+        
+        
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/css/main.css?v=e3ce25dc" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/sphinx_collapse.css?v=226d88b4" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+            
+        
+    
+        
+        
+            
+        <script type="text/javascript" src="../../_static/js/runtime.bundle.js"></script>
+        <script type="text/javascript" src="../../_static/js/main.bundle.js"></script>
+        
+            
+                <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+            
+        
+            
+                <script src="../../_static/doctools.js?v=9a2dae69"></script>
+            
+        
+            
+                <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            
+        
+            
+                <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+            
+        
+            
+                <script src="../../_static/copybutton.js?v=f281be69"></script>
+            
+        
+    
+            
+                <!-- Local meta tags -->
+            
+            
+                <!-- Google Tag Manager docs -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-54NWVS4");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager global -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-T8P2JP");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Expertrec -->
+<script>
+    var id = "e2077224-9ccf-11e9-a0c9-0242ac130002";
+    var ci_search = document.createElement("script");
+    ci_search.type = "text/javascript";
+    ci_search.async = true;
+    ci_search.src = "https://cse.expertrec.com/api/js/ci_common.js?id=" + id;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(ci_search, s);
+</script>
+<!-- End Expertrec -->
+            
+        
+    </head>
+
+    <body class="brand-product">
+        <section class="promo-banner  promo-banner--hide" style="display: none;">
+    <div class="promo-banner-wrapper">
+        
+        <div class="promo-banner__title">ScyllaDB University Live | Free Virtual Training Event</div>
+        <a class="promo-banner__button button button--reverse" href="#"
+           target="_blank" rel="noopener noreferrer">Learn more</a>
+        <button class="promo-banner__close">
+            <i class="icon-cancel"></i>
+        </button>
+    </div>
+</section>
+        <header class="header">
+    <div class="header-logo">
+        <a class="header-logo__img" href="https://scylladb.com/">
+            <img src="../../_static/img/scylladb-logo-horizontal.svg" alt="ScyllaDB Documentation Logo" />
+        </a>
+        <span class="header-logo__bar"></span>
+        <a class="header-logo__text" href="https://docs.scylladb.com/">
+            Documentation
+        </a>
+    </div>
+    <div class="header-navigation">
+        <ul class="dropdown menu scylla-dropdown scylla-dropdown--header" data-dropdown-menu>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Deployments <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/scylla-cloud/">
+                            <i class="icon-docs-cloud"></i>Cloud</a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/">
+                            <i class="icon-server"></i>Server</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Tools <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://manager.docs.scylladb.com/">
+                            <i class="icon-docs-manager"></i>ScyllaDB Manager</a>
+                    </li>
+                    <li>
+                        <a href="https://monitoring.docs.scylladb.com/">
+                            <i class="icon-docs-monitoring"></i>ScyllaDB
+                            Monitoring Stack</a>
+                    </li>
+                    <li>
+                        <a href="https://operator.docs.scylladb.com/">
+                            <i class="icon-docs-operator"></i>ScyllaDB Operator
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Drivers <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/cql-drivers/">
+                            <i class="icon-docs-nsql-guides"></i>CQL Drivers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/dynamo-drivers/">
+                            <i class="icon-docs-alternator"></i>DynamoDB Drivers
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Resources
+                    <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://university.scylladb.com">
+                            <i class="icon-university"></i>
+                            ScyllaDB University
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://forum.scylladb.com">
+                            <i class="icon-docs-community"></i>
+                            Community Forum
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html">
+                            <i class="icon-docs-training"></i>
+                            Tutorials
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="header-button">
+            <a href="https://docs.scylladb.com/manual/stable/getting-started/installation-common/scylla-web-installer.html" class="button"><i class="icon-download me-2"></i> Install</a>
+        </div>
+    </div>
+    <div class="header-search-box">
+        <i class="dark-theme-toggler icon-theme"></i>
+        <div class="search-box">
+            <ci-search></ci-search>
+        </div>
+        
+            <biel-button class="header-ask-ai" project="ddfdo8m94k" 
+                header-title="ScyllaDB chatbot (beta)"
+                button-position="default"
+                modal-position="bottom-right"
+                button-style="dark">
+                Ask AI
+            </biel-button>
+        
+    </div>
+    <div class="side-nav-toggle">
+    <i class="dark-theme-toggler icon-theme"></i>
+    <div class="side-nav-toggle__button" data-toggle="side-nav">
+        <i class="icon-menu"></i>
+    </div>
+</div>
+</header>
+        <div class="title"></div>
+        <section
+            class="layout  layout--sidebar layout--has-secondary-sidebar ">
+            <div class="content large-order-2">
+                
+                    <div class="pre-content">
+                        <div class="breadcrumbs">
+    <span class="bread__item">
+        <a href="https://docs.scylladb.com"
+           class="bread__highlight">
+            <i class="icon-home"></i> ScyllaDB Docs
+        </a>
+    </span>
+    <span class="bread__item">
+        <a href="https://cpp-driver.docs.scylladb.com"
+           class="bread__highlight">
+            Scylla C/C++ Driver
+        </a>
+    </span>
+    
+        <span class="bread__item">
+            <a href="../index.html" class="bread__highlight">
+                Features
+            </a>
+        </span>
+    
+    <span class="bread__item bread__item--last">Building</span>
+</div>
+                    </div>
+                
+                
+                <div class="sidebar-right-layout">
+                    <div class="body-container">
+                
+
+                    <div class="content-body">
+                        
+                            
+                        
+                        
+                        <section id="building">
+<h1>Building<a class="headerlink" href="#building" title="Link to this heading">¶</a></h1>
+<p>The Scylla C/C++ Driver will build on most standard Unix-like and Microsoft
+Windows platforms. Packages are available for the following platforms:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-2.15.2-1.el7.x86_64.rpm">CentOS 7 64-bit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver_2.15.2-1_amd64.deb">Ubuntu 18.04 LTS 64-bit</a></p></li>
+</ul>
+<p>These packages can be successfully installed on other, compatible systems, but
+we do not support such configurations and recommend building from sources
+instead. Please note that although Microsoft Windows and OS X builds are possible,
+ScyllaDB does not support these platforms.</p>
+<section id="compatibility">
+<h2>Compatibility<a class="headerlink" href="#compatibility" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Compilers: GCC 4.1.2+ Clang 3.4+, and MSVC 2012+</p></li>
+</ul>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h2>
+<p>The C/C++ driver depends on the following software:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.cmake.org/download">CMake</a> v2.6.4+</p></li>
+<li><p><a class="reference external" href="http://libuv.org">libuv</a> 1.x</p></li>
+<li><p><a class="reference external" href="https://www.openssl.org">OpenSSL</a> v1.0.x or v1.1.x *</p></li>
+<li><p><a class="reference external" href="https://www.zlib.net">zlib</a> v1.x **</p></li>
+<li><p>Kerberos v5 (<a class="reference external" href="https://www.h5l.org">Heimdal</a> or <a class="reference external" href="https://web.mit.edu/kerberos">MIT</a>) ***</p></li>
+</ul>
+<p><strong>*</strong> Use the <code class="docutils literal notranslate"><span class="pre">CASS_USE_OPENSSL</span></code> CMake option to enable/disable OpenSSL
+support. Disabling this option will disable SSL/TLS protocol support
+within the driver; defaults to <code class="docutils literal notranslate"><span class="pre">On</span></code>.</p>
+<p><strong>**</strong> Use the <code class="docutils literal notranslate"><span class="pre">CASS_USE_ZLIB</span></code> CMake option to enable/disable zlib support.
+Defaults to <code class="docutils literal notranslate"><span class="pre">On</span></code>.</p>
+<p><strong>***</strong> Use the <code class="docutils literal notranslate"><span class="pre">CASS_USE_KERBEROS</span></code> CMake option to enable/disable Kerberos
+support. Enabling this option will enable Kerberos authentication
+protocol within the driver (currently unusupproted by Scylla);
+defaults to <code class="docutils literal notranslate"><span class="pre">Off</span></code>.</p>
+</section>
+<section id="linux-mac-os">
+<h2>Linux/Mac OS<a class="headerlink" href="#linux-mac-os" title="Link to this heading">¶</a></h2>
+<p>The driver is known to build on CentOS/RHEL 6/7/8, Mac OS X 10.10/10.11 (Yosemite
+and El Capitan), Mac OS 10.12/10.13 (Sierra and High Sierra), and Ubuntu
+14.04/16.04/18.04 LTS.</p>
+<p><strong>NOTE</strong>: The driver will also build on most standard Unix-like systems using
+GCC 4.1.2+ or Clang 3.4+.</p>
+<section id="installing-dependencies">
+<h3>Installing dependencies<a class="headerlink" href="#installing-dependencies" title="Link to this heading">¶</a></h3>
+<section id="initial-environment-setup">
+<h4>Initial environment setup<a class="headerlink" href="#initial-environment-setup" title="Link to this heading">¶</a></h4>
+<section id="centos-rhel-yum">
+<h5>CentOS/RHEL (Yum)<a class="headerlink" href="#centos-rhel-yum" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>automake<span class="w"> </span>cmake<span class="w"> </span>gcc-c++<span class="w"> </span>git<span class="w"> </span>libtool
+</pre></div>
+</div>
+</section>
+<section id="ubuntu-apt">
+<h5>Ubuntu (APT)<a class="headerlink" href="#ubuntu-apt" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>update
+apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>git
+</pre></div>
+</div>
+</section>
+<section id="mac-os-brew">
+<h5>Mac OS (Brew)<a class="headerlink" href="#mac-os-brew" title="Link to this heading">¶</a></h5>
+<p><a class="reference external" href="https://brew.sh">Homebrew</a> (or brew) is a free and open-source software package
+management system that simplifies the installation of software on the Mac OS
+operating system. Ensure <a class="reference external" href="https://brew.sh">Homebrew is installed</a> before proceeding.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>update
+brew<span class="w"> </span>upgrade
+brew<span class="w"> </span>install<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>cmake<span class="w"> </span>libtool
+</pre></div>
+</div>
+</section>
+</section>
+<section id="kerberos">
+<h4>Kerberos<a class="headerlink" href="#kerberos" title="Link to this heading">¶</a></h4>
+<section id="id1">
+<h5>CentOS/RHEL (Yum)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>krb5-devel
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h5>Ubuntu (APT)<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>libkrb5-dev
+</pre></div>
+</div>
+</section>
+</section>
+<section id="libuv">
+<h4>libuv<a class="headerlink" href="#libuv" title="Link to this heading">¶</a></h4>
+<p>libuv v1.x should be used in order to ensure all features of the C/C++ driver
+are available. When using a package manager for your operating system make sure
+you install v1.x. Recent package repositories tend to have it available.</p>
+<section id="ubuntu">
+<h5>Ubuntu<a class="headerlink" href="#ubuntu" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libuv-dev
+</pre></div>
+</div>
+</section>
+<section id="centos-rhel">
+<h5>CentOS/RHEL<a class="headerlink" href="#centos-rhel" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>libuv-devel
+</pre></div>
+</div>
+<p>If your package manager is not able to locate <code class="docutils literal notranslate"><span class="pre">libuv</span></code>, you might still be able to
+install it from EPEL:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>epel-release
+sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libuv-devel
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h5>Mac OS (Brew)<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>libuv
+</pre></div>
+</div>
+</section>
+<section id="manually-build-and-install">
+<h5>Manually build and install<a class="headerlink" href="#manually-build-and-install" title="Link to this heading">¶</a></h5>
+<p><em>The following procedures should be performed if packages are not available for
+your system.</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">pushd</span><span class="w"> </span>/tmp
+wget<span class="w"> </span>http://dist.libuv.org/dist/v1.34.0/libuv-v1.35.0.tar.gz
+tar<span class="w"> </span>xzf<span class="w"> </span>libuv-v1.35.0.tar.gz
+<span class="nb">pushd</span><span class="w"> </span>libuv-v1.35.0
+sh<span class="w"> </span>autogen.sh
+./configure
+make<span class="w"> </span>install
+<span class="nb">popd</span>
+<span class="nb">popd</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="openssl">
+<h4>OpenSSL<a class="headerlink" href="#openssl" title="Link to this heading">¶</a></h4>
+<section id="centos-yum">
+<h5>CentOS (Yum)<a class="headerlink" href="#centos-yum" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>openssl-devel
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h5>Ubuntu (APT)<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>libssl-dev
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h5>Mac OS (Brew)<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>openssl
+</pre></div>
+</div>
+<p><strong>Note</strong>: For Mac OS X 10.11 (El Capitan) and Mac OS 10.12/10.13 (Sierra and
+High Sierra) a link needs to be created in order to make OpenSSL
+available to the building libraries:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>link<span class="w"> </span>--force<span class="w"> </span>openssl
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h5>Manually build and install<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">pushd</span><span class="w"> </span>/tmp
+wget<span class="w"> </span>--no-check-certificate<span class="w"> </span>https://www.openssl.org/source/openssl-1.0.2u.tar.gz
+tar<span class="w"> </span>xzf<span class="w"> </span>openssl-1.0.2u.tar.gz
+<span class="nb">pushd</span><span class="w"> </span>openssl-1.0.2u
+<span class="nv">CFLAGS</span><span class="o">=</span>-fpic<span class="w"> </span>./config<span class="w"> </span>shared
+make<span class="w"> </span>install
+<span class="nb">popd</span>
+<span class="nb">popd</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="zlib">
+<h4>zlib<a class="headerlink" href="#zlib" title="Link to this heading">¶</a></h4>
+<section id="id7">
+<h5>CentOS (Yum)<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>zlib-devel
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h5>Ubuntu (APT)<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>zlib1g-dev
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h5>Mac OS (Brew)<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>zlib
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h5>Manually build and install<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">pushd</span><span class="w"> </span>/tmp
+wget<span class="w"> </span>--no-check-certificate<span class="w"> </span>https://www.zlib.net/zlib-1.2.11.tar.gz
+tar<span class="w"> </span>xzf<span class="w"> </span>zlib-1.2.11.tar.gz
+<span class="nb">pushd</span><span class="w"> </span>zlib-1.2.11
+./configure
+make<span class="w"> </span>install
+<span class="nb">popd</span>
+<span class="nb">popd</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="building-and-installing-the-c-c-driver">
+<h3>Building and installing the C/C++ driver<a class="headerlink" href="#building-and-installing-the-c-c-driver" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>build
+<span class="nb">pushd</span><span class="w"> </span>build
+cmake<span class="w"> </span>..
+make
+make<span class="w"> </span>install
+<span class="nb">popd</span>
+</pre></div>
+</div>
+<section id="building-examples-optional">
+<h4>Building examples (optional)<a class="headerlink" href="#building-examples-optional" title="Link to this heading">¶</a></h4>
+<p>Examples are not built by default and need to be enabled. Update your <a class="reference external" href="http://www.cmake.org/download">CMake</a>
+line to build examples.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-DCASS_BUILD_EXAMPLES<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+</section>
+<section id="building-tests-optional">
+<h4>Building tests (optional)<a class="headerlink" href="#building-tests-optional" title="Link to this heading">¶</a></h4>
+<p>Tests (integration and unit) are not built by default and need to be enabled.</p>
+<section id="all-tests">
+<h5>All tests<a class="headerlink" href="#all-tests" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-DCASS_BUILD_TESTS<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+<p><strong>Note</strong>: This will build both the integration and unit tests</p>
+</section>
+<section id="integration-tests">
+<h5>Integration tests<a class="headerlink" href="#integration-tests" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-DCASS_BUILD_INTEGRATION_TESTS<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+</section>
+<section id="unit-tests">
+<h5>Unit tests<a class="headerlink" href="#unit-tests" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-DCASS_BUILD_UNIT_TESTS<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Link to this heading">¶</a></h2>
+<p>The driver is known to build with Visual Studio 2010, 2012, 2013, 2015, 2017, and 2019.</p>
+<section id="obtaining-build-dependencies">
+<h3>Obtaining build dependencies<a class="headerlink" href="#obtaining-build-dependencies" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Download and install <a class="reference external" href="http://gnuwin32.sourceforge.net/downlinks/bison.php">Bison</a></p>
+<ul>
+<li><p>Make sure Bison is in your system PATH and not installed in a directory with
+spaces (e.g. <code class="docutils literal notranslate"><span class="pre">%SYSTEMDRIVE%\GnuWin32</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Download and install <a class="reference external" href="http://www.cmake.org/download">CMake</a></p>
+<ul>
+<li><p>Make sure to select the option “Add CMake to the system PATH for all users”
+or “Add CMake to the system PATH for current user”</p></li>
+</ul>
+</li>
+<li><p>Download and install <a class="reference external" href="http://strawberryperl.com">Strawberry Perl</a> or <a class="reference external" href="https://www.perl.org/get.html#win32">ActiveState Perl</a></p>
+<ul>
+<li><p>Make sure to select the option “Add Perl to PATH environment variable”</p></li>
+</ul>
+</li>
+<li><p>Download and install Kerberos for Windows v4.0.1</p>
+<ul>
+<li><p><a class="reference external" href="http://web.mit.edu/kerberos/dist/kfw/4.0/kfw-4.0.1-i386.msi">32-bit</a></p></li>
+<li><p><a class="reference external" href="http://web.mit.edu/kerberos/dist/kfw/4.0/kfw-4.0.1-amd64.msi">64-bit</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="building-the-driver">
+<h3>Building the driver<a class="headerlink" href="#building-the-driver" title="Link to this heading">¶</a></h3>
+<p>First you will need to open a “Command Prompt” to execute the CMake commands.</p>
+<section id="building-the-c-c-driver">
+<h4>Building the C/C++ driver<a class="headerlink" href="#building-the-c-c-driver" title="Link to this heading">¶</a></h4>
+<p>Supported generators are:</p>
+<ul class="simple">
+<li><p>Visual Studio 10 2010</p></li>
+<li><p>Visual Studio 11 2012</p></li>
+<li><p>Visual Studio 12 2013</p></li>
+<li><p>Visual Studio 14 2015</p></li>
+<li><p>Visual Studio 15 2017</p></li>
+<li><p>Visual Studio 16 2019</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>build
+<span class="nb">pushd</span><span class="w"> </span>build
+cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Visual Studio 16 2019&quot;</span><span class="w"> </span>-A<span class="w"> </span>x64<span class="w"> </span>..
+cmake<span class="w"> </span>--build<span class="w"> </span>.
+<span class="nb">popd</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: To build 32-bit binaries/libraries use <code class="docutils literal notranslate"><span class="pre">-A</span> <span class="pre">Win32</span></code>.</p>
+</section>
+<section id="id11">
+<h4>Building examples (optional)<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h4>
+<p>Examples are not built by default and need to be enabled. Update your <a class="reference external" href="http://www.cmake.org/download">CMake</a>
+line to build examples.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Visual Studio 16 2019&quot;</span><span class="w"> </span>-A<span class="w"> </span>x64<span class="w"> </span>-DCASS_BUILD_EXAMPLES<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h4>Building tests (optional)<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h4>
+<p>Tests (integration and unit) are not built by default and need to be enabled.</p>
+<section id="id13">
+<h5>All tests<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Visual Studio 16 2019&quot;</span><span class="w"> </span>-A<span class="w"> </span>x64<span class="w"> </span>-DCASS_BUILD_TESTS<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+<p><strong>Note</strong>: This will build both the integration and unit tests</p>
+</section>
+<section id="id14">
+<h5>Integration tests<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Visual Studio 16 2019&quot;</span><span class="w"> </span>-A<span class="w"> </span>x64<span class="w"> </span>-DCASS_BUILD_INTEGRATION_TESTS<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h5>Unit tests<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;Visual Studio 16 2019&quot;</span><span class="w"> </span>-A<span class="w"> </span>x64<span class="w"> </span>-DCASS_BUILD_UNIT_TESTS<span class="o">=</span>On<span class="w"> </span>..
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+
+                    </div>
+                    
+                        <div class="post-content">
+                            
+    <div class="feedback-container">
+        <p class="feedback-container__title">Was this page helpful?</p>
+        <span data-tooltip tabindex="1" title="Yes" data-position="top">
+            <button class="feedback-container__button" id="feedback-positive">
+                <i class="feedback-container__icon icon-docs-thumbs-up"></i>
+            </button>
+        </span>
+        <span data-tooltip tabindex="1" title="No" data-position="top">
+            <button class="feedback-container__button" id="feedback-negative">
+                <i class="feedback-container__icon icon-docs-thumbs-down"></i>
+            </button>
+        </span>
+        <div class="feedback-container__message" id="feedback-message"></div>
+    </div>
+
+    <script>
+        function resetFeedbackButtonActive() {
+            const feedbackButtons = document.getElementsByClassName('feedback-container__button');
+            for (let i = 0; i < feedbackButtons.length; i++) {
+                feedbackButtons[i].classList.remove('active');
+            }
+        }
+
+        function showMessage(liked) {
+            const feedbackMessage = document.getElementById('feedback-message');
+            const themeGithubRepository = true;
+            let message = 'Great! Thanks for your feedback.';
+            if (themeGithubRepository && !liked) {
+                message = "Thanks for your feedback! Please don't hesitate to <a href='https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page Building&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/topics/building/index%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation'>create an issue</a> if you have any suggestions on how we can improve.";
+            }
+            feedbackMessage.innerHTML = message;
+        }
+
+        function sendGaEvent(liked) {
+            const event_label = liked ? "positive" : "negative";
+            const event = "feedback_" + event_label;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': event,
+            });
+        }
+
+        const positiveFeebackButton = document.getElementById('feedback-positive');
+        const negativeFeedbackButton = document.getElementById('feedback-negative');
+
+        positiveFeebackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(true);
+            showMessage(true);
+            positiveFeebackButton.classList.add('active');
+        });
+
+        negativeFeedbackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(false);
+            showMessage(false);
+            negativeFeedbackButton.classList.add('active');
+        });
+    </script>
+
+                            <div class="content-navigation">
+    <div class="navigation navigation--prev">
+        
+            <a class="navigation__link" href="../basics/uuids/index.html">
+                <button class="navigation__button">
+                    <i class="icon-chevron-left"></i>
+                </button>
+                <div class="navigation__title">
+                    <span class="colored">PREVIOUS</span> <br />UUIDs
+                </div>
+            </a>
+        
+    </div>
+    <div class="navigation navigation--next">
+        
+            <a class="navigation__link" href="../client_configuration/index.html">
+                <div class="navigation__title">
+                    <span class="colored">NEXT</span> <br />Client Configuration
+                </div>
+                <button class="navigation__button">
+                    <i class="icon-chevron-right"></i>
+                </button>
+            </a>
+        
+    </div>
+</div>
+                            <!-- Post content text -->
+                        </div>
+                    
+                
+                
+                    </div>
+                        <div class="sidebar-right large-order-3">
+                            <div class="secondary-side-nav custom-scroll-bar">
+    
+    <ul class="contribute">
+        <li class="contribute__item">
+            <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page Building&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/topics/building/index%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation"
+               target="_blank">
+                <i class="icon-github" aria-hidden="true"></i>Create an issue
+            </a>
+        </li>
+        
+            <li class="contribute__item">
+                <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/edit/master/docs/source/topics/building/index.md"
+                   target="_blank">
+                    <i class="icon-edit" aria-hidden="true"></i>Edit this page
+                </a>
+            </li>
+        
+    </ul>
+
+    
+        <div class="secondary-side-nav__content">
+            <p class="topic-title">On this page</p>
+            <ul>
+<li><a class="reference internal" href="#">Building</a><ul>
+<li><a class="reference internal" href="#compatibility">Compatibility</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#linux-mac-os">Linux/Mac OS</a><ul>
+<li><a class="reference internal" href="#installing-dependencies">Installing dependencies</a><ul>
+<li><a class="reference internal" href="#initial-environment-setup">Initial environment setup</a><ul>
+<li><a class="reference internal" href="#centos-rhel-yum">CentOS/RHEL (Yum)</a></li>
+<li><a class="reference internal" href="#ubuntu-apt">Ubuntu (APT)</a></li>
+<li><a class="reference internal" href="#mac-os-brew">Mac OS (Brew)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kerberos">Kerberos</a><ul>
+<li><a class="reference internal" href="#id1">CentOS/RHEL (Yum)</a></li>
+<li><a class="reference internal" href="#id2">Ubuntu (APT)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#libuv">libuv</a><ul>
+<li><a class="reference internal" href="#ubuntu">Ubuntu</a></li>
+<li><a class="reference internal" href="#centos-rhel">CentOS/RHEL</a></li>
+<li><a class="reference internal" href="#id3">Mac OS (Brew)</a></li>
+<li><a class="reference internal" href="#manually-build-and-install">Manually build and install</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#openssl">OpenSSL</a><ul>
+<li><a class="reference internal" href="#centos-yum">CentOS (Yum)</a></li>
+<li><a class="reference internal" href="#id4">Ubuntu (APT)</a></li>
+<li><a class="reference internal" href="#id5">Mac OS (Brew)</a></li>
+<li><a class="reference internal" href="#id6">Manually build and install</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zlib">zlib</a><ul>
+<li><a class="reference internal" href="#id7">CentOS (Yum)</a></li>
+<li><a class="reference internal" href="#id8">Ubuntu (APT)</a></li>
+<li><a class="reference internal" href="#id9">Mac OS (Brew)</a></li>
+<li><a class="reference internal" href="#id10">Manually build and install</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-and-installing-the-c-c-driver">Building and installing the C/C++ driver</a><ul>
+<li><a class="reference internal" href="#building-examples-optional">Building examples (optional)</a></li>
+<li><a class="reference internal" href="#building-tests-optional">Building tests (optional)</a><ul>
+<li><a class="reference internal" href="#all-tests">All tests</a></li>
+<li><a class="reference internal" href="#integration-tests">Integration tests</a></li>
+<li><a class="reference internal" href="#unit-tests">Unit tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#windows">Windows</a><ul>
+<li><a class="reference internal" href="#obtaining-build-dependencies">Obtaining build dependencies</a></li>
+<li><a class="reference internal" href="#building-the-driver">Building the driver</a><ul>
+<li><a class="reference internal" href="#building-the-c-c-driver">Building the C/C++ driver</a></li>
+<li><a class="reference internal" href="#id11">Building examples (optional)</a></li>
+<li><a class="reference internal" href="#id12">Building tests (optional)</a><ul>
+<li><a class="reference internal" href="#id13">All tests</a></li>
+<li><a class="reference internal" href="#id14">Integration tests</a></li>
+<li><a class="reference internal" href="#id15">Unit tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    
+</div>
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="sidebar-left  large-order-1">
+                
+                    
+                        <div id="side-nav" class="side-nav custom-scroll-bar" data-closable data-toggler=".show">
+    <button class="collapsible-button">
+        <i class="icon-docs-menu-collapse"></i>
+    </button>
+    <div class="side-nav-content custom-scroll-bar">
+        <div class="side-nav__title">
+            <a href="https://cpp-driver.docs.scylladb.com">Scylla C/C++ Driver</a>
+        </div>
+        <div class="side-nav__search">
+            <div class="search-box">
+                <ci-search></ci-search>
+            </div>
+        </div>
+        <div class="side-nav__versions"><ul class="dropdown menu scylla-dropdown scylla-dropdown--versions" data-dropdown-menu>
+    <li class="scylla-dropdown__item">
+        <a class="scylla-dropdown__title" href="#">
+            
+                master
+            
+            <i class="chevron icon-docs-chevron-right"></i>
+        </a>
+        <ul class="menu scylla-dropdown__content">
+            
+                
+                    <li>
+                        <a href="index.html">master</a>
+                    </li>
+                
+            
+            
+        </ul>
+    </li>
+</ul></div>
+        <div class="side-nav__content">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">C/C++ Driver for ScyllaDB</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassAggregateMeta.html">CassAggregateMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassAuthenticator.html">CassAuthenticator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassAuthenticatorCallbacks.html">CassAuthenticatorCallbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassBatch.html">CassBatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassCluster.html">CassCluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassCollection.html">CassCollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassColumnMeta.html">CassColumnMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassCustomPayload.html">CassCustomPayload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassDataType.html">CassDataType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassErrorResult.html">CassErrorResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassExecProfile.html">CassExecProfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassFunctionMeta.html">CassFunctionMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassFuture.html">CassFuture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassIndexMeta.html">CassIndexMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassInet.html">CassInet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassIterator.html">CassIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassKeyspaceMeta.html">CassKeyspaceMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassLogMessage.html">CassLogMessage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassMaterializedViewMeta.html">CassMaterializedViewMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassMetrics.html">CassMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassNode.html">CassNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassPrepared.html">CassPrepared</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassResult.html">CassResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassRetryPolicy.html">CassRetryPolicy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassRow.html">CassRow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSchemaMeta.html">CassSchemaMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSession.html">CassSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSpeculativeExecutionMetrics.html">CassSpeculativeExecutionMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSsl.html">CassSsl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassStatement.html">CassStatement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassTableMeta.html">CassTableMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassTimestampGen.html">CassTimestampGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassTuple.html">CassTuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassUserType.html">CassUserType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassUuid.html">CassUuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassUuidGen.html">CassUuidGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassValue.html">CassValue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassVersion.html">CassVersion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseDateRange.html">DseDateRange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseDateRangeBound.html">DseDateRangeBound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseLineString.html">DseLineString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseLineStringIterator.html">DseLineStringIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DsePolygon.html">DsePolygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DsePolygonIterator.html">DsePolygonIterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Features</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon-chevron-right"></i></label><div class="break"></div><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basics/index.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/batches/index.html">Batches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/binding_parameters/index.html">Binding Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/client_side_timestamps/index.html">Client-side timestamps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/consistency/index.html">Consistency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data_types/index.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/date_and_time/index.html">The <code class="docutils literal notranslate"><span class="pre">date</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/futures/index.html">Futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/handling_results/index.html">Handling Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/keyspaces/index.html">Keyspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/prepared_statements/index.html">Prepared Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/schema_metadata/index.html">Schema Metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/tuples/index.html">Tuples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/user_defined_types/index.html">User-Defined Types (UDTs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/uuids/index.html">UUIDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../client_configuration/index.html">Client Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud/index.html">Cloud</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../configuration/index.html">Configuration</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../configuration/retry_policies/index.html">Retry policies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../execution_profiles/index.html">Execution Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logging/index.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/index.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scylla_specific/index.html">Scylla Specific Features</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../security/index.html">Security</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../security/ssl/index.html">SSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../testing/index.html">Testing</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../testing/ccm/index.html">Cassandra Cluster Manager (CCM)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tracing/index.html">Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dse_features/index.html">DSE Features</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label for="toctree-checkbox-7"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dse_features/authentication/index.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dse_features/geotypes/index.html">Geospatial types</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+</div>
+                    
+                
+            </div>
+            
+        </section>
+
+        <footer class="footer">
+    <div class="footer-group">
+        <div class="footer-top">
+            <a class="footer-logo" href="https://www.scylladb.com"></a>
+            <div class="footer-links">
+                <a class="footer-links__link" href="https://docs.scylladb.com/" target="_blank">Docs</a>
+                <a class="footer-links__link" href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html" target="_blank">Tutorials</a>
+                <a class="footer-links__link" href="https://university.scylladb.com/" target="_blank">University</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/contact-us/"
+                    target="_blank">Contact Us</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/" target="_blank">About Us</a>
+            </div>
+            <div class="footer-actions">
+                <a class="footer-actions__link" href="http://slack.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="User Slack channel" data-position="bottom">
+                        <i class="icon-slack"></i>
+                    </span>
+                </a>
+                <a class="footer-actions__link" href="https://forum.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="Community forum" data-position="bottom">
+                        <i class="icon-docs-community"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        
+        <div class="footer-copyright">
+            
+                
+                    &#169; 2025, ScyllaDB. All rights reserved.
+                
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/tos/" target="_blank">Terms of Service</a>
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/privacy/" target="_blank">Privacy Policy</a>
+                | ScyllaDB, and ScyllaDB Cloud, are registered trademarks of ScyllaDB, Inc.
+            
+        </div>
+    
+
+
+        <div class="footer-bottom">
+            
+                <div class="footer-bottom__last-updated">
+                    
+                        Last updated on 23 October 2025.
+                    
+                </div>
+            
+            <div class="footer-bottom__version">
+                Powered by
+                <a class="footer-bottom__link" href="http://sphinx-doc.org/">Sphinx 7.4.7</a> &amp;
+                <a class="footer-bottom__link" href="https://sphinx-theme.scylladb.com/">ScyllaDB Theme 1.8.8</a>
+            </div>
+        </div>
+    </div>
+    
+        <biel-button class="footer-ask-ai" project="ddfdo8m94k" 
+            header-title="ScyllaDB chatbot (beta)"
+            button-position="bottom-right"
+            modal-position="bottom-right"
+            button-style="dark">
+            Ask AI
+        </biel-button>
+    
+</footer>
+
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8P2JP" height="0" width="0"
+                    style="display: none; visibility: hidden"></iframe>
+        </noscript>
+    </body>
+
+</html>

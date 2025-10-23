@@ -1,0 +1,974 @@
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" style="visibility: hidden;">
+    
+    
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+             Features | ScyllaDB Docs 
+        </title>
+        <meta name="description" content="ScyllaDB is an Apache Cassandra-compatible NoSQL data store that can handle 1 million transactions per second on a single server." />
+        <link rel="icon" href="../_static/img/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../_static/img/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="../_static/img/favicon-228x228.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="../_static/img/favicon-228x228.png" />
+        <meta name="msapplication-TileImage" href="../_static/img/favicon-228x228.png" />
+
+        
+            
+        
+
+        
+            
+            <link rel="canonical" href="https://cpp-driver.docs.scylladb.com/master/topics/"/>
+        
+
+        <link rel="author" href="mailto:info@scylladb.com" />
+
+        
+            
+        <!-- increase expertrec loading priority-->
+        <link rel="dns-prefetch" href="https://cse.expertrec.com">
+
+        <!-- increase font loading priority -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- async CSS -->
+        <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- no-JS fallback -->
+        <noscript>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+        </noscript>
+
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.esm.js"></script>
+        
+        
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/css/main.css?v=e3ce25dc" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/sphinx_collapse.css?v=226d88b4" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+            
+        
+    
+        
+        
+            
+        <script type="text/javascript" src="../_static/js/runtime.bundle.js"></script>
+        <script type="text/javascript" src="../_static/js/main.bundle.js"></script>
+        
+            
+                <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+            
+        
+            
+                <script src="../_static/doctools.js?v=9a2dae69"></script>
+            
+        
+            
+                <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            
+        
+            
+                <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+            
+        
+            
+                <script src="../_static/copybutton.js?v=f281be69"></script>
+            
+        
+    
+            
+                <!-- Local meta tags -->
+            
+            
+                <!-- Google Tag Manager docs -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-54NWVS4");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager global -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-T8P2JP");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Expertrec -->
+<script>
+    var id = "e2077224-9ccf-11e9-a0c9-0242ac130002";
+    var ci_search = document.createElement("script");
+    ci_search.type = "text/javascript";
+    ci_search.async = true;
+    ci_search.src = "https://cse.expertrec.com/api/js/ci_common.js?id=" + id;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(ci_search, s);
+</script>
+<!-- End Expertrec -->
+            
+        
+    </head>
+
+    <body class="brand-product">
+        <section class="promo-banner  promo-banner--hide" style="display: none;">
+    <div class="promo-banner-wrapper">
+        
+        <div class="promo-banner__title">ScyllaDB University Live | Free Virtual Training Event</div>
+        <a class="promo-banner__button button button--reverse" href="#"
+           target="_blank" rel="noopener noreferrer">Learn more</a>
+        <button class="promo-banner__close">
+            <i class="icon-cancel"></i>
+        </button>
+    </div>
+</section>
+        <header class="header">
+    <div class="header-logo">
+        <a class="header-logo__img" href="https://scylladb.com/">
+            <img src="../_static/img/scylladb-logo-horizontal.svg" alt="ScyllaDB Documentation Logo" />
+        </a>
+        <span class="header-logo__bar"></span>
+        <a class="header-logo__text" href="https://docs.scylladb.com/">
+            Documentation
+        </a>
+    </div>
+    <div class="header-navigation">
+        <ul class="dropdown menu scylla-dropdown scylla-dropdown--header" data-dropdown-menu>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Deployments <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/scylla-cloud/">
+                            <i class="icon-docs-cloud"></i>Cloud</a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/">
+                            <i class="icon-server"></i>Server</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Tools <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://manager.docs.scylladb.com/">
+                            <i class="icon-docs-manager"></i>ScyllaDB Manager</a>
+                    </li>
+                    <li>
+                        <a href="https://monitoring.docs.scylladb.com/">
+                            <i class="icon-docs-monitoring"></i>ScyllaDB
+                            Monitoring Stack</a>
+                    </li>
+                    <li>
+                        <a href="https://operator.docs.scylladb.com/">
+                            <i class="icon-docs-operator"></i>ScyllaDB Operator
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Drivers <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/cql-drivers/">
+                            <i class="icon-docs-nsql-guides"></i>CQL Drivers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/dynamo-drivers/">
+                            <i class="icon-docs-alternator"></i>DynamoDB Drivers
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Resources
+                    <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://university.scylladb.com">
+                            <i class="icon-university"></i>
+                            ScyllaDB University
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://forum.scylladb.com">
+                            <i class="icon-docs-community"></i>
+                            Community Forum
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html">
+                            <i class="icon-docs-training"></i>
+                            Tutorials
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="header-button">
+            <a href="https://docs.scylladb.com/manual/stable/getting-started/installation-common/scylla-web-installer.html" class="button"><i class="icon-download me-2"></i> Install</a>
+        </div>
+    </div>
+    <div class="header-search-box">
+        <i class="dark-theme-toggler icon-theme"></i>
+        <div class="search-box">
+            <ci-search></ci-search>
+        </div>
+        
+            <biel-button class="header-ask-ai" project="ddfdo8m94k" 
+                header-title="ScyllaDB chatbot (beta)"
+                button-position="default"
+                modal-position="bottom-right"
+                button-style="dark">
+                Ask AI
+            </biel-button>
+        
+    </div>
+    <div class="side-nav-toggle">
+    <i class="dark-theme-toggler icon-theme"></i>
+    <div class="side-nav-toggle__button" data-toggle="side-nav">
+        <i class="icon-menu"></i>
+    </div>
+</div>
+</header>
+        <div class="title"></div>
+        <section
+            class="layout  layout--sidebar layout--has-secondary-sidebar ">
+            <div class="content large-order-2">
+                
+                    <div class="pre-content">
+                        <div class="breadcrumbs">
+    <span class="bread__item">
+        <a href="https://docs.scylladb.com"
+           class="bread__highlight">
+            <i class="icon-home"></i> ScyllaDB Docs
+        </a>
+    </span>
+    <span class="bread__item">
+        <a href="https://cpp-driver.docs.scylladb.com"
+           class="bread__highlight">
+            Scylla C/C++ Driver
+        </a>
+    </span>
+    
+    <span class="bread__item bread__item--last">Features</span>
+</div>
+                    </div>
+                
+                
+                <div class="sidebar-right-layout">
+                    <div class="body-container">
+                
+
+                    <div class="content-body">
+                        
+                            
+                        
+                        
+                        <section id="features">
+<h1>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h1>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h3>
+<section id="dependencies">
+<h4>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h4>
+<p>Packages for the dependencies: libuv (1.x), OpenSSL, zlib can be installed
+from distribution’s repositories and/or EPEL. Please note that <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> can
+handle the dependencies by itself, therefore this step can likely be omitted
+on Ubuntu.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Ubuntu 18.04:</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libuv1<span class="w"> </span>openssl<span class="w"> </span>libssl<span class="w"> </span>zlib1g
+
+<span class="c1"># Example: CentOS 7:</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>epel-release
+sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libuv<span class="w"> </span>openssl<span class="w"> </span>zlib
+</pre></div>
+</div>
+<p>The driver can also be <a class="reference external" href="http://github.com/scylladb/cpp-driver/tree/master/topics/building/">built from source</a>, in which case dependencies need
+to be installed in <code class="docutils literal notranslate"><span class="pre">-dev</span></code> or <code class="docutils literal notranslate"><span class="pre">-devel</span></code> versions.</p>
+</section>
+<section id="driver">
+<h4>Driver<a class="headerlink" href="#driver" title="Link to this heading">¶</a></h4>
+<p>Packages are currently available for the following platforms:</p>
+<ul class="simple">
+<li><p>CentOS 7</p></li>
+<li><p>Ubuntu 18.04 LTS</p></li>
+</ul>
+<p>They are available for download from the <a class="reference external" href="https://github.com/scylladb/cpp-driver/releases">Releases</a> section.</p>
+<p>NOTE: If you have Datastax cpp-driver installed you need to remove it first:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ubuntu/Debian:</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>remove<span class="w"> </span>cassandra-cpp-driver
+
+
+<span class="c1"># CentOS/RedHat:</span>
+sudo<span class="w"> </span>yum<span class="w"> </span>remove<span class="w"> </span>cassandra-cpp-driver
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Ubuntu 18.04/Debian:</span>
+wget<span class="w"> </span>https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver_2.15.2-1_amd64.deb<span class="w"> </span>https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-dev_2.15.2-1_amd64.deb
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>./scylla-cpp-driver_2.15.2-1_amd64.deb<span class="w"> </span>./scylla-cpp-driver-dev_2.15.2-1_amd64.deb
+
+
+<span class="c1"># Example: CentOS 7/RedHat:</span>
+wget<span class="w"> </span>https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-2.15.2-1.el7.x86_64.rpm<span class="w"> </span>https://github.com/scylladb/cpp-driver/releases/download/2.15.2-1/scylla-cpp-driver-devel-2.15.2-1.el7.x86_64.rpm
+sudo<span class="w"> </span>yum<span class="w"> </span>localinstall<span class="w"> </span>-y<span class="w"> </span>scylla-cpp-driver-2.15.2-1.el7.x86_64.rpm<span class="w"> </span>scylla-cpp-driver-devel-2.15.2-1.el7.x86_64.rpm
+</pre></div>
+</div>
+</section>
+</section>
+<section id="connecting">
+<h3>Connecting<a class="headerlink" href="#connecting" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassandra.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Setup and connect to cluster */</span>
+<span class="w">  </span><span class="n">CassFuture</span><span class="o">*</span><span class="w"> </span><span class="n">connect_future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+<span class="w">  </span><span class="n">CassSession</span><span class="o">*</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_session_new</span><span class="p">();</span>
+
+<span class="w">  </span><span class="cm">/* Add contact points */</span>
+<span class="w">  </span><span class="n">cass_cluster_set_contact_points</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Shard-awareness (Scylla only): choose the local (ephemeral) port range */</span>
+<span class="w">  </span><span class="n">cass_cluster_set_local_port_range</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="mi">49152</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">);</span>
+<span class="w">  </span><span class="cm">/* Driver will round up this number (32), on every node,</span>
+<span class="cm">     to a multiple of that node&#39;s shard count */</span>
+<span class="w">  </span><span class="n">cass_cluster_set_core_connections_per_host</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Provide the cluster object as configuration to connect the session */</span>
+<span class="w">  </span><span class="n">connect_future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_session_connect</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">cluster</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* This operation will block until the result is ready */</span>
+<span class="w">  </span><span class="n">CassError</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_future_error_code</span><span class="p">(</span><span class="n">connect_future</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">CASS_OK</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Display connection error message */</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">message_length</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cass_future_error_message</span><span class="p">(</span><span class="n">connect_future</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">message_length</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Connect error: &#39;%.*s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">message_length</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Run queries... */</span>
+
+<span class="w">  </span><span class="n">cass_future_free</span><span class="p">(</span><span class="n">connect_future</span><span class="p">);</span>
+<span class="w">  </span><span class="n">cass_session_free</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="w">  </span><span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To connect a session, a <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassCluster"><code class="docutils literal notranslate"><span class="pre">CassCluster</span></code></a> object will need to be created and
+configured. The minimal configuration needed to connect is a list of contact
+points. The contact points are used to initialize the driver and it will
+automatically discover the rest of the nodes in your cluster.</p>
+<p><strong>Perfomance Tip:</strong> Include more than one contact point to be robust against
+node failures.</p>
+</section>
+<section id="futures">
+<h3>Futures<a class="headerlink" href="#futures" title="Link to this heading">¶</a></h3>
+<p>The driver is designed so that no operation will force an application to block.
+Operations that would normally cause the application to block, such as
+connecting to a cluster or running a query, instead return a <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassFuture"><code class="docutils literal notranslate"><span class="pre">CassFuture</span></code></a>
+object that can be waited on, polled, or used to register a callback.</p>
+<p><strong>NOTE:</strong> The API can also be used synchronously by waiting on or immediately
+attempting to get the result from a future.</p>
+</section>
+<section id="executing-queries">
+<h3>Executing Queries<a class="headerlink" href="#executing-queries" title="Link to this heading">¶</a></h3>
+<p>Queries are executed using <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassStatement"><code class="docutils literal notranslate"><span class="pre">CassStatement</span></code></a> objects. Statements encapsulate
+the query string and the query parameters. Query parameters are not supported
+by earlier versions of Cassandra (1.2 and below) and values need to be inlined
+in the query string itself.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">execute_query</span><span class="p">(</span><span class="n">CassSession</span><span class="o">*</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Create a statement with zero parameters */</span>
+<span class="w">  </span><span class="n">CassStatement</span><span class="o">*</span><span class="w"> </span><span class="n">statement</span>
+<span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">cass_statement_new</span><span class="p">(</span><span class="s">&quot;INSERT INTO example (key, value) VALUES (&#39;abc&#39;, 123)&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">CassFuture</span><span class="o">*</span><span class="w"> </span><span class="n">query_future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_session_execute</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">statement</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Statement objects can be freed immediately after being executed */</span>
+<span class="w">  </span><span class="n">cass_statement_free</span><span class="p">(</span><span class="n">statement</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* This will block until the query has finished */</span>
+<span class="w">  </span><span class="n">CassError</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_future_error_code</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Query result: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cass_error_desc</span><span class="p">(</span><span class="n">rc</span><span class="p">));</span>
+
+<span class="w">  </span><span class="n">cass_future_free</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="parameterized-queries-positional">
+<h3>Parameterized Queries (Positional)<a class="headerlink" href="#parameterized-queries-positional" title="Link to this heading">¶</a></h3>
+<p>Cassandra 2.0+ supports the use of parameterized queries. This allows the same
+query string to be executed multiple times with different values; avoiding
+string manipulation in your application.</p>
+<p><strong>Perfomance Tip:</strong> If the same query is being reused multiple times,
+<a class="reference external" href="http://github.com/scylladb/cpp-driver/tree/master/topics/basics/prepared_statements/">prepared statements</a> should be used to optimize performance.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">execute_paramertized_query</span><span class="p">(</span><span class="n">CassSession</span><span class="o">*</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* There are two bind variables in the query string */</span>
+<span class="w">  </span><span class="n">CassStatement</span><span class="o">*</span><span class="w"> </span><span class="n">statement</span>
+<span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">cass_statement_new</span><span class="p">(</span><span class="s">&quot;INSERT INTO example (key, value) VALUES (?, ?)&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Bind the values using the indices of the bind variables */</span>
+<span class="w">  </span><span class="n">cass_statement_bind_string</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">cass_statement_bind_int32</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">CassFuture</span><span class="o">*</span><span class="w"> </span><span class="n">query_future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_session_execute</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">statement</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Statement objects can be freed immediately after being executed */</span>
+<span class="w">  </span><span class="n">cass_statement_free</span><span class="p">(</span><span class="n">statement</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* This will block until the query has finished */</span>
+<span class="w">  </span><span class="n">CassError</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_future_error_code</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Query result: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cass_error_desc</span><span class="p">(</span><span class="n">rc</span><span class="p">));</span>
+
+<span class="w">  </span><span class="n">cass_future_free</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="handling-query-results">
+<h3>Handling Query Results<a class="headerlink" href="#handling-query-results" title="Link to this heading">¶</a></h3>
+<p>A single row can be retrieved using the convenience function
+<a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassResult#cass-result-first-row"><code class="docutils literal notranslate"><span class="pre">cass_result_first_row()</span></code></a> to get the first row. A <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassIterator"><code class="docutils literal notranslate"><span class="pre">CassIterator</span></code></a> object may
+also be used to iterate over the returned row(s).</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">handle_query_result</span><span class="p">(</span><span class="n">CassFuture</span><span class="o">*</span><span class="w"> </span><span class="n">future</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* This will also block until the query returns */</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">CassResult</span><span class="o">*</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_future_get_result</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* If there was an error then the result won&#39;t be available */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="cm">/* Handle error */</span>
+
+<span class="w">    </span><span class="n">cass_future_free</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* The future can be freed immediately after getting the result object */</span>
+<span class="w">  </span><span class="n">cass_future_free</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* This can be used to retrieve the first row of the result */</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">CassRow</span><span class="o">*</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_result_first_row</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Now we can retrieve the column values from the row */</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">key_length</span><span class="p">;</span>
+<span class="w">  </span><span class="cm">/* Get the column value of &quot;key&quot; by name */</span>
+<span class="w">  </span><span class="n">cass_value_get_string</span><span class="p">(</span><span class="n">cass_row_get_column_by_name</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">key_length</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">cass_int32_t</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">  </span><span class="cm">/* Get the column value of &quot;value&quot; by name */</span>
+<span class="w">  </span><span class="n">cass_value_get_int32</span><span class="p">(</span><span class="n">cass_row_get_column_by_name</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="cm">/* This will free the result as well as the string pointed to by &#39;key&#39; */</span>
+<span class="w">  </span><span class="n">cass_result_free</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">¶</a></h2>
+<section id="cluster">
+<h3>Cluster<a class="headerlink" href="#cluster" title="Link to this heading">¶</a></h3>
+<p>The <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassCluster"><code class="docutils literal notranslate"><span class="pre">CassCluster</span></code></a> object describes a Cassandra/Scylla cluster’s configuration.
+The default cluster object is good for most clusters and only requires a single
+or multiple lists of contact points in order to establish a session connection.
+Once a session is connected using a cluster object, its configuration is
+constant. Modifying the cluster’s object configuration after a session is
+established does not alter the session’s configuration.</p>
+</section>
+<section id="session">
+<h3>Session<a class="headerlink" href="#session" title="Link to this heading">¶</a></h3>
+<p>The <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession</span></code></a> object is used for query execution. Internally, a session
+object also manages a pool of client connections to Cassandra/Scylla and uses
+a load balancing policy to distribute requests across those connections. An
+application should create a single session object per keyspace. A session
+object is designed to be created once, reused, and shared by multiple threads
+within the application. The throughput of a session can be scaled by
+increasing the number of I/O threads. An I/O thread is used to handle reading
+and writing query request data to and from Cassandra/Scylla. The number of I/O
+threads defaults to one per CPU core, but it can be configured using
+<a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassCluster#function-cass_cluster_set_num_threads_io"><code class="docutils literal notranslate"><span class="pre">cass_cluster_set_num_threads_io()</span></code></a>. It’s generally better to create a single
+session with more I/O threads than multiple sessions with a smaller number of
+I/O threads.</p>
+</section>
+<section id="asynchronous-i-o">
+<h3>Asynchronous I/O<a class="headerlink" href="#asynchronous-i-o" title="Link to this heading">¶</a></h3>
+<p>Each I/O thread maintains a number of connections for each node in the cluster.
+This number can be controlled by <code class="docutils literal notranslate"><span class="pre">cass_cluster_set_core_connections_per_host()</span></code>.
+In case of Scylla this number is additionally rounded up to the number of shards
+on the node.</p>
+<p>Each of those connections can handle several simultaneous requests using
+pipelining. Asynchronous I/O and pipelining together allow each connection to
+handle several (up to 32k with protocol v3/v4) in-flight requests concurrently.
+This significantly reduces the number of connections required to be open to
+Cassandra/Scylla and allows the driver to batch requests destined for the
+same node.</p>
+</section>
+<section id="thread-safety">
+<h3>Thread safety<a class="headerlink" href="#thread-safety" title="Link to this heading">¶</a></h3>
+<p>A <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassSession"><code class="docutils literal notranslate"><span class="pre">CassSession</span></code></a> is designed to be used concurrently from multiple threads.
+<a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassFuture"><code class="docutils literal notranslate"><span class="pre">CassFuture</span></code></a> is also thread safe. Other than these exclusions, in general,
+functions that might modify an object’s state are <strong>NOT</strong> thread safe. Objects
+that are immutable (marked ‘const’) can be read safely by multiple threads.</p>
+<p><strong>NOTE:</strong> The object/resource free-ing functions (e.g. <code class="docutils literal notranslate"><span class="pre">cass_cluster_free</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cass_session_free</span></code>, … <code class="docutils literal notranslate"><span class="pre">cass_*_free</span></code>) cannot be called concurrently on the
+same instance of an object.</p>
+</section>
+<section id="memory-handling">
+<h3>Memory handling<a class="headerlink" href="#memory-handling" title="Link to this heading">¶</a></h3>
+<p>Values such as strings (<code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char*</span></code>), bytes and decimals
+(<code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">cass_bytes_t*</span></code>) point to memory held by the result object. The
+lifetimes of these values are valid as long as the result object isn’t freed.
+These values <strong>must</strong> be copied into application memory if they need to live
+longer than the result object’s lifetime. Primitive types such as
+<a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/cassandra.h#cass-int32-t"><code class="docutils literal notranslate"><span class="pre">cass_int32_t</span></code></a> are copied by the driver because it can be done cheaply
+without incurring extra allocations.</p>
+<p><strong>NOTE:</strong> Advancing an iterator invalidates the value it previously returned.</p>
+</section>
+</section>
+<section id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Link to this heading">¶</a></h2>
+<p>Here are some features that are missing from the C/C++ driver, but are included
+with other drivers. Such features can be found (and requested) on our <a class="reference external" href="https://github.com/scylladb/cpp-driver/issues">GH</a>.</p>
+<ul class="simple">
+<li><p>CDC (change data capture) partitioner support</p></li>
+<li><p>LWT (lightweight transactions) support</p></li>
+<li><p>Compression</p></li>
+<li><p>Schema event registration and notification</p></li>
+<li><p>Callback interfaces for load balancing, authentication, reconnection and retry</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+                    </div>
+                    
+                        <div class="post-content">
+                            
+    <div class="feedback-container">
+        <p class="feedback-container__title">Was this page helpful?</p>
+        <span data-tooltip tabindex="1" title="Yes" data-position="top">
+            <button class="feedback-container__button" id="feedback-positive">
+                <i class="feedback-container__icon icon-docs-thumbs-up"></i>
+            </button>
+        </span>
+        <span data-tooltip tabindex="1" title="No" data-position="top">
+            <button class="feedback-container__button" id="feedback-negative">
+                <i class="feedback-container__icon icon-docs-thumbs-down"></i>
+            </button>
+        </span>
+        <div class="feedback-container__message" id="feedback-message"></div>
+    </div>
+
+    <script>
+        function resetFeedbackButtonActive() {
+            const feedbackButtons = document.getElementsByClassName('feedback-container__button');
+            for (let i = 0; i < feedbackButtons.length; i++) {
+                feedbackButtons[i].classList.remove('active');
+            }
+        }
+
+        function showMessage(liked) {
+            const feedbackMessage = document.getElementById('feedback-message');
+            const themeGithubRepository = true;
+            let message = 'Great! Thanks for your feedback.';
+            if (themeGithubRepository && !liked) {
+                message = "Thanks for your feedback! Please don't hesitate to <a href='https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page Features&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/topics/index%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation'>create an issue</a> if you have any suggestions on how we can improve.";
+            }
+            feedbackMessage.innerHTML = message;
+        }
+
+        function sendGaEvent(liked) {
+            const event_label = liked ? "positive" : "negative";
+            const event = "feedback_" + event_label;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': event,
+            });
+        }
+
+        const positiveFeebackButton = document.getElementById('feedback-positive');
+        const negativeFeedbackButton = document.getElementById('feedback-negative');
+
+        positiveFeebackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(true);
+            showMessage(true);
+            positiveFeebackButton.classList.add('active');
+        });
+
+        negativeFeedbackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(false);
+            showMessage(false);
+            negativeFeedbackButton.classList.add('active');
+        });
+    </script>
+
+                            <div class="content-navigation">
+    <div class="navigation navigation--prev">
+        
+            <a class="navigation__link" href="../api/struct.DsePolygonIterator.html">
+                <button class="navigation__button">
+                    <i class="icon-chevron-left"></i>
+                </button>
+                <div class="navigation__title">
+                    <span class="colored">PREVIOUS</span> <br />DsePolygonIterator
+                </div>
+            </a>
+        
+    </div>
+    <div class="navigation navigation--next">
+        
+            <a class="navigation__link" href="basics/index.html">
+                <div class="navigation__title">
+                    <span class="colored">NEXT</span> <br />Basics
+                </div>
+                <button class="navigation__button">
+                    <i class="icon-chevron-right"></i>
+                </button>
+            </a>
+        
+    </div>
+</div>
+                            <!-- Post content text -->
+                        </div>
+                    
+                
+                
+                    </div>
+                        <div class="sidebar-right large-order-3">
+                            <div class="secondary-side-nav custom-scroll-bar">
+    
+    <ul class="contribute">
+        <li class="contribute__item">
+            <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page Features&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/topics/index%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation"
+               target="_blank">
+                <i class="icon-github" aria-hidden="true"></i>Create an issue
+            </a>
+        </li>
+        
+            <li class="contribute__item">
+                <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/edit/master/docs/source/topics/index.md"
+                   target="_blank">
+                    <i class="icon-edit" aria-hidden="true"></i>Edit this page
+                </a>
+            </li>
+        
+    </ul>
+
+    
+        <div class="secondary-side-nav__content">
+            <p class="topic-title">On this page</p>
+            <ul>
+<li><a class="reference internal" href="#">Features</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#driver">Driver</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connecting">Connecting</a></li>
+<li><a class="reference internal" href="#futures">Futures</a></li>
+<li><a class="reference internal" href="#executing-queries">Executing Queries</a></li>
+<li><a class="reference internal" href="#parameterized-queries-positional">Parameterized Queries (Positional)</a></li>
+<li><a class="reference internal" href="#handling-query-results">Handling Query Results</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#architecture">Architecture</a><ul>
+<li><a class="reference internal" href="#cluster">Cluster</a></li>
+<li><a class="reference internal" href="#session">Session</a></li>
+<li><a class="reference internal" href="#asynchronous-i-o">Asynchronous I/O</a></li>
+<li><a class="reference internal" href="#thread-safety">Thread safety</a></li>
+<li><a class="reference internal" href="#memory-handling">Memory handling</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#todo">TODO</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    
+</div>
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="sidebar-left  large-order-1">
+                
+                    
+                        <div id="side-nav" class="side-nav custom-scroll-bar" data-closable data-toggler=".show">
+    <button class="collapsible-button">
+        <i class="icon-docs-menu-collapse"></i>
+    </button>
+    <div class="side-nav-content custom-scroll-bar">
+        <div class="side-nav__title">
+            <a href="https://cpp-driver.docs.scylladb.com">Scylla C/C++ Driver</a>
+        </div>
+        <div class="side-nav__search">
+            <div class="search-box">
+                <ci-search></ci-search>
+            </div>
+        </div>
+        <div class="side-nav__versions"><ul class="dropdown menu scylla-dropdown scylla-dropdown--versions" data-dropdown-menu>
+    <li class="scylla-dropdown__item">
+        <a class="scylla-dropdown__title" href="#">
+            
+                master
+            
+            <i class="chevron icon-docs-chevron-right"></i>
+        </a>
+        <ul class="menu scylla-dropdown__content">
+            
+                
+                    <li>
+                        <a href="index.html">master</a>
+                    </li>
+                
+            
+            
+        </ul>
+    </li>
+</ul></div>
+        <div class="side-nav__content">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">C/C++ Driver for ScyllaDB</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassAggregateMeta.html">CassAggregateMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassAuthenticator.html">CassAuthenticator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassAuthenticatorCallbacks.html">CassAuthenticatorCallbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassBatch.html">CassBatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassCluster.html">CassCluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassCollection.html">CassCollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassColumnMeta.html">CassColumnMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassCustomPayload.html">CassCustomPayload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassDataType.html">CassDataType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassErrorResult.html">CassErrorResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassExecProfile.html">CassExecProfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassFunctionMeta.html">CassFunctionMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassFuture.html">CassFuture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassIndexMeta.html">CassIndexMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassInet.html">CassInet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassIterator.html">CassIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassKeyspaceMeta.html">CassKeyspaceMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassLogMessage.html">CassLogMessage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassMaterializedViewMeta.html">CassMaterializedViewMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassMetrics.html">CassMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassNode.html">CassNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassPrepared.html">CassPrepared</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassResult.html">CassResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassRetryPolicy.html">CassRetryPolicy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassRow.html">CassRow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassSchemaMeta.html">CassSchemaMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassSession.html">CassSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassSpeculativeExecutionMetrics.html">CassSpeculativeExecutionMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassSsl.html">CassSsl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassStatement.html">CassStatement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassTableMeta.html">CassTableMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassTimestampGen.html">CassTimestampGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassTuple.html">CassTuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassUserType.html">CassUserType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassUuid.html">CassUuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassUuidGen.html">CassUuidGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassValue.html">CassValue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.CassVersion.html">CassVersion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.DseDateRange.html">DseDateRange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.DseDateRangeBound.html">DseDateRangeBound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.DseLineString.html">DseLineString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.DseLineStringIterator.html">DseLineStringIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.DsePolygon.html">DsePolygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct.DsePolygonIterator.html">DsePolygonIterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Features</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="basics/index.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/batches/index.html">Batches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/binding_parameters/index.html">Binding Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/client_side_timestamps/index.html">Client-side timestamps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/consistency/index.html">Consistency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/data_types/index.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/date_and_time/index.html">The <code class="docutils literal notranslate"><span class="pre">date</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/futures/index.html">Futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/handling_results/index.html">Handling Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/keyspaces/index.html">Keyspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/prepared_statements/index.html">Prepared Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/schema_metadata/index.html">Schema Metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/tuples/index.html">Tuples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/user_defined_types/index.html">User-Defined Types (UDTs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/uuids/index.html">UUIDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="building/index.html">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="client_configuration/index.html">Client Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud/index.html">Cloud</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="configuration/index.html">Configuration</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration/retry_policies/index.html">Retry policies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="execution_profiles/index.html">Execution Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq/index.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/index.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging/index.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics/index.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scylla_specific/index.html">Scylla Specific Features</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="security/index.html">Security</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="security/ssl/index.html">SSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="testing/index.html">Testing</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing/ccm/index.html">Cassandra Cluster Manager (CCM)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tracing/index.html">Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="dse_features/index.html">DSE Features</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label for="toctree-checkbox-7"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="dse_features/authentication/index.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dse_features/geotypes/index.html">Geospatial types</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+</div>
+                    
+                
+            </div>
+            
+        </section>
+
+        <footer class="footer">
+    <div class="footer-group">
+        <div class="footer-top">
+            <a class="footer-logo" href="https://www.scylladb.com"></a>
+            <div class="footer-links">
+                <a class="footer-links__link" href="https://docs.scylladb.com/" target="_blank">Docs</a>
+                <a class="footer-links__link" href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html" target="_blank">Tutorials</a>
+                <a class="footer-links__link" href="https://university.scylladb.com/" target="_blank">University</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/contact-us/"
+                    target="_blank">Contact Us</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/" target="_blank">About Us</a>
+            </div>
+            <div class="footer-actions">
+                <a class="footer-actions__link" href="http://slack.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="User Slack channel" data-position="bottom">
+                        <i class="icon-slack"></i>
+                    </span>
+                </a>
+                <a class="footer-actions__link" href="https://forum.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="Community forum" data-position="bottom">
+                        <i class="icon-docs-community"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        
+        <div class="footer-copyright">
+            
+                
+                    &#169; 2025, ScyllaDB. All rights reserved.
+                
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/tos/" target="_blank">Terms of Service</a>
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/privacy/" target="_blank">Privacy Policy</a>
+                | ScyllaDB, and ScyllaDB Cloud, are registered trademarks of ScyllaDB, Inc.
+            
+        </div>
+    
+
+
+        <div class="footer-bottom">
+            
+                <div class="footer-bottom__last-updated">
+                    
+                        Last updated on 23 October 2025.
+                    
+                </div>
+            
+            <div class="footer-bottom__version">
+                Powered by
+                <a class="footer-bottom__link" href="http://sphinx-doc.org/">Sphinx 7.4.7</a> &amp;
+                <a class="footer-bottom__link" href="https://sphinx-theme.scylladb.com/">ScyllaDB Theme 1.8.8</a>
+            </div>
+        </div>
+    </div>
+    
+        <biel-button class="footer-ask-ai" project="ddfdo8m94k" 
+            header-title="ScyllaDB chatbot (beta)"
+            button-position="bottom-right"
+            modal-position="bottom-right"
+            button-style="dark">
+            Ask AI
+        </biel-button>
+    
+</footer>
+
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8P2JP" height="0" width="0"
+                    style="display: none; visibility: hidden"></iframe>
+        </noscript>
+    </body>
+
+</html>

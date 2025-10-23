@@ -1,0 +1,1145 @@
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" style="visibility: hidden;">
+    
+    
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+             Configuration | ScyllaDB Docs 
+        </title>
+        <meta name="description" content="ScyllaDB is an Apache Cassandra-compatible NoSQL data store that can handle 1 million transactions per second on a single server." />
+        <link rel="icon" href="../../_static/img/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../../_static/img/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="../../_static/img/favicon-228x228.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="../../_static/img/favicon-228x228.png" />
+        <meta name="msapplication-TileImage" href="../../_static/img/favicon-228x228.png" />
+
+        
+            
+        
+
+        
+            
+            <link rel="canonical" href="https://cpp-driver.docs.scylladb.com/master/topics/configuration/"/>
+        
+
+        <link rel="author" href="mailto:info@scylladb.com" />
+
+        
+            
+        <!-- increase expertrec loading priority-->
+        <link rel="dns-prefetch" href="https://cse.expertrec.com">
+
+        <!-- increase font loading priority -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- async CSS -->
+        <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');"
+              href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+        <!-- no-JS fallback -->
+        <noscript>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+        </noscript>
+
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/biel-search@latest/dist/biel-search/biel-search.esm.js"></script>
+        
+        
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/css/main.css?v=e3ce25dc" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/sphinx_collapse.css?v=226d88b4" />
+            
+        
+            
+                <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+            
+        
+    
+        
+        
+            
+        <script type="text/javascript" src="../../_static/js/runtime.bundle.js"></script>
+        <script type="text/javascript" src="../../_static/js/main.bundle.js"></script>
+        
+            
+                <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+            
+        
+            
+                <script src="../../_static/doctools.js?v=9a2dae69"></script>
+            
+        
+            
+                <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            
+        
+            
+                <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+            
+        
+            
+                <script src="../../_static/copybutton.js?v=f281be69"></script>
+            
+        
+    
+            
+                <!-- Local meta tags -->
+            
+            
+                <!-- Google Tag Manager docs -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-54NWVS4");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager global -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js"
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-T8P2JP");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Expertrec -->
+<script>
+    var id = "e2077224-9ccf-11e9-a0c9-0242ac130002";
+    var ci_search = document.createElement("script");
+    ci_search.type = "text/javascript";
+    ci_search.async = true;
+    ci_search.src = "https://cse.expertrec.com/api/js/ci_common.js?id=" + id;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(ci_search, s);
+</script>
+<!-- End Expertrec -->
+            
+        
+    </head>
+
+    <body class="brand-product">
+        <section class="promo-banner  promo-banner--hide" style="display: none;">
+    <div class="promo-banner-wrapper">
+        
+        <div class="promo-banner__title">ScyllaDB University Live | Free Virtual Training Event</div>
+        <a class="promo-banner__button button button--reverse" href="#"
+           target="_blank" rel="noopener noreferrer">Learn more</a>
+        <button class="promo-banner__close">
+            <i class="icon-cancel"></i>
+        </button>
+    </div>
+</section>
+        <header class="header">
+    <div class="header-logo">
+        <a class="header-logo__img" href="https://scylladb.com/">
+            <img src="../../_static/img/scylladb-logo-horizontal.svg" alt="ScyllaDB Documentation Logo" />
+        </a>
+        <span class="header-logo__bar"></span>
+        <a class="header-logo__text" href="https://docs.scylladb.com/">
+            Documentation
+        </a>
+    </div>
+    <div class="header-navigation">
+        <ul class="dropdown menu scylla-dropdown scylla-dropdown--header" data-dropdown-menu>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Deployments <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/scylla-cloud/">
+                            <i class="icon-docs-cloud"></i>Cloud</a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/">
+                            <i class="icon-server"></i>Server</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Tools <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://manager.docs.scylladb.com/">
+                            <i class="icon-docs-manager"></i>ScyllaDB Manager</a>
+                    </li>
+                    <li>
+                        <a href="https://monitoring.docs.scylladb.com/">
+                            <i class="icon-docs-monitoring"></i>ScyllaDB
+                            Monitoring Stack</a>
+                    </li>
+                    <li>
+                        <a href="https://operator.docs.scylladb.com/">
+                            <i class="icon-docs-operator"></i>ScyllaDB Operator
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Drivers <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/cql-drivers/">
+                            <i class="icon-docs-nsql-guides"></i>CQL Drivers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/manual/stable/using-scylla/drivers/dynamo-drivers/">
+                            <i class="icon-docs-alternator"></i>DynamoDB Drivers
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="scylla-dropdown__item">
+                <a href="#" class="scylla-dropdown__title">Resources
+                    <i class="chevron icon-arrow-dropdown"></i></a>
+                <ul class="menu scylla-dropdown__content">
+                    <li>
+                        <a href="https://university.scylladb.com">
+                            <i class="icon-university"></i>
+                            ScyllaDB University
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://forum.scylladb.com">
+                            <i class="icon-docs-community"></i>
+                            Community Forum
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html">
+                            <i class="icon-docs-training"></i>
+                            Tutorials
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="header-button">
+            <a href="https://docs.scylladb.com/manual/stable/getting-started/installation-common/scylla-web-installer.html" class="button"><i class="icon-download me-2"></i> Install</a>
+        </div>
+    </div>
+    <div class="header-search-box">
+        <i class="dark-theme-toggler icon-theme"></i>
+        <div class="search-box">
+            <ci-search></ci-search>
+        </div>
+        
+            <biel-button class="header-ask-ai" project="ddfdo8m94k" 
+                header-title="ScyllaDB chatbot (beta)"
+                button-position="default"
+                modal-position="bottom-right"
+                button-style="dark">
+                Ask AI
+            </biel-button>
+        
+    </div>
+    <div class="side-nav-toggle">
+    <i class="dark-theme-toggler icon-theme"></i>
+    <div class="side-nav-toggle__button" data-toggle="side-nav">
+        <i class="icon-menu"></i>
+    </div>
+</div>
+</header>
+        <div class="title"></div>
+        <section
+            class="layout  layout--sidebar layout--has-secondary-sidebar ">
+            <div class="content large-order-2">
+                
+                    <div class="pre-content">
+                        <div class="breadcrumbs">
+    <span class="bread__item">
+        <a href="https://docs.scylladb.com"
+           class="bread__highlight">
+            <i class="icon-home"></i> ScyllaDB Docs
+        </a>
+    </span>
+    <span class="bread__item">
+        <a href="https://cpp-driver.docs.scylladb.com"
+           class="bread__highlight">
+            Scylla C/C++ Driver
+        </a>
+    </span>
+    
+        <span class="bread__item">
+            <a href="../index.html" class="bread__highlight">
+                Features
+            </a>
+        </span>
+    
+    <span class="bread__item bread__item--last">Configuration</span>
+</div>
+                    </div>
+                
+                
+                <div class="sidebar-right-layout">
+                    <div class="body-container">
+                
+
+                    <div class="content-body">
+                        
+                            
+                        
+                        
+                        <section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h1>
+<section id="load-balancing">
+<h2>Load balancing<a class="headerlink" href="#load-balancing" title="Link to this heading">¶</a></h2>
+<p>Load balancing controls how queries are distributed to nodes in a Cassandra
+cluster.</p>
+<p>Without additional configuration the C/C++ driver defaults to using Datacenter-aware
+load balancing with token-aware routing. This means that driver will only send
+queries to nodes in the local datacenter (for local consistency levels) and
+it will use the primary key of queries to route them directly to the nodes where the
+corresponding data is located.</p>
+<section id="round-robin-load-balancing">
+<h3>Round-robin Load Balancing<a class="headerlink" href="#round-robin-load-balancing" title="Link to this heading">¶</a></h3>
+<p>This load balancing policy equally distributes queries across cluster without
+consideration of datacenter locality. This should only be used with
+Cassandra clusters where all nodes are located in the same datacenter.</p>
+</section>
+<section id="datacenter-aware-load-balancing">
+<h3>Datacenter-aware Load Balancing<a class="headerlink" href="#datacenter-aware-load-balancing" title="Link to this heading">¶</a></h3>
+<p>This load balancing policy equally distributes queries to nodes in the local
+datacenter. Nodes in remote datacenters are only used when all local nodes are
+unavailable. Additionally, remote nodes are only considered when non-local
+consistency levels are used or if the driver is configured to use remote nodes
+with the <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/api/struct.CassCluster#1a46b9816129aaa5ab61a1363489dccfd0"><code class="docutils literal notranslate"><span class="pre">allow_remote_dcs_for_local_cl</span></code></a> setting.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">local_dc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dc1&quot;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* Local datacenter name */</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Use up to 2 remote datacenter nodes for remote consistency levels</span>
+<span class="cm"> * or when `allow_remote_dcs_for_local_cl` is enabled.</span>
+<span class="cm"> */</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">used_hosts_per_remote_dc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="cm">/* Don&#39;t use remote datacenter nodes for local consistency levels */</span>
+<span class="n">cass_bool_t</span><span class="w"> </span><span class="n">allow_remote_dcs_for_local_cl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_false</span><span class="p">;</span>
+
+<span class="n">cass_cluster_set_load_balance_dc_aware</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">local_dc</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">used_hosts_per_remote_dc</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">allow_remote_dcs_for_local_cl</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="token-aware-routing">
+<h3>Token-aware Routing<a class="headerlink" href="#token-aware-routing" title="Link to this heading">¶</a></h3>
+<p>Token-aware routing uses the primary key of queries to route requests directly to
+the Cassandra nodes where the data is located. Using this policy avoids having
+to route requests through an extra coordinator node in the Cassandra cluster. This
+can improve query latency and reduce load on the Cassandra nodes. It can be used
+in conjunction with other load balancing and routing policies.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Enable token-aware routing (this is the default setting) */</span>
+<span class="n">cass_cluster_set_token_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="n">cass_true</span><span class="p">);</span>
+
+<span class="cm">/* Disable token-aware routing */</span>
+<span class="n">cass_cluster_set_token_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="n">cass_false</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="latency-aware-routing">
+<h3>Latency-aware Routing<a class="headerlink" href="#latency-aware-routing" title="Link to this heading">¶</a></h3>
+<p>Latency-aware routing tracks the latency of queries to avoid sending new queries
+to poorly performing Cassandra nodes. It can be used in conjunction with other
+load balancing and routing policies.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Disable latency-aware routing (this is the default setting) */</span>
+<span class="n">cass_cluster_set_latency_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="n">cass_false</span><span class="p">);</span>
+
+<span class="cm">/* Enable latency-aware routing */</span>
+<span class="n">cass_cluster_set_latency_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="n">cass_true</span><span class="p">);</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Configure latency-aware routing settings</span>
+<span class="cm"> */</span>
+
+<span class="cm">/* Up to 2 times the best performing latency is okay */</span>
+<span class="n">cass_double_t</span><span class="w"> </span><span class="n">exclusion_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+
+<span class="w"> </span><span class="cm">/* Use the default scale */</span>
+<span class="n">cass_uint64_t</span><span class="w"> </span><span class="n">scale_ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+
+<span class="cm">/* Retry a node after 10 seconds even if it was performing poorly before */</span>
+<span class="n">cass_uint64_t</span><span class="w"> </span><span class="n">retry_period_ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span>
+
+<span class="cm">/* Find the best performing latency every 100 milliseconds */</span>
+<span class="n">cass_uint64_t</span><span class="w"> </span><span class="n">update_rate_ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+
+<span class="cm">/* Only consider the average latency of a node after it&#39;s been queried 50 times */</span>
+<span class="n">cass_uint64_t</span><span class="w"> </span><span class="n">min_measured</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
+
+<span class="n">cass_cluster_set_latency_aware_routing_settings</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+<span class="w">                                                </span><span class="n">exclusion_threshold</span><span class="p">,</span>
+<span class="w">                                                </span><span class="n">scale_ms</span><span class="p">,</span>
+<span class="w">                                                </span><span class="n">retry_period_ms</span><span class="p">,</span>
+<span class="w">                                                </span><span class="n">update_rate_ms</span><span class="p">,</span>
+<span class="w">                                                </span><span class="n">min_measured</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="filtering-policies">
+<h3>Filtering policies<a class="headerlink" href="#filtering-policies" title="Link to this heading">¶</a></h3>
+<section id="whitelist">
+<h4>Whitelist<a class="headerlink" href="#whitelist" title="Link to this heading">¶</a></h4>
+<p>This policy ensures that only hosts from the provided whitelist filter will
+ever be used. Any host that is not contained within the whitelist will be
+considered ignored and a connection will not be established.  It can be used in
+conjunction with other load balancing and routing policies.</p>
+<p>NOTE: Using this policy to limit the connections of the driver to a predefined
+set of hosts will defeat the auto-detection features of the driver. If
+the goal is to limit connections to hosts in a local datacenter use
+DC aware in conjunction with the round robin load balancing policy.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Set the list of predefined hosts the driver is allowed to connect to */</span>
+<span class="n">cass_cluster_set_whitelist_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+<span class="w">                                     </span><span class="s">&quot;127.0.0.1, 127.0.0.3, 127.0.0.5&quot;</span><span class="p">);</span>
+
+<span class="cm">/* The whitelist can be cleared (and disabled) by using an empty string */</span>
+<span class="n">cass_cluster_set_whitelist_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="blacklist">
+<h4>Blacklist<a class="headerlink" href="#blacklist" title="Link to this heading">¶</a></h4>
+<p>This policy is the inverse of the whitelist policy where hosts provided in the
+blacklist filter will be ignored and a connection will not be established.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Set the list of predefined hosts the driver is NOT allowed to connect to */</span>
+<span class="n">cass_cluster_set_blacklist_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+<span class="w">                                     </span><span class="s">&quot;127.0.0.1, 127.0.0.3, 127.0.0.5&quot;</span><span class="p">);</span>
+
+<span class="cm">/* The blacklist can be cleared (and disabled) by using an empty string */</span>
+<span class="n">cass_cluster_set_blacklist_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="datacenter">
+<h4>Datacenter<a class="headerlink" href="#datacenter" title="Link to this heading">¶</a></h4>
+<p>Filtering can also be performed on all hosts in a datacenter or multiple
+datacenters when using the whitelist/blacklist datacenter filtering polices.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Set the list of predefined datacenters the driver is allowed to connect to */</span>
+<span class="n">cass_cluster_set_whitelist_dc_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dc2, dc4&quot;</span><span class="p">);</span>
+
+<span class="cm">/* The datacenter whitelist can be cleared/disabled by using an empty string */</span>
+<span class="n">cass_cluster_set_whitelist_dc_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+
+<span class="cm">/* Set the list of predefined datacenters the driver is NOT allowed to connect to */</span>
+<span class="n">cass_cluster_set_blacklist_dc_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dc2, dc4&quot;</span><span class="p">);</span>
+
+<span class="cm">/* The datacenter blacklist can be cleared/disabled by using an empty string */</span>
+<span class="n">cass_cluster_set_blacklist_dc_filtering</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="speculative-execution">
+<h2>Speculative Execution<a class="headerlink" href="#speculative-execution" title="Link to this heading">¶</a></h2>
+<p>For certain applications it is of the utmost importance to minimize latency.
+Speculative execution is a way to minimize latency by preemptively executing
+several instances of the same query against different nodes. The fastest
+response is then returned to the client application and the other requests are
+cancelled. Speculative execution is <b>disabled</b> by default.</p>
+<section id="query-idempotence">
+<h3>Query Idempotence<a class="headerlink" href="#query-idempotence" title="Link to this heading">¶</a></h3>
+<p>Speculative execution will result in executing the same query several times.
+Therefore, it is important that queries are idempotent i.e. a query can be
+applied multiple times without changing the result beyond the initial
+application. <b>Queries that are not explicitly marked as idempotent will not be
+scheduled for speculative executions.</b></p>
+<p>The following types of queries are <b>not</b> idempotent:</p>
+<ul class="simple">
+<li><p>Mutation of <code class="docutils literal notranslate"><span class="pre">counter</span></code> columns</p></li>
+<li><p>Prepending or appending to a <code class="docutils literal notranslate"><span class="pre">list</span></code> column</p></li>
+<li><p>Use of non-idempotent CQL function e.g. <code class="docutils literal notranslate"><span class="pre">now()</span></code> or <code class="docutils literal notranslate"><span class="pre">uuid()</span></code></p></li>
+</ul>
+<p>The driver is unable to determine if a query is idempotent therefore it is up to
+an application to explicitly mark a statement as being idempotent.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassStatement</span><span class="o">*</span><span class="w"> </span><span class="n">statement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_statement_new</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;SELECT * FROM table1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="cm">/* Make the statement idempotent */</span>
+<span class="n">cass_statement_set_is_idempotent</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span><span class="w"> </span><span class="n">cass_true</span><span class="p">);</span>
+
+<span class="n">cass_statement_free</span><span class="p">(</span><span class="n">statement</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="enabling-speculative-execution">
+<h3>Enabling speculative execution<a class="headerlink" href="#enabling-speculative-execution" title="Link to this heading">¶</a></h3>
+<p>Speculative execution is enabled by connecting a <code class="docutils literal notranslate"><span class="pre">CassSession</span></code> with a
+<code class="docutils literal notranslate"><span class="pre">CassCluster</span></code> that has a speculative execution policy enabled. The driver
+currently only supports a constant policy, but may support more in the future.</p>
+<section id="constant-speculative-execution-policy">
+<h4>Constant speculative execution policy<a class="headerlink" href="#constant-speculative-execution-policy" title="Link to this heading">¶</a></h4>
+<p>The following will start up to 2 more executions after the initial execution
+with the subsequent executions being created 500 milliseconds apart.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="n">cass_int64_t</span><span class="w"> </span><span class="n">constant_delay_ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span><span class="w"> </span><span class="cm">/* Delay before a new execution is created */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">max_speculative_executions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">   </span><span class="cm">/* Number of executions */</span>
+
+<span class="n">cass_cluster_set_constant_speculative_execution_policy</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+<span class="w">                                                       </span><span class="n">constant_delay_ms</span><span class="p">,</span>
+<span class="w">                                                       </span><span class="n">max_speculative_executions</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="connection-heartbeats">
+<h3>Connection Heartbeats<a class="headerlink" href="#connection-heartbeats" title="Link to this heading">¶</a></h3>
+<p>To prevent intermediate network devices (routers, switches, etc.) from
+disconnecting pooled connections the driver sends a lightweight heartbeat
+request (using an <a class="reference external" href="https://github.com/apache/cassandra/blob/cassandra-3.0/doc/native_protocol_v3.spec"><code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code></a> protocol request) periodically. By default the
+driver sends a heartbeat every 30 seconds. This can be changed or disabled (0
+second interval) using the following:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Change the heartbeat interval to 1 minute */</span>
+<span class="n">cass_cluster_set_connection_heartbeat_interval</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">);</span>
+
+<span class="cm">/* Disable heartbeat requests */</span>
+<span class="n">cass_cluster_set_connection_heartbeat_interval</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Heartbeats are also used to detect unresponsive connections. An idle timeout
+setting controls the amount of time a connection is allowed to be without a
+successful heartbeat before being terminated and scheduled for reconnection. This
+interval can be changed from the default of 60 seconds:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="cm">/* Change the idle timeout to 2 minute */</span>
+<span class="n">cass_cluster_set_connection_idle_timeout</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="p">);</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>It can be disabled by setting the value to a very long timeout or by disabling
+heartbeats.</p>
+</section>
+<section id="host-state-changes">
+<h3>Host State Changes<a class="headerlink" href="#host-state-changes" title="Link to this heading">¶</a></h3>
+<p>The status and membership of a node can change within the life-cycle of the
+cluster. A host listener callback can be used to detect these changes.</p>
+<p><strong>Important</strong>: The driver runs the host listener callback on a thread that is
+different from the application. Any data accessed in the
+callback must be immutable or synchronized with a mutex,
+semaphore, etc.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">on_host_listener</span><span class="p">(</span><span class="n">CassHostListenerEvent</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">CassInet</span><span class="w"> </span><span class="n">inet</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Get the string representation of the inet address */</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">address</span><span class="p">[</span><span class="n">CASS_INET_STRING_LENGTH</span><span class="p">];</span>
+<span class="w">  </span><span class="n">cass_inet_string</span><span class="p">(</span><span class="n">inet</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Perform application logic for host listener event */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CASS_HOST_LISTENER_EVENT_ADD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Host %s has been ADDED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CASS_HOST_LISTENER_EVENT_REMOVE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Host %s has been REMOVED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CASS_HOST_LISTENER_EVENT_UP</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Host %s is UP</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CASS_HOST_LISTENER_EVENT_DOWN</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Host %s is DOWN</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">CassCluster</span><span class="o">*</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cass_cluster_new</span><span class="p">();</span>
+
+<span class="w">  </span><span class="cm">/* Register the host listener callback */</span>
+<span class="w">  </span><span class="n">cass_cluster_set_host_listener_callback</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="w"> </span><span class="n">on_host_listener</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* ... */</span>
+
+<span class="w">  </span><span class="n">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: Expensive (e.g. slow) operations should not be performed in host
+listener callbacks. Performing expensive operations in a callback
+will block or slow the driver’s normal operation.</p>
+</section>
+<section id="reconnection-policy">
+<h3>Reconnection Policy<a class="headerlink" href="#reconnection-policy" title="Link to this heading">¶</a></h3>
+<p>The reconnection policy controls the interval between each attempt for a given
+connection.</p>
+<section id="exponential-reconnection-policy">
+<h4>Exponential Reconnection Policy<a class="headerlink" href="#exponential-reconnection-policy" title="Link to this heading">¶</a></h4>
+<p>The exponential reconnection policy is the default reconnection policy. It
+starts by using a base delay in milliseconds which is then exponentially
+increased (doubled) during each reconnection attempt; up to the defined maximum
+delay.</p>
+<p><strong>Note</strong>: Once the connection is re-established, this policy will restart using
+base delay if a reconnection occurs.</p>
+</section>
+<section id="constant-reconnection-policy">
+<h4>Constant Reconnection Policy<a class="headerlink" href="#constant-reconnection-policy" title="Link to this heading">¶</a></h4>
+<p>The constant reconnection policy is a fixed delay for each reconnection
+attempt.</p>
+</section>
+</section>
+<section id="performance-tips">
+<h3>Performance Tips<a class="headerlink" href="#performance-tips" title="Link to this heading">¶</a></h3>
+<section id="use-a-single-persistent-session">
+<h4>Use a single persistent session<a class="headerlink" href="#use-a-single-persistent-session" title="Link to this heading">¶</a></h4>
+<p>Sessions are expensive objects to create in both time and resources because they
+maintain a pool of connections to your Cassandra cluster. An application should
+create a minimal number of sessions and maintain them for the lifetime of an
+application.</p>
+</section>
+<section id="use-token-aware-and-latency-aware-policies">
+<h4>Use token-aware and latency-aware policies<a class="headerlink" href="#use-token-aware-and-latency-aware-policies" title="Link to this heading">¶</a></h4>
+<p>The token-aware load balancing can reduce the latency of requests by avoiding an
+extra network hop through a coordinator node. When using the token-aware policy
+requests are sent to one of the nodes which will retrieved or stored instead of
+routing the request through a proxy node (coordinator node).</p>
+<p>The latency-aware load balancing policy can also reduce the latency of requests
+by routing requests to nodes that historical performing with the lowest latency.
+This can prevent requests from being sent to nodes that are underperforming.</p>
+<p>Both <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/topics/configuration#token-aware-routing">latency-aware</a> and <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/topics/configuration#latency-aware-routing">token-aware</a> can be use together to obtain the benefits of
+both.</p>
+</section>
+<section id="use-paging-when-retrieving-large-result-sets">
+<h4>Use <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/topics/basics/handling_results#paging">paging</a> when retrieving large result sets<a class="headerlink" href="#use-paging-when-retrieving-large-result-sets" title="Link to this heading">¶</a></h4>
+<p>Using a large page size or a very high <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> clause can cause your application
+to delay for each individual request. The driver’s paging mechanism can be used
+to decrease the latency of individual requests.</p>
+</section>
+<section id="choose-a-lower-consistency-level">
+<h4>Choose a lower consistency level<a class="headerlink" href="#choose-a-lower-consistency-level" title="Link to this heading">¶</a></h4>
+<p>Ultimately, choosing a consistency level is a trade-off between consistency and
+availability. Performance should not be a large deciding factor when choosing a
+consistency level. However, it can affect high-percentile latency numbers
+because requests with consistency levels greater than <code class="docutils literal notranslate"><span class="pre">ONE</span></code> can cause requests
+to wait for one or more nodes to respond back to the coordinator node before a
+request can complete. In multi-datacenter configurations, consistency levels such as
+<code class="docutils literal notranslate"><span class="pre">EACH_QUORUM</span></code> can cause a request to wait for replication across a slower cross
+datacenter network link.  More information about setting the consistency level
+can be found <a class="reference external" href="https://cpp-driver.docs.scylladb.com/master/topics/basics/consistency/">here</a>.</p>
+</section>
+</section>
+<section id="driver-tuning">
+<h3>Driver Tuning<a class="headerlink" href="#driver-tuning" title="Link to this heading">¶</a></h3>
+<p>Beyond the performance tips and best practices considered in the previous
+section your application might consider tuning the more fine-grain driver
+settings in this section to achieve optimal performance for your application’s
+specific workload.</p>
+<section id="increasing-core-connections">
+<h4>Increasing core connections<a class="headerlink" href="#increasing-core-connections" title="Link to this heading">¶</a></h4>
+<p>In some workloads, throughput can be increased by increasing the number of core
+connections. By default, the driver uses a single core connection per host. It’s
+recommended that you try increasing the core connections to two and slowly
+increase this number while doing performance testing. Two core connections is
+often a good setting and increasing the core connections too high will decrease
+performance because having multiple connections to a single host inhibits the
+driver’s ability to coalesce multiple requests into a fewer number of system
+calls.</p>
+</section>
+<section id="coalesce-delay">
+<h4>Coalesce delay<a class="headerlink" href="#coalesce-delay" title="Link to this heading">¶</a></h4>
+<p>The coalesce delay is an optimization to reduce the number of system calls
+required to process requests. This setting controls how long the driver’s I/O
+threads wait for requests to accumulate before flushing them on to the wire.
+Larger values for coalesce delay are preferred for throughput-based workloads as
+it can significantly reduce the number of system calls required to process
+requests.</p>
+<p>In general, the coalesce delay should be increased for throughput-based
+workloads and can be decreased for latency-based workloads. Most importantly,
+the delay should consider the responsiveness guarantees of your application.</p>
+<p>Note: Single, sporadic requests are not generally affected by this delay and
+are processed immediately.</p>
+</section>
+<section id="new-request-ratio">
+<h4>New request ratio<a class="headerlink" href="#new-request-ratio" title="Link to this heading">¶</a></h4>
+<p>The new request ratio controls how much time an I/O thread spends processing new
+requests versus handling outstanding requests. This value is a percentage (with
+a value from 1 to 100), where larger values will dedicate more time to
+processing new requests and less time on outstanding requests. The goal of this
+setting is to balance the time spent processing new/outstanding requests and
+prevent either from fully monopolizing the I/O thread’s processing time. It’s
+recommended that your application decrease this value if computationally
+expensive or long-running future callbacks are used (via
+<code class="docutils literal notranslate"><span class="pre">cass_future_set_callback()</span></code>), otherwise this can be left unchanged.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+</section>
+
+                    </div>
+                    
+                        <div class="post-content">
+                            
+    <div class="feedback-container">
+        <p class="feedback-container__title">Was this page helpful?</p>
+        <span data-tooltip tabindex="1" title="Yes" data-position="top">
+            <button class="feedback-container__button" id="feedback-positive">
+                <i class="feedback-container__icon icon-docs-thumbs-up"></i>
+            </button>
+        </span>
+        <span data-tooltip tabindex="1" title="No" data-position="top">
+            <button class="feedback-container__button" id="feedback-negative">
+                <i class="feedback-container__icon icon-docs-thumbs-down"></i>
+            </button>
+        </span>
+        <div class="feedback-container__message" id="feedback-message"></div>
+    </div>
+
+    <script>
+        function resetFeedbackButtonActive() {
+            const feedbackButtons = document.getElementsByClassName('feedback-container__button');
+            for (let i = 0; i < feedbackButtons.length; i++) {
+                feedbackButtons[i].classList.remove('active');
+            }
+        }
+
+        function showMessage(liked) {
+            const feedbackMessage = document.getElementById('feedback-message');
+            const themeGithubRepository = true;
+            let message = 'Great! Thanks for your feedback.';
+            if (themeGithubRepository && !liked) {
+                message = "Thanks for your feedback! Please don't hesitate to <a href='https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page Configuration&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/topics/configuration/index%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation'>create an issue</a> if you have any suggestions on how we can improve.";
+            }
+            feedbackMessage.innerHTML = message;
+        }
+
+        function sendGaEvent(liked) {
+            const event_label = liked ? "positive" : "negative";
+            const event = "feedback_" + event_label;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': event,
+            });
+        }
+
+        const positiveFeebackButton = document.getElementById('feedback-positive');
+        const negativeFeedbackButton = document.getElementById('feedback-negative');
+
+        positiveFeebackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(true);
+            showMessage(true);
+            positiveFeebackButton.classList.add('active');
+        });
+
+        negativeFeedbackButton.addEventListener('click', function() {
+            resetFeedbackButtonActive();
+            sendGaEvent(false);
+            showMessage(false);
+            negativeFeedbackButton.classList.add('active');
+        });
+    </script>
+
+                            <div class="content-navigation">
+    <div class="navigation navigation--prev">
+        
+            <a class="navigation__link" href="../cloud/index.html">
+                <button class="navigation__button">
+                    <i class="icon-chevron-left"></i>
+                </button>
+                <div class="navigation__title">
+                    <span class="colored">PREVIOUS</span> <br />Cloud
+                </div>
+            </a>
+        
+    </div>
+    <div class="navigation navigation--next">
+        
+            <a class="navigation__link" href="retry_policies/index.html">
+                <div class="navigation__title">
+                    <span class="colored">NEXT</span> <br />Retry policies
+                </div>
+                <button class="navigation__button">
+                    <i class="icon-chevron-right"></i>
+                </button>
+            </a>
+        
+    </div>
+</div>
+                            <!-- Post content text -->
+                        </div>
+                    
+                
+                
+                    </div>
+                        <div class="sidebar-right large-order-3">
+                            <div class="secondary-side-nav custom-scroll-bar">
+    
+    <ul class="contribute">
+        <li class="contribute__item">
+            <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/issues/new?title=docs:%20Issue on page Configuration&&body=I%20would%20like%20to%20report%20an%20issue%20on%20page%20https://cpp-driver.docs.scylladb.com/master/topics/configuration/index%0A%0A%23%23%23%20Problem%0A%0A%23%23%23%20%20Suggest%20a%20fix&labels=documentation"
+               target="_blank">
+                <i class="icon-github" aria-hidden="true"></i>Create an issue
+            </a>
+        </li>
+        
+            <li class="contribute__item">
+                <a class="button button-sm" href="https://github.com/scylladb/cpp-driver/edit/master/docs/source/topics/configuration/index.md"
+                   target="_blank">
+                    <i class="icon-edit" aria-hidden="true"></i>Edit this page
+                </a>
+            </li>
+        
+    </ul>
+
+    
+        <div class="secondary-side-nav__content">
+            <p class="topic-title">On this page</p>
+            <ul>
+<li><a class="reference internal" href="#">Configuration</a><ul>
+<li><a class="reference internal" href="#load-balancing">Load balancing</a><ul>
+<li><a class="reference internal" href="#round-robin-load-balancing">Round-robin Load Balancing</a></li>
+<li><a class="reference internal" href="#datacenter-aware-load-balancing">Datacenter-aware Load Balancing</a></li>
+<li><a class="reference internal" href="#token-aware-routing">Token-aware Routing</a></li>
+<li><a class="reference internal" href="#latency-aware-routing">Latency-aware Routing</a></li>
+<li><a class="reference internal" href="#filtering-policies">Filtering policies</a><ul>
+<li><a class="reference internal" href="#whitelist">Whitelist</a></li>
+<li><a class="reference internal" href="#blacklist">Blacklist</a></li>
+<li><a class="reference internal" href="#datacenter">Datacenter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#speculative-execution">Speculative Execution</a><ul>
+<li><a class="reference internal" href="#query-idempotence">Query Idempotence</a></li>
+<li><a class="reference internal" href="#enabling-speculative-execution">Enabling speculative execution</a><ul>
+<li><a class="reference internal" href="#constant-speculative-execution-policy">Constant speculative execution policy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connection-heartbeats">Connection Heartbeats</a></li>
+<li><a class="reference internal" href="#host-state-changes">Host State Changes</a></li>
+<li><a class="reference internal" href="#reconnection-policy">Reconnection Policy</a><ul>
+<li><a class="reference internal" href="#exponential-reconnection-policy">Exponential Reconnection Policy</a></li>
+<li><a class="reference internal" href="#constant-reconnection-policy">Constant Reconnection Policy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-tips">Performance Tips</a><ul>
+<li><a class="reference internal" href="#use-a-single-persistent-session">Use a single persistent session</a></li>
+<li><a class="reference internal" href="#use-token-aware-and-latency-aware-policies">Use token-aware and latency-aware policies</a></li>
+<li><a class="reference internal" href="#use-paging-when-retrieving-large-result-sets">Use paging when retrieving large result sets</a></li>
+<li><a class="reference internal" href="#choose-a-lower-consistency-level">Choose a lower consistency level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#driver-tuning">Driver Tuning</a><ul>
+<li><a class="reference internal" href="#increasing-core-connections">Increasing core connections</a></li>
+<li><a class="reference internal" href="#coalesce-delay">Coalesce delay</a></li>
+<li><a class="reference internal" href="#new-request-ratio">New request ratio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    
+</div>
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="sidebar-left  large-order-1">
+                
+                    
+                        <div id="side-nav" class="side-nav custom-scroll-bar" data-closable data-toggler=".show">
+    <button class="collapsible-button">
+        <i class="icon-docs-menu-collapse"></i>
+    </button>
+    <div class="side-nav-content custom-scroll-bar">
+        <div class="side-nav__title">
+            <a href="https://cpp-driver.docs.scylladb.com">Scylla C/C++ Driver</a>
+        </div>
+        <div class="side-nav__search">
+            <div class="search-box">
+                <ci-search></ci-search>
+            </div>
+        </div>
+        <div class="side-nav__versions"><ul class="dropdown menu scylla-dropdown scylla-dropdown--versions" data-dropdown-menu>
+    <li class="scylla-dropdown__item">
+        <a class="scylla-dropdown__title" href="#">
+            
+                master
+            
+            <i class="chevron icon-docs-chevron-right"></i>
+        </a>
+        <ul class="menu scylla-dropdown__content">
+            
+                
+                    <li>
+                        <a href="index.html">master</a>
+                    </li>
+                
+            
+            
+        </ul>
+    </li>
+</ul></div>
+        <div class="side-nav__content">
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">C/C++ Driver for ScyllaDB</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassAggregateMeta.html">CassAggregateMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassAuthenticator.html">CassAuthenticator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassAuthenticatorCallbacks.html">CassAuthenticatorCallbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassBatch.html">CassBatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassCluster.html">CassCluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassCollection.html">CassCollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassColumnMeta.html">CassColumnMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassCustomPayload.html">CassCustomPayload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassDataType.html">CassDataType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassErrorResult.html">CassErrorResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassExecProfile.html">CassExecProfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassFunctionMeta.html">CassFunctionMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassFuture.html">CassFuture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassIndexMeta.html">CassIndexMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassInet.html">CassInet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassIterator.html">CassIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassKeyspaceMeta.html">CassKeyspaceMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassLogMessage.html">CassLogMessage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassMaterializedViewMeta.html">CassMaterializedViewMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassMetrics.html">CassMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassNode.html">CassNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassPrepared.html">CassPrepared</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassResult.html">CassResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassRetryPolicy.html">CassRetryPolicy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassRow.html">CassRow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSchemaMeta.html">CassSchemaMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSession.html">CassSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSpeculativeExecutionMetrics.html">CassSpeculativeExecutionMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassSsl.html">CassSsl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassStatement.html">CassStatement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassTableMeta.html">CassTableMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassTimestampGen.html">CassTimestampGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassTuple.html">CassTuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassUserType.html">CassUserType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassUuid.html">CassUuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassUuidGen.html">CassUuidGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassValue.html">CassValue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.CassVersion.html">CassVersion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseDateRange.html">DseDateRange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseDateRangeBound.html">DseDateRangeBound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseLineString.html">DseLineString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DseLineStringIterator.html">DseLineStringIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DsePolygon.html">DsePolygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/struct.DsePolygonIterator.html">DsePolygonIterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Features</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon-chevron-right"></i></label><div class="break"></div><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basics/index.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/batches/index.html">Batches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/binding_parameters/index.html">Binding Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/client_side_timestamps/index.html">Client-side timestamps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/consistency/index.html">Consistency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data_types/index.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/date_and_time/index.html">The <code class="docutils literal notranslate"><span class="pre">date</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/futures/index.html">Futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/handling_results/index.html">Handling Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/keyspaces/index.html">Keyspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/prepared_statements/index.html">Prepared Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/schema_metadata/index.html">Schema Metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/tuples/index.html">Tuples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/user_defined_types/index.html">User-Defined Types (UDTs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/uuids/index.html">UUIDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../building/index.html">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../client_configuration/index.html">Client Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cloud/index.html">Cloud</a></li>
+<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">Configuration</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="retry_policies/index.html">Retry policies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../execution_profiles/index.html">Execution Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logging/index.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/index.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scylla_specific/index.html">Scylla Specific Features</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../security/index.html">Security</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../security/ssl/index.html">SSL</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../testing/index.html">Testing</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l3"><a class="reference internal" href="../testing/ccm/index.html">Cassandra Cluster Manager (CCM)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tracing/index.html">Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dse_features/index.html">DSE Features</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label for="toctree-checkbox-7"><i class="icon-chevron-right"></i></label><div class="break"></div><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dse_features/authentication/index.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dse_features/geotypes/index.html">Geospatial types</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+</div>
+                    
+                
+            </div>
+            
+        </section>
+
+        <footer class="footer">
+    <div class="footer-group">
+        <div class="footer-top">
+            <a class="footer-logo" href="https://www.scylladb.com"></a>
+            <div class="footer-links">
+                <a class="footer-links__link" href="https://docs.scylladb.com/" target="_blank">Docs</a>
+                <a class="footer-links__link" href="https://docs.scylladb.com/stable/get-started/develop-with-scylladb/tutorials-example-projects.html" target="_blank">Tutorials</a>
+                <a class="footer-links__link" href="https://university.scylladb.com/" target="_blank">University</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/contact-us/"
+                    target="_blank">Contact Us</a>
+                <a class="footer-links__link" href="https://www.scylladb.com/company/" target="_blank">About Us</a>
+            </div>
+            <div class="footer-actions">
+                <a class="footer-actions__link" href="http://slack.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="User Slack channel" data-position="bottom">
+                        <i class="icon-slack"></i>
+                    </span>
+                </a>
+                <a class="footer-actions__link" href="https://forum.scylladb.com/" target="_blank">
+                    <span data-tooltip tabindex="1" title="Community forum" data-position="bottom">
+                        <i class="icon-docs-community"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        
+        <div class="footer-copyright">
+            
+                
+                    &#169; 2025, ScyllaDB. All rights reserved.
+                
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/tos/" target="_blank">Terms of Service</a>
+                | <a class="footer-copyright__link" href="https://www.scylladb.com/privacy/" target="_blank">Privacy Policy</a>
+                | ScyllaDB, and ScyllaDB Cloud, are registered trademarks of ScyllaDB, Inc.
+            
+        </div>
+    
+
+
+        <div class="footer-bottom">
+            
+                <div class="footer-bottom__last-updated">
+                    
+                        Last updated on 23 October 2025.
+                    
+                </div>
+            
+            <div class="footer-bottom__version">
+                Powered by
+                <a class="footer-bottom__link" href="http://sphinx-doc.org/">Sphinx 7.4.7</a> &amp;
+                <a class="footer-bottom__link" href="https://sphinx-theme.scylladb.com/">ScyllaDB Theme 1.8.8</a>
+            </div>
+        </div>
+    </div>
+    
+        <biel-button class="footer-ask-ai" project="ddfdo8m94k" 
+            header-title="ScyllaDB chatbot (beta)"
+            button-position="bottom-right"
+            modal-position="bottom-right"
+            button-style="dark">
+            Ask AI
+        </biel-button>
+    
+</footer>
+
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8P2JP" height="0" width="0"
+                    style="display: none; visibility: hidden"></iframe>
+        </noscript>
+    </body>
+
+</html>
