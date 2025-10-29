@@ -1,5 +1,9 @@
 # C/C++ Driver for ScyllaDB
 
+> [!IMPORTANT]
+> :exclamation: **This driver is now superseded by [ScyllaDB CPP-RS Driver](https://github.com/scylladb/cpp-rs-driver) and no longer maintained.**
+> Consider migration to the new driver for better performance and active support, especially of recent ScyllaDB features.
+
 A modern, feature-rich and **shard-aware** C/C++ client library for
 [ScyllaDB] using exclusively Cassandra's binary protocol and
 Cassandra Query Language v3. Forked from Datastax `cpp-driver`.
