@@ -2,7 +2,7 @@
 name = "cpp-driver"
 description = "Scylla C/C++ Driver"
 version = "0.1"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "breathe>=4.35.0",
     "pygments>=2.18.0",
