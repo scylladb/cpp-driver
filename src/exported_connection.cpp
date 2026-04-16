@@ -1,4 +1,6 @@
+#if !defined(_WIN32)
 #include <unistd.h>
+#endif
 
 #include "exported_connection.hpp"
 #include "connection.hpp"
@@ -20,8 +22,15 @@ ExportedConnection::ExportedConnection(SharedRefPtr<Connection> connection) {
     this->heartbeat_interval_secs_ = connection->heartbeat_interval_secs_;
 
     // Socket
+#if defined(_WIN32)
+    uv_fileno(reinterpret_cast<uv_handle_t *>(&connection->socket_->tcp_), reinterpret_cast<uv_os_fd_t *>(&this->fd));
+    WSAPROTOCOL_INFOW info;
+    WSADuplicateSocketW(this->fd, GetCurrentProcessId(), &info);
+    this->fd = WSASocketW(info.iAddressFamily, info.iSocketType, info.iProtocol, &info, 0, WSA_FLAG_OVERLAPPED);
+#else
     uv_fileno(reinterpret_cast<uv_handle_t *>(&connection->socket_->tcp_), &this->fd);
     this->fd = dup(this->fd);
+#endif
     this->handler_ = connection->socket_->handler_.release();
     // Set basic handler, to notify Connection about closing, and destroy it.
     connection->socket_->set_handler(new ConnectionHandler(connection.get()));
