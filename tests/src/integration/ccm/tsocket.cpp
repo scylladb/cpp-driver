@@ -18,7 +18,9 @@
 
 #include <sstream>
 
-#ifndef _WIN32
+#ifdef _WIN32
+#include <ws2tcpip.h>
+#else
 #include <arpa/inet.h>
 #include <cstring>
 #include <errno.h>
@@ -125,7 +127,7 @@ void Socket::establish_connection(const std::string& ip_address, unsigned short 
   struct sockaddr_in ipv4_socket_address;
   ipv4_socket_address.sin_family = AF_INET;
   ipv4_socket_address.sin_port = htons(port);
-  ipv4_socket_address.sin_addr.s_addr = inet_addr(ip_address.c_str());
+  inet_pton(AF_INET, ip_address.c_str(), &ipv4_socket_address.sin_addr.s_addr);
   if (connect(handle_, (struct sockaddr*)(&ipv4_socket_address), sizeof(struct sockaddr_in)) != 0) {
     std::string message = "Failed to Establish Connection: ";
 #ifdef _WIN32

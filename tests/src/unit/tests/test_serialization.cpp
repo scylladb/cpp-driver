@@ -21,7 +21,7 @@
 
 using namespace datastax::internal;
 
-TEST(SerializationTest, DecodeZigZag) { ASSERT_EQ(1LL << 63, decode_zig_zag((long)-1)); }
+TEST(SerializationTest, DecodeZigZag) { ASSERT_EQ(1LL << 63, decode_zig_zag((uint64_t)-1)); }
 
 TEST(SerializationTest, DecodeByte) {
   const signed char input[2] = { -1, 0 };
