@@ -48,6 +48,7 @@ include_directories(${CASS_ROOT_DIR}/tests/src/vendor)
 include_directories(${CASS_INCLUDE_DIR})
 include_directories(${CASS_SRC_DIR})
 include_directories(${CASS_SRC_DIR}/third_party/sparsehash/src)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/../src/generated)
 
 set(GOOGLE_TEST_DIR ${CASS_ROOT_DIR}/tests/src/vendor/gtest)
 set(GOOGLE_TEST_HEADER_FILES "${GOOGLE_TEST_DIR}/gtest.h")

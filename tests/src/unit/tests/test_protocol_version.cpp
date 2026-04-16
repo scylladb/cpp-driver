@@ -30,7 +30,7 @@ TEST_F(ProtocolVersionUnitTest, LowestSupported) {
 }
 
 TEST_F(ProtocolVersionUnitTest, HighestSupported) {
-  EXPECT_EQ(ProtocolVersion(CASS_PROTOCOL_VERSION_DSEV2), ProtocolVersion::highest_supported());
+  EXPECT_EQ(ProtocolVersion(CASS_PROTOCOL_VERSION_V4), ProtocolVersion::highest_supported());
 }
 
 TEST_F(ProtocolVersionUnitTest, NewestBeta) {
