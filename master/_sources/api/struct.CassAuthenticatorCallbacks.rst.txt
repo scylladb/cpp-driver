@@ -1,0 +1,5 @@
+CassAuthenticatorCallbacks
+==========================
+
+.. doxygenstruct:: CassAuthenticatorCallbacks 
+  :project: API

@@ -1,0 +1,5 @@
+CassCluster
+===========
+
+.. doxygenstruct:: CassCluster 
+  :project: API
