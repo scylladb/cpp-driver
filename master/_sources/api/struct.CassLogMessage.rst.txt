@@ -1,0 +1,5 @@
+CassLogMessage
+==============
+
+.. doxygenstruct:: CassLogMessage 
+  :project: API

@@ -1,0 +1,5 @@
+CassIterator
+============
+
+.. doxygenstruct:: CassIterator 
+  :project: API

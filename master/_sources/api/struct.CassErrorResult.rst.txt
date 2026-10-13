@@ -1,0 +1,5 @@
+CassErrorResult
+===============
+
+.. doxygenstruct:: CassErrorResult 
+  :project: API

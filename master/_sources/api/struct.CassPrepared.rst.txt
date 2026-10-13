@@ -1,0 +1,5 @@
+CassPrepared
+============
+
+.. doxygenstruct:: CassPrepared 
+  :project: API

@@ -1,0 +1,5 @@
+CassTableMeta
+=============
+
+.. doxygenstruct:: CassTableMeta 
+  :project: API
